@@ -138,6 +138,119 @@
   }
 }
 
+/* ===== DARK MODE — CSS Cascade Overrides ===== */
+/* Overrides existing utility and component classes with dark values.
+   No component files are changed — pure CSS approach. */
+
+[data-mode='dark'] body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* Surfaces & backgrounds */
+[data-mode='dark'] .bg-white { background-color: #1e293b; }
+[data-mode='dark'] .bg-slate-50 { background-color: #0f172a; }
+[data-mode='dark'] .bg-slate-100 { background-color: #1e293b; }
+[data-mode='dark'] .bg-slate-200 { background-color: #334155; }
+[data-mode='dark'] .bg-slate-300 { background-color: #475569; }
+
+/* Hover/active surfaces */
+[data-mode='dark'] .hover\:bg-slate-50:hover { background-color: #1e293b; }
+[data-mode='dark'] .hover\:bg-slate-100:hover { background-color: #334155; }
+[data-mode='dark'] .hover\:bg-slate-200:hover { background-color: #475569; }
+[data-mode='dark'] .active\:bg-slate-50:active { background-color: #334155; }
+[data-mode='dark'] .active\:bg-slate-100:active { background-color: #475569; }
+
+/* Text colors */
+[data-mode='dark'] .text-slate-900 { color: #f1f5f9; }
+[data-mode='dark'] .text-slate-800 { color: #e2e8f0; }
+[data-mode='dark'] .text-slate-700 { color: #cbd5e1; }
+[data-mode='dark'] .text-slate-600 { color: #94a3b8; }
+[data-mode='dark'] .text-slate-500 { color: #64748b; }
+[data-mode='dark'] .text-slate-400 { color: #475569; }
+
+/* Hover text */
+[data-mode='dark'] .hover\:text-slate-900:hover { color: #f1f5f9; }
+[data-mode='dark'] .hover\:text-slate-700:hover { color: #cbd5e1; }
+[data-mode='dark'] .hover\:text-slate-600:hover { color: #94a3b8; }
+[data-mode='dark'] .hover\:text-slate-500:hover { color: #64748b; }
+
+/* Active text */
+[data-mode='dark'] .active\:text-slate-900:active { color: #f1f5f9; }
+
+/* Borders */
+[data-mode='dark'] .border-slate-100 { border-color: #1e293b; }
+[data-mode='dark'] .border-slate-200 { border-color: #334155; }
+[data-mode='dark'] .border-slate-300 { border-color: #475569; }
+[data-mode='dark'] .hover\:border-slate-200:hover { border-color: #334155; }
+[data-mode='dark'] .hover\:border-slate-300:hover { border-color: #475569; }
+[data-mode='dark'] .focus\:border-slate-300:focus { border-color: #475569; }
+
+/* Dividers */
+[data-mode='dark'] .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: #1e293b; }
+[data-mode='dark'] .divide-slate-200 > :not([hidden]) ~ :not([hidden]) { border-color: #334155; }
+[data-mode='dark'] .divide-white > :not([hidden]) ~ :not([hidden]) { border-color: #1e293b; }
+
+/* Placeholder */
+[data-mode='dark'] .placeholder-slate-400::placeholder { color: #475569; }
+[data-mode='dark'] .placeholder-slate-500::placeholder { color: #475569; }
+
+/* Disabled states */
+[data-mode='dark'] .disabled\:bg-slate-50:disabled { background-color: #0f172a; }
+[data-mode='dark'] .disabled\:bg-white:disabled { background-color: #0f172a; }
+[data-mode='dark'] .disabled\:text-slate-500:disabled { color: #475569; }
+
+/* Ring offset (matches card bg) */
+[data-mode='dark'] .ring-offset-1 { --tw-ring-offset-color: #1e293b; }
+[data-mode='dark'] .ring-offset-2 { --tw-ring-offset-color: #1e293b; }
+[data-mode='dark'] .ring-offset-white { --tw-ring-offset-color: #1e293b; }
+
+/* ===== Component class overrides ===== */
+[data-mode='dark'] .card {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+[data-mode='dark'] .btn-secondary {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #cbd5e1;
+}
+[data-mode='dark'] .btn-secondary:hover {
+  background-color: #334155;
+  border-color: #475569;
+}
+
+[data-mode='dark'] .btn-ghost {
+  color: #94a3b8;
+}
+[data-mode='dark'] .btn-ghost:hover {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-mode='dark'] .btn-icon {
+  color: #64748b;
+}
+[data-mode='dark'] .btn-icon:hover {
+  background-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-mode='dark'] .input {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #f1f5f9;
+}
+[data-mode='dark'] .input:disabled {
+  background-color: #0f172a;
+  color: #475569;
+}
+
+[data-mode='dark'] .label {
+  color: #cbd5e1;
+}
+
 @layer utilities {
   @keyframes fade-in-up {
     from { opacity: 0; transform: translateY(8px); }

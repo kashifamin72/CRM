@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
 export type Theme = 'default' | 'emerald' | 'sunset' | 'purple' | 'midnight';
+export type Mode = 'light' | 'dark';
 
 export const ThemeLabels: Record<Theme, string> = {
   default: 'Default Blue',
@@ -21,6 +22,9 @@ export const ThemeColors: Record<Theme, string> = {
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  mode: Mode;
+  setMode: (mode: Mode) => void;
+  toggleMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -35,12 +39,24 @@ function getInitialTheme(): Theme {
   return 'default';
 }
 
+function getInitialMode(): Mode {
+  try {
+    const stored = localStorage.getItem('mode');
+    if (stored === 'dark' || stored === 'light') {
+      return stored;
+    }
+  } catch {}
+  return 'light';
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(getInitialTheme);
+  const [mode, setModeState] = useState<Mode>(getInitialMode);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-  }, [theme]);
+    document.documentElement.dataset.mode = mode;
+  }, [theme, mode]);
 
   const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme);
@@ -49,8 +65,19 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, []);
 
+  const setMode = useCallback((newMode: Mode) => {
+    setModeState(newMode);
+    try {
+      localStorage.setItem('mode', newMode);
+    } catch {}
+  }, []);
+
+  const toggleMode = useCallback(() => {
+    setMode(mode === 'light' ? 'dark' : 'light');
+  }, [mode, setMode]);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, mode, setMode, toggleMode }}>
       {children}
     </ThemeContext.Provider>
   );
