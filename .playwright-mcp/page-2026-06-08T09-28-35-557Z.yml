@@ -1,0 +1,689 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: CRM System
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - text: Dashboard
+          - link "Leads" [ref=e17] [cursor=pointer]:
+            - /url: /leads
+            - img [ref=e19]
+            - text: Leads
+          - link "Calendar" [ref=e24] [cursor=pointer]:
+            - /url: /calendar
+            - img [ref=e25]
+            - text: Calendar
+          - link "Messages" [ref=e27] [cursor=pointer]:
+            - /url: /messages
+            - img [ref=e28]
+            - text: Messages
+        - generic [ref=e30]:
+          - paragraph [ref=e31]: Analytics
+          - generic [ref=e32]:
+            - link "Reports" [ref=e33] [cursor=pointer]:
+              - /url: /reports
+              - img [ref=e34]
+              - text: Reports
+            - link "Lead Sources" [ref=e36] [cursor=pointer]:
+              - /url: /lead-sources
+              - img [ref=e37]
+              - text: Lead Sources
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: Administration
+          - link "Employees" [ref=e44] [cursor=pointer]:
+            - /url: /employees
+            - img [ref=e45]
+            - text: Employees
+      - button "Kashif Admin Administrator" [ref=e59] [cursor=pointer]:
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: Kashif Admin
+          - paragraph [ref=e62]: Administrator
+        - img [ref=e63]
+    - generic [ref=e65]:
+      - banner [ref=e66]:
+        - button [ref=e67] [cursor=pointer]:
+          - img [ref=e68]
+      - main [ref=e72]:
+        - generic [ref=e222]:
+          - generic [ref=e223]:
+            - generic [ref=e224]:
+              - heading "Leads" [level=1] [ref=e225]
+              - paragraph [ref=e226]: Manage your sales pipeline
+            - link "New Lead" [ref=e227] [cursor=pointer]:
+              - /url: /leads/create
+              - img [ref=e228]
+              - text: New Lead
+          - generic [ref=e230]:
+            - generic [ref=e231]:
+              - img
+              - textbox "Search leads" [ref=e232]:
+                - /placeholder: Search leads...
+            - combobox "Filter by status" [ref=e233]:
+              - option "All Statuses" [selected]
+              - option "New"
+              - option "Contacted"
+              - option "Qualified"
+              - option "Proposal"
+              - option "Closed Won"
+              - option "Closed Lost"
+            - combobox "Filter by source" [ref=e234]:
+              - option "All Sources" [selected]
+              - option "Email Campaign"
+              - option "Facebook"
+              - option "Google Ads"
+              - option "Instagram"
+              - option "LinkedIn"
+              - option "Old Client"
+              - option "Other"
+              - option "Phone Call"
+              - option "Reference"
+              - option "Trade Show"
+              - option "Walk-in"
+              - option "Website"
+            - combobox "Filter by win/lost" [ref=e235]:
+              - option "All Leads" [selected]
+              - option "Show all (incl. Win/Lost)"
+              - option "Last 30 Days (Win/Lost)"
+              - option "Last Month (Win/Lost)"
+              - option "Exclude Win/Lost"
+            - combobox "Filter by assigned officer" [ref=e236]:
+              - option "All Officers" [selected]
+              - option "Unassigned"
+              - option "Abdullah Ali"
+              - option "Faisal Malik"
+              - option "Salman Ahmed"
+            - generic [ref=e237]:
+              - button [ref=e238] [cursor=pointer]:
+                - img [ref=e239]
+              - button [ref=e240] [cursor=pointer]:
+                - img [ref=e241]
+          - table [ref=e248]:
+            - rowgroup [ref=e249]:
+              - row "Title Customer Status Lead Date Source Business Value Assigned To Actions" [ref=e250]:
+                - columnheader "Title" [ref=e251]:
+                  - generic [ref=e252]:
+                    - img [ref=e253]
+                    - text: Title
+                - columnheader "Customer" [ref=e256]:
+                  - generic [ref=e257]:
+                    - img [ref=e258]
+                    - text: Customer
+                - columnheader "Status" [ref=e262]:
+                  - generic [ref=e263]:
+                    - img [ref=e264]
+                    - text: Status
+                - columnheader "Lead Date" [ref=e266]:
+                  - generic [ref=e267]:
+                    - img [ref=e268]
+                    - text: Lead Date
+                - columnheader "Source" [ref=e270]:
+                  - generic [ref=e271]:
+                    - img [ref=e272]
+                    - text: Source
+                - columnheader "Business" [ref=e275]:
+                  - generic [ref=e276]:
+                    - img [ref=e277]
+                    - text: Business
+                - columnheader "Value" [ref=e280]:
+                  - generic [ref=e281]:
+                    - img [ref=e282]
+                    - text: Value
+                - columnheader "Assigned To" [ref=e284]:
+                  - generic [ref=e285]:
+                    - img [ref=e286]
+                    - text: Assigned To
+                - columnheader "Actions" [ref=e290]
+            - rowgroup [ref=e291]:
+              - row "Website Redesign Project Ahmed Raza Contacted 6/8/2026 Website — $15,000 Salman Ahmed Edit Website Redesign Project WhatsApp Ahmed Raza Delete Website Redesign Project" [ref=e292]:
+                - cell "Website Redesign Project" [ref=e293]:
+                  - link "Website Redesign Project" [ref=e294] [cursor=pointer]:
+                    - /url: /leads/1
+                - cell "Ahmed Raza" [ref=e295]:
+                  - generic [ref=e296]: Ahmed Raza
+                - cell "Contacted" [ref=e297]:
+                  - combobox "Change status for Website Redesign Project" [ref=e298] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted" [selected]
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e299]
+                - cell "Website" [ref=e300]:
+                  - generic [ref=e301]: Website
+                - cell "—" [ref=e302]
+                - cell "$15,000" [ref=e303]
+                - cell "Salman Ahmed" [ref=e304]
+                - cell "Edit Website Redesign Project WhatsApp Ahmed Raza Delete Website Redesign Project" [ref=e305]:
+                  - generic [ref=e306]:
+                    - link "Edit Website Redesign Project" [ref=e307] [cursor=pointer]:
+                      - /url: /leads/1
+                      - img [ref=e308]
+                    - link "WhatsApp Ahmed Raza" [ref=e311] [cursor=pointer]:
+                      - /url: https://wa.me/923001234567
+                      - img [ref=e312]
+                    - button "Delete Website Redesign Project" [ref=e314] [cursor=pointer]:
+                      - img [ref=e315]
+              - row "Mobile App Development Fatima Khan Contacted 6/8/2026 Facebook — $25,000 Abdullah Ali Edit Mobile App Development WhatsApp Fatima Khan Delete Mobile App Development" [ref=e318]:
+                - cell "Mobile App Development" [ref=e319]:
+                  - link "Mobile App Development" [ref=e320] [cursor=pointer]:
+                    - /url: /leads/2
+                - cell "Fatima Khan" [ref=e321]:
+                  - generic [ref=e322]: Fatima Khan
+                - cell "Contacted" [ref=e323]:
+                  - combobox "Change status for Mobile App Development" [ref=e324] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted" [selected]
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e325]
+                - cell "Facebook" [ref=e326]:
+                  - generic [ref=e327]: Facebook
+                - cell "—" [ref=e328]
+                - cell "$25,000" [ref=e329]
+                - cell "Abdullah Ali" [ref=e330]
+                - cell "Edit Mobile App Development WhatsApp Fatima Khan Delete Mobile App Development" [ref=e331]:
+                  - generic [ref=e332]:
+                    - link "Edit Mobile App Development" [ref=e333] [cursor=pointer]:
+                      - /url: /leads/2
+                      - img [ref=e334]
+                    - link "WhatsApp Fatima Khan" [ref=e337] [cursor=pointer]:
+                      - /url: https://wa.me/923002345678
+                      - img [ref=e338]
+                    - button "Delete Mobile App Development" [ref=e340] [cursor=pointer]:
+                      - img [ref=e341]
+              - row "ERP System Consultation Hassan Ali New 6/8/2026 Reference — $50,000 Unassigned Edit ERP System Consultation WhatsApp Hassan Ali Delete ERP System Consultation" [ref=e344]:
+                - cell "ERP System Consultation" [ref=e345]:
+                  - link "ERP System Consultation" [ref=e346] [cursor=pointer]:
+                    - /url: /leads/3
+                - cell "Hassan Ali" [ref=e347]:
+                  - generic [ref=e348]: Hassan Ali
+                - cell "New" [ref=e349]:
+                  - combobox "Change status for ERP System Consultation" [ref=e350] [cursor=pointer]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e351]
+                - cell "Reference" [ref=e352]:
+                  - generic [ref=e353]: Reference
+                - cell "—" [ref=e354]
+                - cell "$50,000" [ref=e355]
+                - cell "Unassigned" [ref=e356]
+                - cell "Edit ERP System Consultation WhatsApp Hassan Ali Delete ERP System Consultation" [ref=e357]:
+                  - generic [ref=e358]:
+                    - link "Edit ERP System Consultation" [ref=e359] [cursor=pointer]:
+                      - /url: /leads/3
+                      - img [ref=e360]
+                    - link "WhatsApp Hassan Ali" [ref=e363] [cursor=pointer]:
+                      - /url: https://wa.me/923003456789
+                      - img [ref=e364]
+                    - button "Delete ERP System Consultation" [ref=e366] [cursor=pointer]:
+                      - img [ref=e367]
+              - row "Cloud Migration Sara Malik Contacted 6/8/2026 Google Ads — $35,000 Salman Ahmed Edit Cloud Migration WhatsApp Sara Malik Delete Cloud Migration" [ref=e370]:
+                - cell "Cloud Migration" [ref=e371]:
+                  - link "Cloud Migration" [ref=e372] [cursor=pointer]:
+                    - /url: /leads/4
+                - cell "Sara Malik" [ref=e373]:
+                  - generic [ref=e374]: Sara Malik
+                - cell "Contacted" [ref=e375]:
+                  - combobox "Change status for Cloud Migration" [ref=e376] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted" [selected]
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e377]
+                - cell "Google Ads" [ref=e378]:
+                  - generic [ref=e379]: Google Ads
+                - cell "—" [ref=e380]
+                - cell "$35,000" [ref=e381]
+                - cell "Salman Ahmed" [ref=e382]
+                - cell "Edit Cloud Migration WhatsApp Sara Malik Delete Cloud Migration" [ref=e383]:
+                  - generic [ref=e384]:
+                    - link "Edit Cloud Migration" [ref=e385] [cursor=pointer]:
+                      - /url: /leads/4
+                      - img [ref=e386]
+                    - link "WhatsApp Sara Malik" [ref=e389] [cursor=pointer]:
+                      - /url: https://wa.me/923004567890
+                      - img [ref=e390]
+                    - button "Delete Cloud Migration" [ref=e392] [cursor=pointer]:
+                      - img [ref=e393]
+              - row "CRM Implementation Omar Sheikh Qualified 6/8/2026 Phone Call — $12,000 Salman Ahmed Edit CRM Implementation WhatsApp Omar Sheikh Delete CRM Implementation" [ref=e396]:
+                - cell "CRM Implementation" [ref=e397]:
+                  - link "CRM Implementation" [ref=e398] [cursor=pointer]:
+                    - /url: /leads/5
+                - cell "Omar Sheikh" [ref=e399]:
+                  - generic [ref=e400]: Omar Sheikh
+                - cell "Qualified" [ref=e401]:
+                  - combobox "Change status for CRM Implementation" [ref=e402] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified" [selected]
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e403]
+                - cell "Phone Call" [ref=e404]:
+                  - generic [ref=e405]: Phone Call
+                - cell "—" [ref=e406]
+                - cell "$12,000" [ref=e407]
+                - cell "Salman Ahmed" [ref=e408]
+                - cell "Edit CRM Implementation WhatsApp Omar Sheikh Delete CRM Implementation" [ref=e409]:
+                  - generic [ref=e410]:
+                    - link "Edit CRM Implementation" [ref=e411] [cursor=pointer]:
+                      - /url: /leads/5
+                      - img [ref=e412]
+                    - link "WhatsApp Omar Sheikh" [ref=e415] [cursor=pointer]:
+                      - /url: https://wa.me/923005678901
+                      - img [ref=e416]
+                    - button "Delete CRM Implementation" [ref=e418] [cursor=pointer]:
+                      - img [ref=e419]
+              - row "SEO & Digital Marketing Nadia Hussain Contacted 6/8/2026 Instagram — $8,000 Abdullah Ali Edit SEO & Digital Marketing WhatsApp Nadia Hussain Delete SEO & Digital Marketing" [ref=e422]:
+                - cell "SEO & Digital Marketing" [ref=e423]:
+                  - link "SEO & Digital Marketing" [ref=e424] [cursor=pointer]:
+                    - /url: /leads/6
+                - cell "Nadia Hussain" [ref=e425]:
+                  - generic [ref=e426]: Nadia Hussain
+                - cell "Contacted" [ref=e427]:
+                  - combobox "Change status for SEO & Digital Marketing" [ref=e428] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted" [selected]
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e429]
+                - cell "Instagram" [ref=e430]:
+                  - generic [ref=e431]: Instagram
+                - cell "—" [ref=e432]
+                - cell "$8,000" [ref=e433]
+                - cell "Abdullah Ali" [ref=e434]
+                - cell "Edit SEO & Digital Marketing WhatsApp Nadia Hussain Delete SEO & Digital Marketing" [ref=e435]:
+                  - generic [ref=e436]:
+                    - link "Edit SEO & Digital Marketing" [ref=e437] [cursor=pointer]:
+                      - /url: /leads/6
+                      - img [ref=e438]
+                    - link "WhatsApp Nadia Hussain" [ref=e441] [cursor=pointer]:
+                      - /url: https://wa.me/923006789012
+                      - img [ref=e442]
+                    - button "Delete SEO & Digital Marketing" [ref=e444] [cursor=pointer]:
+                      - img [ref=e445]
+              - row "E-Commerce Platform Bilal Ahmad Closed Won 6/8/2026 Website — $45,000 Abdullah Ali Edit E-Commerce Platform WhatsApp Bilal Ahmad Delete E-Commerce Platform" [ref=e448]:
+                - cell "E-Commerce Platform" [ref=e449]:
+                  - link "E-Commerce Platform" [ref=e450] [cursor=pointer]:
+                    - /url: /leads/7
+                - cell "Bilal Ahmad" [ref=e451]:
+                  - generic [ref=e452]: Bilal Ahmad
+                - cell "Closed Won" [ref=e453]:
+                  - combobox "Change status for E-Commerce Platform" [ref=e454] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won" [selected]
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e455]
+                - cell "Website" [ref=e456]:
+                  - generic [ref=e457]: Website
+                - cell "—" [ref=e458]
+                - cell "$45,000" [ref=e459]
+                - cell "Abdullah Ali" [ref=e460]
+                - cell "Edit E-Commerce Platform WhatsApp Bilal Ahmad Delete E-Commerce Platform" [ref=e461]:
+                  - generic [ref=e462]:
+                    - link "Edit E-Commerce Platform" [ref=e463] [cursor=pointer]:
+                      - /url: /leads/7
+                      - img [ref=e464]
+                    - link "WhatsApp Bilal Ahmad" [ref=e467] [cursor=pointer]:
+                      - /url: https://wa.me/923007890123
+                      - img [ref=e468]
+                    - button "Delete E-Commerce Platform" [ref=e470] [cursor=pointer]:
+                      - img [ref=e471]
+              - row "Inventory Management System Zainab Noor Qualified 6/8/2026 LinkedIn — $20,000 Faisal Malik Edit Inventory Management System WhatsApp Zainab Noor Delete Inventory Management System" [ref=e474]:
+                - cell "Inventory Management System" [ref=e475]:
+                  - link "Inventory Management System" [ref=e476] [cursor=pointer]:
+                    - /url: /leads/8
+                - cell "Zainab Noor" [ref=e477]:
+                  - generic [ref=e478]: Zainab Noor
+                - cell "Qualified" [ref=e479]:
+                  - combobox "Change status for Inventory Management System" [ref=e480] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified" [selected]
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e481]
+                - cell "LinkedIn" [ref=e482]:
+                  - generic [ref=e483]: LinkedIn
+                - cell "—" [ref=e484]
+                - cell "$20,000" [ref=e485]
+                - cell "Faisal Malik" [ref=e486]
+                - cell "Edit Inventory Management System WhatsApp Zainab Noor Delete Inventory Management System" [ref=e487]:
+                  - generic [ref=e488]:
+                    - link "Edit Inventory Management System" [ref=e489] [cursor=pointer]:
+                      - /url: /leads/8
+                      - img [ref=e490]
+                    - link "WhatsApp Zainab Noor" [ref=e493] [cursor=pointer]:
+                      - /url: https://wa.me/923008901234
+                      - img [ref=e494]
+                    - button "Delete Inventory Management System" [ref=e496] [cursor=pointer]:
+                      - img [ref=e497]
+              - row "Hospital Management System Dr. Imran Shah Proposal 6/8/2026 Trade Show — $80,000 Abdullah Ali Edit Hospital Management System WhatsApp Dr. Imran Shah Delete Hospital Management System" [ref=e500]:
+                - cell "Hospital Management System" [ref=e501]:
+                  - link "Hospital Management System" [ref=e502] [cursor=pointer]:
+                    - /url: /leads/9
+                - cell "Dr. Imran Shah" [ref=e503]:
+                  - generic [ref=e504]: Dr. Imran Shah
+                - cell "Proposal" [ref=e505]:
+                  - combobox "Change status for Hospital Management System" [ref=e506] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal" [selected]
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e507]
+                - cell "Trade Show" [ref=e508]:
+                  - generic [ref=e509]: Trade Show
+                - cell "—" [ref=e510]
+                - cell "$80,000" [ref=e511]
+                - cell "Abdullah Ali" [ref=e512]
+                - cell "Edit Hospital Management System WhatsApp Dr. Imran Shah Delete Hospital Management System" [ref=e513]:
+                  - generic [ref=e514]:
+                    - link "Edit Hospital Management System" [ref=e515] [cursor=pointer]:
+                      - /url: /leads/9
+                      - img [ref=e516]
+                    - link "WhatsApp Dr. Imran Shah" [ref=e519] [cursor=pointer]:
+                      - /url: https://wa.me/923009012345
+                      - img [ref=e520]
+                    - button "Delete Hospital Management System" [ref=e522] [cursor=pointer]:
+                      - img [ref=e523]
+              - row "POS System Upgrade Mariam Bibi Proposal 6/8/2026 Old Client — $18,000 Salman Ahmed Edit POS System Upgrade WhatsApp Mariam Bibi Delete POS System Upgrade" [ref=e526]:
+                - cell "POS System Upgrade" [ref=e527]:
+                  - link "POS System Upgrade" [ref=e528] [cursor=pointer]:
+                    - /url: /leads/10
+                - cell "Mariam Bibi" [ref=e529]:
+                  - generic [ref=e530]: Mariam Bibi
+                - cell "Proposal" [ref=e531]:
+                  - combobox "Change status for POS System Upgrade" [ref=e532] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal" [selected]
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e533]
+                - cell "Old Client" [ref=e534]:
+                  - generic [ref=e535]: Old Client
+                - cell "—" [ref=e536]
+                - cell "$18,000" [ref=e537]
+                - cell "Salman Ahmed" [ref=e538]
+                - cell "Edit POS System Upgrade WhatsApp Mariam Bibi Delete POS System Upgrade" [ref=e539]:
+                  - generic [ref=e540]:
+                    - link "Edit POS System Upgrade" [ref=e541] [cursor=pointer]:
+                      - /url: /leads/10
+                      - img [ref=e542]
+                    - link "WhatsApp Mariam Bibi" [ref=e545] [cursor=pointer]:
+                      - /url: https://wa.me/923010123456
+                      - img [ref=e546]
+                    - button "Delete POS System Upgrade" [ref=e548] [cursor=pointer]:
+                      - img [ref=e549]
+              - row "Learning Management System Prof. Tariq Jamil Proposal 6/8/2026 Reference — $65,000 Faisal Malik Edit Learning Management System WhatsApp Prof. Tariq Jamil Delete Learning Management System" [ref=e552]:
+                - cell "Learning Management System" [ref=e553]:
+                  - link "Learning Management System" [ref=e554] [cursor=pointer]:
+                    - /url: /leads/11
+                - cell "Prof. Tariq Jamil" [ref=e555]:
+                  - generic [ref=e556]: Prof. Tariq Jamil
+                - cell "Proposal" [ref=e557]:
+                  - combobox "Change status for Learning Management System" [ref=e558] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal" [selected]
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e559]
+                - cell "Reference" [ref=e560]:
+                  - generic [ref=e561]: Reference
+                - cell "—" [ref=e562]
+                - cell "$65,000" [ref=e563]
+                - cell "Faisal Malik" [ref=e564]
+                - cell "Edit Learning Management System WhatsApp Prof. Tariq Jamil Delete Learning Management System" [ref=e565]:
+                  - generic [ref=e566]:
+                    - link "Edit Learning Management System" [ref=e567] [cursor=pointer]:
+                      - /url: /leads/11
+                      - img [ref=e568]
+                    - link "WhatsApp Prof. Tariq Jamil" [ref=e571] [cursor=pointer]:
+                      - /url: https://wa.me/923011234567
+                      - img [ref=e572]
+                    - button "Delete Learning Management System" [ref=e574] [cursor=pointer]:
+                      - img [ref=e575]
+              - row "Company Website Kamran Foster Closed Won 6/8/2026 Walk-in — $10,000 Salman Ahmed Edit Company Website WhatsApp Kamran Foster Delete Company Website" [ref=e578]:
+                - cell "Company Website" [ref=e579]:
+                  - link "Company Website" [ref=e580] [cursor=pointer]:
+                    - /url: /leads/12
+                - cell "Kamran Foster" [ref=e581]:
+                  - generic [ref=e582]: Kamran Foster
+                - cell "Closed Won" [ref=e583]:
+                  - combobox "Change status for Company Website" [ref=e584] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won" [selected]
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e585]
+                - cell "Walk-in" [ref=e586]:
+                  - generic [ref=e587]: Walk-in
+                - cell "—" [ref=e588]
+                - cell "$10,000" [ref=e589]
+                - cell "Salman Ahmed" [ref=e590]
+                - cell "Edit Company Website WhatsApp Kamran Foster Delete Company Website" [ref=e591]:
+                  - generic [ref=e592]:
+                    - link "Edit Company Website" [ref=e593] [cursor=pointer]:
+                      - /url: /leads/12
+                      - img [ref=e594]
+                    - link "WhatsApp Kamran Foster" [ref=e597] [cursor=pointer]:
+                      - /url: https://wa.me/923012345678
+                      - img [ref=e598]
+                    - button "Delete Company Website" [ref=e600] [cursor=pointer]:
+                      - img [ref=e601]
+              - row "Email Marketing Setup Ayesha Siddiqui Closed Won 6/8/2026 Email Campaign — $5,000 Abdullah Ali Edit Email Marketing Setup WhatsApp Ayesha Siddiqui Delete Email Marketing Setup" [ref=e604]:
+                - cell "Email Marketing Setup" [ref=e605]:
+                  - link "Email Marketing Setup" [ref=e606] [cursor=pointer]:
+                    - /url: /leads/13
+                - cell "Ayesha Siddiqui" [ref=e607]:
+                  - generic [ref=e608]: Ayesha Siddiqui
+                - cell "Closed Won" [ref=e609]:
+                  - combobox "Change status for Email Marketing Setup" [ref=e610] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won" [selected]
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e611]
+                - cell "Email Campaign" [ref=e612]:
+                  - generic [ref=e613]: Email Campaign
+                - cell "—" [ref=e614]
+                - cell "$5,000" [ref=e615]
+                - cell "Abdullah Ali" [ref=e616]
+                - cell "Edit Email Marketing Setup WhatsApp Ayesha Siddiqui Delete Email Marketing Setup" [ref=e617]:
+                  - generic [ref=e618]:
+                    - link "Edit Email Marketing Setup" [ref=e619] [cursor=pointer]:
+                      - /url: /leads/13
+                      - img [ref=e620]
+                    - link "WhatsApp Ayesha Siddiqui" [ref=e623] [cursor=pointer]:
+                      - /url: https://wa.me/923013456789
+                      - img [ref=e624]
+                    - button "Delete Email Marketing Setup" [ref=e626] [cursor=pointer]:
+                      - img [ref=e627]
+              - row "Blockchain Solution Usman Ghani Closed Lost 6/8/2026 Google Ads — $120,000 Faisal Malik Edit Blockchain Solution WhatsApp Usman Ghani Delete Blockchain Solution" [ref=e630]:
+                - cell "Blockchain Solution" [ref=e631]:
+                  - link "Blockchain Solution" [ref=e632] [cursor=pointer]:
+                    - /url: /leads/14
+                - cell "Usman Ghani" [ref=e633]:
+                  - generic [ref=e634]: Usman Ghani
+                - cell "Closed Lost" [ref=e635]:
+                  - combobox "Change status for Blockchain Solution" [ref=e636] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost" [selected]
+                - cell "6/8/2026" [ref=e637]
+                - cell "Google Ads" [ref=e638]:
+                  - generic [ref=e639]: Google Ads
+                - cell "—" [ref=e640]
+                - cell "$120,000" [ref=e641]
+                - cell "Faisal Malik" [ref=e642]
+                - cell "Edit Blockchain Solution WhatsApp Usman Ghani Delete Blockchain Solution" [ref=e643]:
+                  - generic [ref=e644]:
+                    - link "Edit Blockchain Solution" [ref=e645] [cursor=pointer]:
+                      - /url: /leads/14
+                      - img [ref=e646]
+                    - link "WhatsApp Usman Ghani" [ref=e649] [cursor=pointer]:
+                      - /url: https://wa.me/923014567890
+                      - img [ref=e650]
+                    - button "Delete Blockchain Solution" [ref=e652] [cursor=pointer]:
+                      - img [ref=e653]
+              - row "AI Chatbot Integration Rabia Naz Closed Lost 6/8/2026 Other — $15,000 Salman Ahmed Edit AI Chatbot Integration WhatsApp Rabia Naz Delete AI Chatbot Integration" [ref=e656]:
+                - cell "AI Chatbot Integration" [ref=e657]:
+                  - link "AI Chatbot Integration" [ref=e658] [cursor=pointer]:
+                    - /url: /leads/15
+                - cell "Rabia Naz" [ref=e659]:
+                  - generic [ref=e660]: Rabia Naz
+                - cell "Closed Lost" [ref=e661]:
+                  - combobox "Change status for AI Chatbot Integration" [ref=e662] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost" [selected]
+                - cell "6/8/2026" [ref=e663]
+                - cell "Other" [ref=e664]:
+                  - generic [ref=e665]: Other
+                - cell "—" [ref=e666]
+                - cell "$15,000" [ref=e667]
+                - cell "Salman Ahmed" [ref=e668]
+                - cell "Edit AI Chatbot Integration WhatsApp Rabia Naz Delete AI Chatbot Integration" [ref=e669]:
+                  - generic [ref=e670]:
+                    - link "Edit AI Chatbot Integration" [ref=e671] [cursor=pointer]:
+                      - /url: /leads/15
+                      - img [ref=e672]
+                    - link "WhatsApp Rabia Naz" [ref=e675] [cursor=pointer]:
+                      - /url: https://wa.me/923015678901
+                      - img [ref=e676]
+                    - button "Delete AI Chatbot Integration" [ref=e678] [cursor=pointer]:
+                      - img [ref=e679]
+              - row "QA Test Lead Manager EDITED Test Customer Contacted 6/8/2026 Website — $5,000 Salman Ahmed Edit QA Test Lead Manager EDITED WhatsApp Test Customer Delete QA Test Lead Manager EDITED" [ref=e682]:
+                - cell "QA Test Lead Manager EDITED" [ref=e683]:
+                  - link "QA Test Lead Manager EDITED" [ref=e684] [cursor=pointer]:
+                    - /url: /leads/16
+                - cell "Test Customer" [ref=e685]:
+                  - generic [ref=e686]: Test Customer
+                - cell "Contacted" [ref=e687]:
+                  - combobox "Change status for QA Test Lead Manager EDITED" [ref=e688] [cursor=pointer]:
+                    - option "New"
+                    - option "Contacted" [selected]
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e689]
+                - cell "Website" [ref=e690]:
+                  - generic [ref=e691]: Website
+                - cell "—" [ref=e692]
+                - cell "$5,000" [ref=e693]
+                - cell "Salman Ahmed" [ref=e694]
+                - cell "Edit QA Test Lead Manager EDITED WhatsApp Test Customer Delete QA Test Lead Manager EDITED" [ref=e695]:
+                  - generic [ref=e696]:
+                    - link "Edit QA Test Lead Manager EDITED" [ref=e697] [cursor=pointer]:
+                      - /url: /leads/16
+                      - img [ref=e698]
+                    - link "WhatsApp Test Customer" [ref=e701] [cursor=pointer]:
+                      - /url: https://wa.me/92000000000
+                      - img [ref=e702]
+                    - button "Delete QA Test Lead Manager EDITED" [ref=e704] [cursor=pointer]:
+                      - img [ref=e705]
+              - row "Sales Officer QA Lead SalesCustomer New 6/8/2026 — — - Unassigned Edit Sales Officer QA Lead Delete Sales Officer QA Lead" [ref=e708]:
+                - cell "Sales Officer QA Lead" [ref=e709]:
+                  - link "Sales Officer QA Lead" [ref=e710] [cursor=pointer]:
+                    - /url: /leads/18
+                - cell "SalesCustomer" [ref=e711]:
+                  - generic [ref=e712]: SalesCustomer
+                - cell "New" [ref=e713]:
+                  - combobox "Change status for Sales Officer QA Lead" [ref=e714] [cursor=pointer]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e715]
+                - cell "—" [ref=e716]
+                - cell "—" [ref=e717]
+                - cell "-" [ref=e718]
+                - cell "Unassigned" [ref=e719]
+                - cell "Edit Sales Officer QA Lead Delete Sales Officer QA Lead" [ref=e720]:
+                  - generic [ref=e721]:
+                    - link "Edit Sales Officer QA Lead" [ref=e722] [cursor=pointer]:
+                      - /url: /leads/18
+                      - img [ref=e723]
+                    - button "Delete Sales Officer QA Lead" [ref=e726] [cursor=pointer]:
+                      - img [ref=e727]
+              - row "UX Redesign Project Tech Innovations Inc Ali Hassan CTO +923339876543 New 6/8/2026 — — $75,000 Unassigned Edit UX Redesign Project WhatsApp Tech Innovations Inc Delete UX Redesign Project" [ref=e730]:
+                - cell "UX Redesign Project" [ref=e731]:
+                  - link "UX Redesign Project" [ref=e732] [cursor=pointer]:
+                    - /url: /leads/23
+                - cell "Tech Innovations Inc Ali Hassan CTO +923339876543" [ref=e733]:
+                  - generic [ref=e734]: Tech Innovations Inc
+                  - generic [ref=e735]:
+                    - generic [ref=e736]: Ali Hassan
+                    - generic [ref=e737]: CTO
+                    - link "+923339876543" [ref=e738] [cursor=pointer]:
+                      - /url: tel:+923339876543
+                - cell "New" [ref=e739]:
+                  - combobox "Change status for UX Redesign Project" [ref=e740] [cursor=pointer]:
+                    - option "New" [selected]
+                    - option "Contacted"
+                    - option "Qualified"
+                    - option "Proposal"
+                    - option "Closed Won"
+                    - option "Closed Lost"
+                - cell "6/8/2026" [ref=e741]
+                - cell "—" [ref=e742]
+                - cell "—" [ref=e743]
+                - cell "$75,000" [ref=e744]
+                - cell "Unassigned" [ref=e745]
+                - cell "Edit UX Redesign Project WhatsApp Tech Innovations Inc Delete UX Redesign Project" [ref=e746]:
+                  - generic [ref=e747]:
+                    - link "Edit UX Redesign Project" [ref=e748] [cursor=pointer]:
+                      - /url: /leads/23
+                      - img [ref=e749]
+                    - link "WhatsApp Tech Innovations Inc" [ref=e752] [cursor=pointer]:
+                      - /url: https://wa.me/923211234567
+                      - img [ref=e753]
+                    - button "Delete UX Redesign Project" [ref=e755] [cursor=pointer]:
+                      - img [ref=e756]
+      - contentinfo [ref=e220]:
+        - paragraph [ref=e221]: © 2026 Visionplus Technologies Pvt. All rights reserved.
+  - status:
+    - generic [ref=e759]:
+      - img [ref=e760]
+      - paragraph [ref=e763]: Lead created
+      - button "Dismiss notification" [ref=e764] [cursor=pointer]:
+        - img [ref=e765]

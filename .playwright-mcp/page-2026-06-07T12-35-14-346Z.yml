@@ -1,0 +1,98 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Messages" [ref=e23] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e24]
+          - text: Messages
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: Analytics
+        - generic [ref=e28]:
+          - link "Reports" [ref=e29] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e30]
+            - text: Reports
+          - link "Lead Sources" [ref=e32] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e33]
+            - text: Lead Sources
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Administration
+        - link "Employees" [ref=e40] [cursor=pointer]:
+          - /url: /employees
+          - img [ref=e41]
+          - text: Employees
+    - button "KA Kashif Admin Administrator" [ref=e55] [cursor=pointer]:
+      - generic [ref=e56]: KA
+      - generic [ref=e57]:
+        - paragraph [ref=e58]: Kashif Admin
+        - paragraph [ref=e59]: Administrator
+      - img [ref=e60]
+  - generic [ref=e62]:
+    - banner [ref=e63]:
+      - button [ref=e64] [cursor=pointer]:
+        - img [ref=e65]
+    - main [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - button [ref=e72] [cursor=pointer]:
+            - img [ref=e73]
+          - generic [ref=e75]:
+            - heading "New Lead" [level=1] [ref=e76]
+            - paragraph [ref=e77]: Create a new sales lead
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e80]: Title *
+            - textbox "Lead title" [ref=e81]
+          - generic [ref=e82]:
+            - generic [ref=e83]: Description
+            - textbox "Brief description" [ref=e84]
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e87]: Customer Name *
+              - textbox [ref=e88]
+            - generic [ref=e89]:
+              - generic [ref=e90]: Customer Email
+              - textbox [ref=e91]
+            - generic [ref=e92]:
+              - generic [ref=e93]: Customer Phone
+              - textbox [ref=e94]
+            - generic [ref=e95]:
+              - generic [ref=e96]: Estimated Value ($)
+              - spinbutton [ref=e97]
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - generic [ref=e100]: Status
+              - combobox [ref=e101]:
+                - option "New" [selected]
+                - option "Contacted"
+                - option "Qualified"
+                - option "Proposal"
+                - option "ClosedWon"
+                - option "ClosedLost"
+            - generic [ref=e102]:
+              - generic [ref=e103]: Lead Source
+              - combobox [ref=e104]:
+                - option "Select source" [selected]
+          - generic [ref=e105]:
+            - generic [ref=e106]: Notes
+            - textbox "Internal notes" [ref=e107]
+          - generic [ref=e108]:
+            - button "Create Lead" [ref=e109] [cursor=pointer]:
+              - img [ref=e110]
+              - text: Create Lead
+            - button "Cancel" [ref=e114] [cursor=pointer]
+    - contentinfo [ref=e115]:
+      - paragraph [ref=e116]: © 2026 Visionplus Technologies Pvt. All rights reserved.

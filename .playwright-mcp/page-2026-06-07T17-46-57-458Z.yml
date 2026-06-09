@@ -1,0 +1,250 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Calendar" [ref=e23] [cursor=pointer]:
+          - /url: /calendar
+          - img [ref=e24]
+          - text: Calendar
+        - link "Messages" [ref=e26] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e27]
+          - text: Messages
+    - button "SA Salman Ahmed SalesOfficer" [ref=e31] [cursor=pointer]:
+      - generic [ref=e32]: SA
+      - generic [ref=e33]:
+        - paragraph [ref=e34]: Salman Ahmed
+        - paragraph [ref=e35]: SalesOfficer
+      - img [ref=e36]
+  - generic [ref=e38]:
+    - banner [ref=e39]:
+      - button [ref=e40] [cursor=pointer]:
+        - img [ref=e41]
+    - main [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - heading "Leads" [level=1] [ref=e49]
+            - paragraph [ref=e50]: Manage your sales pipeline
+          - link "New Lead" [ref=e51] [cursor=pointer]:
+            - /url: /leads/create
+            - img [ref=e52]
+            - text: New Lead
+        - generic [ref=e54]:
+          - generic [ref=e55]:
+            - img [ref=e56]
+            - textbox "Search leads..." [ref=e59]
+          - combobox [ref=e60]:
+            - option "All Statuses" [selected]
+            - option "New"
+            - option "Contacted"
+            - option "Qualified"
+            - option "Proposal"
+            - option "Closed Won"
+            - option "Closed Lost"
+          - combobox [ref=e61]:
+            - option "All Sources" [selected]
+          - generic [ref=e62]:
+            - button [ref=e63] [cursor=pointer]:
+              - img [ref=e64]
+            - button [ref=e65] [cursor=pointer]:
+              - img [ref=e66]
+        - table [ref=e73]:
+          - rowgroup [ref=e74]:
+            - row "Title Customer Status Source Value Assigned To Actions" [ref=e75]:
+              - columnheader "Title" [ref=e76]
+              - columnheader "Customer" [ref=e77]
+              - columnheader "Status" [ref=e78]
+              - columnheader "Source" [ref=e79]
+              - columnheader "Value" [ref=e80]
+              - columnheader "Assigned To" [ref=e81]
+              - columnheader "Actions" [ref=e82]
+          - rowgroup [ref=e83]:
+            - row "QA Test Lead Manager EDITED Test Customer New Website $5,000 Salman Ahmed" [ref=e84]:
+              - cell "QA Test Lead Manager EDITED" [ref=e85]:
+                - link "QA Test Lead Manager EDITED" [ref=e86] [cursor=pointer]:
+                  - /url: /leads/16
+              - cell "Test Customer" [ref=e87]
+              - cell "New" [ref=e88]:
+                - combobox [ref=e89] [cursor=pointer]:
+                  - option "New" [selected]
+                  - option "Contacted"
+                  - option "Qualified"
+                  - option "Proposal"
+                  - option "Closed Won"
+                  - option "Closed Lost"
+              - cell "Website" [ref=e90]:
+                - generic [ref=e91]: Website
+              - cell "$5,000" [ref=e92]
+              - cell "Salman Ahmed" [ref=e93]
+              - cell [ref=e94]:
+                - generic [ref=e95]:
+                  - link [ref=e96] [cursor=pointer]:
+                    - /url: /leads/16
+                    - img [ref=e97]
+                  - link [ref=e100] [cursor=pointer]:
+                    - /url: https://wa.me/92000000000
+                    - img [ref=e101]
+            - row "AI Chatbot Integration Rabia Naz Closed Lost Other $15,000 Salman Ahmed" [ref=e103]:
+              - cell "AI Chatbot Integration" [ref=e104]:
+                - link "AI Chatbot Integration" [ref=e105] [cursor=pointer]:
+                  - /url: /leads/15
+              - cell "Rabia Naz" [ref=e106]
+              - cell "Closed Lost" [ref=e107]:
+                - combobox [ref=e108] [cursor=pointer]:
+                  - option "New"
+                  - option "Contacted"
+                  - option "Qualified"
+                  - option "Proposal"
+                  - option "Closed Won"
+                  - option "Closed Lost" [selected]
+              - cell "Other" [ref=e109]:
+                - generic [ref=e110]: Other
+              - cell "$15,000" [ref=e111]
+              - cell "Salman Ahmed" [ref=e112]
+              - cell [ref=e113]:
+                - generic [ref=e114]:
+                  - link [ref=e115] [cursor=pointer]:
+                    - /url: /leads/15
+                    - img [ref=e116]
+                  - link [ref=e119] [cursor=pointer]:
+                    - /url: https://wa.me/923015678901
+                    - img [ref=e120]
+            - row "Company Website Kamran Foster Closed Won Walk-in $10,000 Salman Ahmed" [ref=e122]:
+              - cell "Company Website" [ref=e123]:
+                - link "Company Website" [ref=e124] [cursor=pointer]:
+                  - /url: /leads/12
+              - cell "Kamran Foster" [ref=e125]
+              - cell "Closed Won" [ref=e126]:
+                - combobox [ref=e127] [cursor=pointer]:
+                  - option "New"
+                  - option "Contacted"
+                  - option "Qualified"
+                  - option "Proposal"
+                  - option "Closed Won" [selected]
+                  - option "Closed Lost"
+              - cell "Walk-in" [ref=e128]:
+                - generic [ref=e129]: Walk-in
+              - cell "$10,000" [ref=e130]
+              - cell "Salman Ahmed" [ref=e131]
+              - cell [ref=e132]:
+                - generic [ref=e133]:
+                  - link [ref=e134] [cursor=pointer]:
+                    - /url: /leads/12
+                    - img [ref=e135]
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: https://wa.me/923012345678
+                    - img [ref=e139]
+            - row "POS System Upgrade Mariam Bibi Proposal Old Client $18,000 Salman Ahmed" [ref=e141]:
+              - cell "POS System Upgrade" [ref=e142]:
+                - link "POS System Upgrade" [ref=e143] [cursor=pointer]:
+                  - /url: /leads/10
+              - cell "Mariam Bibi" [ref=e144]
+              - cell "Proposal" [ref=e145]:
+                - combobox [ref=e146] [cursor=pointer]:
+                  - option "New"
+                  - option "Contacted"
+                  - option "Qualified"
+                  - option "Proposal" [selected]
+                  - option "Closed Won"
+                  - option "Closed Lost"
+              - cell "Old Client" [ref=e147]:
+                - generic [ref=e148]: Old Client
+              - cell "$18,000" [ref=e149]
+              - cell "Salman Ahmed" [ref=e150]
+              - cell [ref=e151]:
+                - generic [ref=e152]:
+                  - link [ref=e153] [cursor=pointer]:
+                    - /url: /leads/10
+                    - img [ref=e154]
+                  - link [ref=e157] [cursor=pointer]:
+                    - /url: https://wa.me/923010123456
+                    - img [ref=e158]
+            - row "E-Commerce Platform Bilal Ahmad Qualified Website $45,000 Salman Ahmed" [ref=e160]:
+              - cell "E-Commerce Platform" [ref=e161]:
+                - link "E-Commerce Platform" [ref=e162] [cursor=pointer]:
+                  - /url: /leads/7
+              - cell "Bilal Ahmad" [ref=e163]
+              - cell "Qualified" [ref=e164]:
+                - combobox [ref=e165] [cursor=pointer]:
+                  - option "New"
+                  - option "Contacted"
+                  - option "Qualified" [selected]
+                  - option "Proposal"
+                  - option "Closed Won"
+                  - option "Closed Lost"
+              - cell "Website" [ref=e166]:
+                - generic [ref=e167]: Website
+              - cell "$45,000" [ref=e168]
+              - cell "Salman Ahmed" [ref=e169]
+              - cell [ref=e170]:
+                - generic [ref=e171]:
+                  - link [ref=e172] [cursor=pointer]:
+                    - /url: /leads/7
+                    - img [ref=e173]
+                  - link [ref=e176] [cursor=pointer]:
+                    - /url: https://wa.me/923007890123
+                    - img [ref=e177]
+            - row "CRM Implementation Omar Sheikh Contacted Phone Call $12,000 Salman Ahmed" [ref=e179]:
+              - cell "CRM Implementation" [ref=e180]:
+                - link "CRM Implementation" [ref=e181] [cursor=pointer]:
+                  - /url: /leads/5
+              - cell "Omar Sheikh" [ref=e182]
+              - cell "Contacted" [ref=e183]:
+                - combobox [ref=e184] [cursor=pointer]:
+                  - option "New"
+                  - option "Contacted" [selected]
+                  - option "Qualified"
+                  - option "Proposal"
+                  - option "Closed Won"
+                  - option "Closed Lost"
+              - cell "Phone Call" [ref=e185]:
+                - generic [ref=e186]: Phone Call
+              - cell "$12,000" [ref=e187]
+              - cell "Salman Ahmed" [ref=e188]
+              - cell [ref=e189]:
+                - generic [ref=e190]:
+                  - link [ref=e191] [cursor=pointer]:
+                    - /url: /leads/5
+                    - img [ref=e192]
+                  - link [ref=e195] [cursor=pointer]:
+                    - /url: https://wa.me/923005678901
+                    - img [ref=e196]
+            - row "Website Redesign Project Ahmed Raza New Website $15,000 Salman Ahmed" [ref=e198]:
+              - cell "Website Redesign Project" [ref=e199]:
+                - link "Website Redesign Project" [ref=e200] [cursor=pointer]:
+                  - /url: /leads/1
+              - cell "Ahmed Raza" [ref=e201]
+              - cell "New" [ref=e202]:
+                - combobox [ref=e203] [cursor=pointer]:
+                  - option "New" [selected]
+                  - option "Contacted"
+                  - option "Qualified"
+                  - option "Proposal"
+                  - option "Closed Won"
+                  - option "Closed Lost"
+              - cell "Website" [ref=e204]:
+                - generic [ref=e205]: Website
+              - cell "$15,000" [ref=e206]
+              - cell "Salman Ahmed" [ref=e207]
+              - cell [ref=e208]:
+                - generic [ref=e209]:
+                  - link [ref=e210] [cursor=pointer]:
+                    - /url: /leads/1
+                    - img [ref=e211]
+                  - link [ref=e214] [cursor=pointer]:
+                    - /url: https://wa.me/923001234567
+                    - img [ref=e215]
+    - contentinfo [ref=e217]:
+      - paragraph [ref=e218]: © 2026 Visionplus Technologies Pvt. All rights reserved.

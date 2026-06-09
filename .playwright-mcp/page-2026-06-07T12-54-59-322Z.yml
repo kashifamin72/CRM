@@ -1,0 +1,67 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Messages" [ref=e23] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e24]
+          - text: Messages
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: Analytics
+        - generic [ref=e28]:
+          - link "Reports" [ref=e29] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e30]
+            - text: Reports
+          - link "Lead Sources" [ref=e32] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e33]
+            - text: Lead Sources
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Administration
+        - link "Employees" [ref=e40] [cursor=pointer]:
+          - /url: /employees
+          - img [ref=e41]
+          - text: Employees
+    - button "KA Kashif Admin Administrator" [ref=e55] [cursor=pointer]:
+      - generic [ref=e56]: KA
+      - generic [ref=e57]:
+        - paragraph [ref=e58]: Kashif Admin
+        - paragraph [ref=e59]: Administrator
+      - img [ref=e60]
+  - generic [ref=e62]:
+    - banner [ref=e63]:
+      - button [ref=e64] [cursor=pointer]:
+        - img [ref=e65]
+    - main [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - heading "Employees" [level=1] [ref=e73]
+            - paragraph [ref=e74]: Manage team members
+          - link "Add Employee" [ref=e75] [cursor=pointer]:
+            - /url: /employees/create
+            - img [ref=e76]
+            - text: Add Employee
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - textbox "Search employees..." [ref=e83]
+          - combobox [ref=e84]:
+            - option "All Status" [selected]
+            - option "Active"
+            - option "Inactive"
+        - img [ref=e86]
+    - contentinfo [ref=e88]:
+      - paragraph [ref=e89]: © 2026 Visionplus Technologies Pvt. All rights reserved.

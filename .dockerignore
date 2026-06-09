@@ -1,0 +1,49 @@
+# Root .dockerignore - protect local data from being copied into any image.
+# DO NOT add the live data directories here as "include" - they must NEVER
+# end up baked into a published image.
+
+# Local database files (SQLite)
+*.db
+*.db-shm
+*.db-wal
+db/
+CRM-db/
+
+# Uploaded files (profile pictures, etc.)
+uploads/
+wwwroot/uploads/
+
+# Data Protection keys
+keys/
+CRM-keys/
+
+# Backups
+backups/
+
+# Local environment & secrets
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Node
+node_modules/
+dist/
+npm-debug.log*
+
+# .NET
+backend/bin/
+backend/obj/
+*.dll
+*.pdb
+*.user
+*.suo

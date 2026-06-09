@@ -1,0 +1,93 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: CRM System
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - text: Dashboard
+          - link "Leads" [ref=e17] [cursor=pointer]:
+            - /url: /leads
+            - img [ref=e18]
+            - text: Leads
+          - link "Calendar" [ref=e23] [cursor=pointer]:
+            - /url: /calendar
+            - img [ref=e24]
+            - text: Calendar
+          - link "Messages" [ref=e26] [cursor=pointer]:
+            - /url: /messages
+            - img [ref=e27]
+            - text: Messages
+        - generic [ref=e29]:
+          - paragraph [ref=e30]: Analytics
+          - generic [ref=e31]:
+            - link "Reports" [ref=e32] [cursor=pointer]:
+              - /url: /reports
+              - img [ref=e34]
+              - text: Reports
+            - link "Lead Sources" [ref=e36] [cursor=pointer]:
+              - /url: /lead-sources
+              - img [ref=e37]
+              - text: Lead Sources
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: Administration
+          - link "Employees" [ref=e44] [cursor=pointer]:
+            - /url: /employees
+            - img [ref=e45]
+            - text: Employees
+      - button "KA Kashif Admin Administrator" [ref=e59] [cursor=pointer]:
+        - generic [ref=e60]: KA
+        - generic [ref=e61]:
+          - paragraph [ref=e62]: Kashif Admin
+          - paragraph [ref=e63]: Administrator
+        - img [ref=e64]
+    - generic [ref=e66]:
+      - banner [ref=e67]:
+        - button [ref=e68] [cursor=pointer]:
+          - img [ref=e69]
+        - button [ref=e70] [cursor=pointer]:
+          - img [ref=e71]
+      - main [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - heading "Reports" [level=1] [ref=e78]
+            - paragraph [ref=e79]: Analyze your sales performance
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]: From
+              - textbox [ref=e84]
+            - generic [ref=e85]:
+              - generic [ref=e86]: To
+              - textbox [ref=e87]
+            - generic [ref=e88]:
+              - generic [ref=e89]: Sales Officer
+              - combobox [ref=e90]:
+                - option "All Officers" [selected]
+                - option "Unassigned"
+            - generic [ref=e91]:
+              - generic [ref=e92]: Source
+              - combobox [ref=e93]:
+                - option "All Sources" [selected]
+                - option "Email Campaign"
+                - option "Facebook"
+                - option "Google Ads"
+                - option "Instagram"
+                - option "LinkedIn"
+                - option "Old Client"
+                - option "Other"
+                - option "Phone Call"
+                - option "Reference"
+                - option "Trade Show"
+                - option "Walk-in"
+                - option "Website"
+            - button "Generate" [ref=e95] [cursor=pointer]:
+              - img [ref=e96]
+              - text: Generate
+          - img [ref=e99]
+      - contentinfo [ref=e101]:
+        - paragraph [ref=e102]: © 2026 Visionplus Technologies Pvt. All rights reserved.
+  - status

@@ -1,0 +1,183 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Messages" [ref=e23] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e24]
+          - text: Messages
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: Analytics
+        - generic [ref=e28]:
+          - link "Reports" [ref=e29] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e30]
+            - text: Reports
+          - link "Lead Sources" [ref=e32] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e33]
+            - text: Lead Sources
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Administration
+        - link "Employees" [ref=e40] [cursor=pointer]:
+          - /url: /employees
+          - img [ref=e41]
+          - text: Employees
+    - button "KA Kashif Admin Administrator" [ref=e55] [cursor=pointer]:
+      - generic [ref=e56]: KA
+      - generic [ref=e57]:
+        - paragraph [ref=e58]: Kashif Admin
+        - paragraph [ref=e59]: Administrator
+      - img [ref=e60]
+  - generic [ref=e62]:
+    - banner [ref=e63]:
+      - button [ref=e64] [cursor=pointer]:
+        - img [ref=e65]
+    - main [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - heading "Dashboard" [level=1] [ref=e72]
+          - paragraph [ref=e73]: Welcome back, Kashif
+        - generic [ref=e74]:
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - paragraph [ref=e78]: Total Leads
+              - paragraph
+            - img [ref=e80]
+          - generic [ref=e86]:
+            - generic [ref=e87]:
+              - paragraph [ref=e88]: New Leads
+              - paragraph
+            - img [ref=e90]
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - paragraph [ref=e94]: Closed Won
+              - paragraph
+            - img [ref=e96]
+          - generic [ref=e103]:
+            - generic [ref=e104]:
+              - paragraph [ref=e105]: Est. Value
+              - paragraph [ref=e106]: $0
+            - img [ref=e108]
+        - generic [ref=e110]:
+          - heading "Pipeline" [level=3] [ref=e112]
+          - heading "By Source" [level=3] [ref=e115]
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - heading "Recent Leads" [level=3] [ref=e119]
+            - link "View all" [ref=e120] [cursor=pointer]:
+              - /url: /leads
+              - text: View all
+              - img [ref=e121]
+          - table [ref=e124]:
+            - rowgroup [ref=e125]:
+              - row "Title Customer Status Value Assigned To" [ref=e126]:
+                - columnheader "Title" [ref=e127]
+                - columnheader "Customer" [ref=e128]
+                - columnheader "Status" [ref=e129]
+                - columnheader "Value" [ref=e130]
+                - columnheader "Assigned To" [ref=e131]
+            - rowgroup [ref=e132]:
+              - row "AI Chatbot Integration Rabia Naz Closed Lost $15,000 Salman Ahmed" [ref=e133]:
+                - cell "AI Chatbot Integration" [ref=e134]:
+                  - link "AI Chatbot Integration" [ref=e135] [cursor=pointer]:
+                    - /url: /leads/15
+                - cell "Rabia Naz" [ref=e136]
+                - cell "Closed Lost" [ref=e137]:
+                  - generic [ref=e138]: Closed Lost
+                - cell "$15,000" [ref=e139]
+                - cell "Salman Ahmed" [ref=e140]
+              - row "Blockchain Solution Usman Ghani Closed Lost $120,000 Faisal Malik" [ref=e141]:
+                - cell "Blockchain Solution" [ref=e142]:
+                  - link "Blockchain Solution" [ref=e143] [cursor=pointer]:
+                    - /url: /leads/14
+                - cell "Usman Ghani" [ref=e144]
+                - cell "Closed Lost" [ref=e145]:
+                  - generic [ref=e146]: Closed Lost
+                - cell "$120,000" [ref=e147]
+                - cell "Faisal Malik" [ref=e148]
+              - row "Email Marketing Setup Ayesha Siddiqui Closed Won $5,000 Abdullah Ali" [ref=e149]:
+                - cell "Email Marketing Setup" [ref=e150]:
+                  - link "Email Marketing Setup" [ref=e151] [cursor=pointer]:
+                    - /url: /leads/13
+                - cell "Ayesha Siddiqui" [ref=e152]
+                - cell "Closed Won" [ref=e153]:
+                  - generic [ref=e154]: Closed Won
+                - cell "$5,000" [ref=e155]
+                - cell "Abdullah Ali" [ref=e156]
+              - row "Company Website Kamran Foster Closed Won $10,000 Salman Ahmed" [ref=e157]:
+                - cell "Company Website" [ref=e158]:
+                  - link "Company Website" [ref=e159] [cursor=pointer]:
+                    - /url: /leads/12
+                - cell "Kamran Foster" [ref=e160]
+                - cell "Closed Won" [ref=e161]:
+                  - generic [ref=e162]: Closed Won
+                - cell "$10,000" [ref=e163]
+                - cell "Salman Ahmed" [ref=e164]
+              - row "Learning Management System Prof. Tariq Jamil Proposal $65,000 Faisal Malik" [ref=e165]:
+                - cell "Learning Management System" [ref=e166]:
+                  - link "Learning Management System" [ref=e167] [cursor=pointer]:
+                    - /url: /leads/11
+                - cell "Prof. Tariq Jamil" [ref=e168]
+                - cell "Proposal" [ref=e169]:
+                  - generic [ref=e170]: Proposal
+                - cell "$65,000" [ref=e171]
+                - cell "Faisal Malik" [ref=e172]
+              - row "POS System Upgrade Mariam Bibi Proposal $18,000 Salman Ahmed" [ref=e173]:
+                - cell "POS System Upgrade" [ref=e174]:
+                  - link "POS System Upgrade" [ref=e175] [cursor=pointer]:
+                    - /url: /leads/10
+                - cell "Mariam Bibi" [ref=e176]
+                - cell "Proposal" [ref=e177]:
+                  - generic [ref=e178]: Proposal
+                - cell "$18,000" [ref=e179]
+                - cell "Salman Ahmed" [ref=e180]
+              - row "Hospital Management System Dr. Imran Shah Proposal $80,000 Abdullah Ali" [ref=e181]:
+                - cell "Hospital Management System" [ref=e182]:
+                  - link "Hospital Management System" [ref=e183] [cursor=pointer]:
+                    - /url: /leads/9
+                - cell "Dr. Imran Shah" [ref=e184]
+                - cell "Proposal" [ref=e185]:
+                  - generic [ref=e186]: Proposal
+                - cell "$80,000" [ref=e187]
+                - cell "Abdullah Ali" [ref=e188]
+              - row "Inventory Management System Zainab Noor Qualified $20,000 Faisal Malik" [ref=e189]:
+                - cell "Inventory Management System" [ref=e190]:
+                  - link "Inventory Management System" [ref=e191] [cursor=pointer]:
+                    - /url: /leads/8
+                - cell "Zainab Noor" [ref=e192]
+                - cell "Qualified" [ref=e193]:
+                  - generic [ref=e194]: Qualified
+                - cell "$20,000" [ref=e195]
+                - cell "Faisal Malik" [ref=e196]
+              - row "E-Commerce Platform Bilal Ahmad Qualified $45,000 Salman Ahmed" [ref=e197]:
+                - cell "E-Commerce Platform" [ref=e198]:
+                  - link "E-Commerce Platform" [ref=e199] [cursor=pointer]:
+                    - /url: /leads/7
+                - cell "Bilal Ahmad" [ref=e200]
+                - cell "Qualified" [ref=e201]:
+                  - generic [ref=e202]: Qualified
+                - cell "$45,000" [ref=e203]
+                - cell "Salman Ahmed" [ref=e204]
+              - row "SEO & Digital Marketing Nadia Hussain Contacted $8,000 Abdullah Ali" [ref=e205]:
+                - cell "SEO & Digital Marketing" [ref=e206]:
+                  - link "SEO & Digital Marketing" [ref=e207] [cursor=pointer]:
+                    - /url: /leads/6
+                - cell "Nadia Hussain" [ref=e208]
+                - cell "Contacted" [ref=e209]:
+                  - generic [ref=e210]: Contacted
+                - cell "$8,000" [ref=e211]
+                - cell "Abdullah Ali" [ref=e212]
+    - contentinfo [ref=e213]:
+      - paragraph [ref=e214]: © 2026 Visionplus Technologies Pvt. All rights reserved.

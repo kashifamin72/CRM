@@ -1,0 +1,71 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: CRM System
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - text: Dashboard
+          - link "Leads" [ref=e17] [cursor=pointer]:
+            - /url: /leads
+            - img [ref=e18]
+            - text: Leads
+          - link "Messages" [ref=e23] [cursor=pointer]:
+            - /url: /messages
+            - img [ref=e24]
+            - text: Messages
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: Analytics
+          - generic [ref=e28]:
+            - link "Reports" [ref=e29] [cursor=pointer]:
+              - /url: /reports
+              - img [ref=e30]
+              - text: Reports
+            - link "Lead Sources" [ref=e32] [cursor=pointer]:
+              - /url: /lead-sources
+              - img [ref=e33]
+              - text: Lead Sources
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: Administration
+          - link "Employees" [ref=e40] [cursor=pointer]:
+            - /url: /employees
+            - img [ref=e41]
+            - text: Employees
+      - button "KA Kashif Admin Administrator" [ref=e55] [cursor=pointer]:
+        - generic [ref=e56]: KA
+        - generic [ref=e57]:
+          - paragraph [ref=e58]: Kashif Admin
+          - paragraph [ref=e59]: Administrator
+        - img [ref=e60]
+    - generic [ref=e62]:
+      - banner [ref=e63]:
+        - button [ref=e64] [cursor=pointer]:
+          - img [ref=e65]
+      - main [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - heading "Message Logs" [level=1] [ref=e72]
+            - paragraph [ref=e73]: WhatsApp message history
+          - table [ref=e76]:
+            - rowgroup [ref=e77]:
+              - row "Lead Phone Message Status Sent By Date" [ref=e78]:
+                - columnheader "Lead" [ref=e79]
+                - columnheader "Phone" [ref=e80]
+                - columnheader "Message" [ref=e81]
+                - columnheader "Status" [ref=e82]
+                - columnheader "Sent By" [ref=e83]
+                - columnheader "Date" [ref=e84]
+            - rowgroup [ref=e85]:
+              - row "No messages found" [ref=e86]:
+                - cell "No messages found" [ref=e87]
+      - contentinfo [ref=e88]:
+        - paragraph [ref=e89]: © 2026 Visionplus Technologies Pvt. All rights reserved.
+  - generic [ref=e91]:
+    - img [ref=e92]
+    - paragraph [ref=e94]: Failed to load messages
+    - button [ref=e95] [cursor=pointer]:
+      - img [ref=e96]

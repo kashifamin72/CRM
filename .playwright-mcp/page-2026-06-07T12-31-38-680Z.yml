@@ -1,0 +1,195 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Messages" [ref=e23] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e24]
+          - text: Messages
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: Analytics
+        - generic [ref=e28]:
+          - link "Reports" [ref=e29] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e30]
+            - text: Reports
+          - link "Lead Sources" [ref=e32] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e33]
+            - text: Lead Sources
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Administration
+        - link "Employees" [ref=e40] [cursor=pointer]:
+          - /url: /employees
+          - img [ref=e41]
+          - text: Employees
+    - button "KA Kashif Admin Administrator" [ref=e55] [cursor=pointer]:
+      - generic [ref=e56]: KA
+      - generic [ref=e57]:
+        - paragraph [ref=e58]: Kashif Admin
+        - paragraph [ref=e59]: Administrator
+      - img [ref=e60]
+  - generic [ref=e62]:
+    - banner [ref=e63]:
+      - button [ref=e64] [cursor=pointer]:
+        - img [ref=e65]
+    - main [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - heading "Leads" [level=1] [ref=e73]
+            - paragraph [ref=e74]: Manage your sales pipeline
+          - link "New Lead" [ref=e75] [cursor=pointer]:
+            - /url: /leads/create
+            - img [ref=e76]
+            - text: New Lead
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - textbox "Search leads..." [ref=e83]
+          - combobox [ref=e84]:
+            - option "All Statuses" [selected]
+            - option "New"
+            - option "Contacted"
+            - option "Qualified"
+            - option "Proposal"
+            - option "Closed Won"
+            - option "Closed Lost"
+          - combobox [ref=e85]:
+            - option "All Sources" [selected]
+            - option "Email Campaign"
+            - option "Facebook"
+            - option "Google Ads"
+            - option "Instagram"
+            - option "LinkedIn"
+            - option "Old Client"
+            - option "Other"
+            - option "Phone Call"
+            - option "Reference"
+            - option "Trade Show"
+            - option "Walk-in"
+            - option "Website"
+          - generic [ref=e86]:
+            - button [ref=e87] [cursor=pointer]:
+              - img [ref=e88]
+            - button [ref=e89] [cursor=pointer]:
+              - img [ref=e90]
+        - generic [ref=e95]:
+          - generic [ref=e457]:
+            - generic [ref=e458]:
+              - generic [ref=e459]: New
+              - generic [ref=e460]: "3"
+            - generic [ref=e461]:
+              - link "ERP System Consultation Hassan Ali $50,000" [ref=e462] [cursor=pointer]:
+                - /url: /leads/3
+                - paragraph [ref=e464]: ERP System Consultation
+                - paragraph [ref=e465]: Hassan Ali
+                - paragraph [ref=e466]: $50,000
+              - link "Mobile App Development Fatima Khan $25,000" [ref=e467] [cursor=pointer]:
+                - /url: /leads/2
+                - paragraph [ref=e469]: Mobile App Development
+                - paragraph [ref=e470]: Fatima Khan
+                - paragraph [ref=e471]: $25,000
+              - link "Website Redesign Project Ahmed Raza $15,000" [ref=e472] [cursor=pointer]:
+                - /url: /leads/1
+                - paragraph [ref=e474]: Website Redesign Project
+                - paragraph [ref=e475]: Ahmed Raza
+                - paragraph [ref=e476]: $15,000
+          - generic [ref=e477]:
+            - generic [ref=e478]:
+              - generic [ref=e479]: Contacted
+              - generic [ref=e480]: "3"
+            - generic [ref=e481]:
+              - link "SEO & Digital Marketing Nadia Hussain $8,000" [ref=e482] [cursor=pointer]:
+                - /url: /leads/6
+                - paragraph [ref=e484]: SEO & Digital Marketing
+                - paragraph [ref=e485]: Nadia Hussain
+                - paragraph [ref=e486]: $8,000
+              - link "CRM Implementation Omar Sheikh $12,000" [ref=e487] [cursor=pointer]:
+                - /url: /leads/5
+                - paragraph [ref=e489]: CRM Implementation
+                - paragraph [ref=e490]: Omar Sheikh
+                - paragraph [ref=e491]: $12,000
+              - link "Cloud Migration Sara Malik $35,000" [ref=e492] [cursor=pointer]:
+                - /url: /leads/4
+                - paragraph [ref=e494]: Cloud Migration
+                - paragraph [ref=e495]: Sara Malik
+                - paragraph [ref=e496]: $35,000
+          - generic [ref=e497]:
+            - generic [ref=e498]:
+              - generic [ref=e499]: Qualified
+              - generic [ref=e500]: "2"
+            - generic [ref=e501]:
+              - link "Inventory Management System Zainab Noor $20,000" [ref=e502] [cursor=pointer]:
+                - /url: /leads/8
+                - paragraph [ref=e504]: Inventory Management System
+                - paragraph [ref=e505]: Zainab Noor
+                - paragraph [ref=e506]: $20,000
+              - link "E-Commerce Platform Bilal Ahmad $45,000" [ref=e507] [cursor=pointer]:
+                - /url: /leads/7
+                - paragraph [ref=e509]: E-Commerce Platform
+                - paragraph [ref=e510]: Bilal Ahmad
+                - paragraph [ref=e511]: $45,000
+          - generic [ref=e512]:
+            - generic [ref=e513]:
+              - generic [ref=e514]: Proposal
+              - generic [ref=e515]: "3"
+            - generic [ref=e516]:
+              - link "Learning Management System Prof. Tariq Jamil $65,000" [ref=e517] [cursor=pointer]:
+                - /url: /leads/11
+                - paragraph [ref=e519]: Learning Management System
+                - paragraph [ref=e520]: Prof. Tariq Jamil
+                - paragraph [ref=e521]: $65,000
+              - link "POS System Upgrade Mariam Bibi $18,000" [ref=e522] [cursor=pointer]:
+                - /url: /leads/10
+                - paragraph [ref=e524]: POS System Upgrade
+                - paragraph [ref=e525]: Mariam Bibi
+                - paragraph [ref=e526]: $18,000
+              - link "Hospital Management System Dr. Imran Shah $80,000" [ref=e527] [cursor=pointer]:
+                - /url: /leads/9
+                - paragraph [ref=e529]: Hospital Management System
+                - paragraph [ref=e530]: Dr. Imran Shah
+                - paragraph [ref=e531]: $80,000
+          - generic [ref=e532]:
+            - generic [ref=e533]:
+              - generic [ref=e534]: Closed Won
+              - generic [ref=e535]: "2"
+            - generic [ref=e536]:
+              - link "Email Marketing Setup Ayesha Siddiqui $5,000" [ref=e537] [cursor=pointer]:
+                - /url: /leads/13
+                - paragraph [ref=e539]: Email Marketing Setup
+                - paragraph [ref=e540]: Ayesha Siddiqui
+                - paragraph [ref=e541]: $5,000
+              - link "Company Website Kamran Foster $10,000" [ref=e542] [cursor=pointer]:
+                - /url: /leads/12
+                - paragraph [ref=e544]: Company Website
+                - paragraph [ref=e545]: Kamran Foster
+                - paragraph [ref=e546]: $10,000
+          - generic [ref=e547]:
+            - generic [ref=e548]:
+              - generic [ref=e549]: Closed Lost
+              - generic [ref=e550]: "2"
+            - generic [ref=e551]:
+              - link "AI Chatbot Integration Rabia Naz $15,000" [ref=e552] [cursor=pointer]:
+                - /url: /leads/15
+                - paragraph [ref=e554]: AI Chatbot Integration
+                - paragraph [ref=e555]: Rabia Naz
+                - paragraph [ref=e556]: $15,000
+              - link "Blockchain Solution Usman Ghani $120,000" [ref=e557] [cursor=pointer]:
+                - /url: /leads/14
+                - paragraph [ref=e559]: Blockchain Solution
+                - paragraph [ref=e560]: Usman Ghani
+                - paragraph [ref=e561]: $120,000
+    - contentinfo [ref=e98]:
+      - paragraph [ref=e99]: © 2026 Visionplus Technologies Pvt. All rights reserved.

@@ -1,0 +1,125 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Calendar" [ref=e23] [cursor=pointer]:
+          - /url: /calendar
+          - img [ref=e24]
+          - text: Calendar
+        - link "Messages" [ref=e26] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e27]
+          - text: Messages
+      - generic [ref=e29]:
+        - paragraph [ref=e30]: Analytics
+        - generic [ref=e31]:
+          - link "Reports" [ref=e32] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e33]
+            - text: Reports
+          - link "Lead Sources" [ref=e35] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e36]
+            - text: Lead Sources
+    - button "KK Kashif Khan Manager" [ref=e42] [cursor=pointer]:
+      - generic [ref=e43]: KK
+      - generic [ref=e44]:
+        - paragraph [ref=e45]: Kashif Khan
+        - paragraph [ref=e46]: Manager
+      - img [ref=e47]
+  - generic [ref=e49]:
+    - banner [ref=e50]:
+      - button [ref=e51] [cursor=pointer]:
+        - img [ref=e52]
+    - main [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - button [ref=e59] [cursor=pointer]:
+            - img [ref=e60]
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: New
+              - heading "QA Test Lead Manager EDITED" [level=1] [ref=e65]
+            - generic [ref=e66]:
+              - generic [ref=e67]: Test Customer
+              - link "+92000000000" [ref=e68] [cursor=pointer]:
+                - /url: tel:+92000000000
+              - link "test@qa.com" [ref=e69] [cursor=pointer]:
+                - /url: mailto:test@qa.com
+        - generic [ref=e70]:
+          - button "Details" [ref=e71] [cursor=pointer]
+          - button "Follow-ups" [ref=e72] [cursor=pointer]
+          - button "Messages" [ref=e73] [cursor=pointer]
+          - button "Activity" [ref=e74] [cursor=pointer]
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]: Title
+            - textbox [ref=e78]: QA Test Lead Manager EDITED
+          - generic [ref=e79]:
+            - generic [ref=e80]: Description
+            - textbox [ref=e81]: QA create test
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e84]: Customer Name
+              - textbox [ref=e85]: Test Customer
+            - generic [ref=e86]:
+              - generic [ref=e87]: Customer Email
+              - textbox [ref=e88]: test@qa.com
+            - generic [ref=e89]:
+              - generic [ref=e90]: Customer Phone
+              - textbox [ref=e91]: "+92000000000"
+            - generic [ref=e92]:
+              - generic [ref=e93]: Estimated Value ($)
+              - spinbutton [ref=e94]: "5000"
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - generic [ref=e97]: Status
+              - combobox [ref=e98]:
+                - option "New" [selected]
+                - option "Contacted"
+                - option "Qualified"
+                - option "Proposal"
+                - option "Closed Won"
+                - option "Closed Lost"
+            - generic [ref=e99]:
+              - generic [ref=e100]: Lead Source
+              - combobox [ref=e101]:
+                - option "Select source"
+                - option "Email Campaign"
+                - option "Facebook"
+                - option "Google Ads"
+                - option "Instagram"
+                - option "LinkedIn"
+                - option "Old Client"
+                - option "Other"
+                - option "Phone Call"
+                - option "Reference"
+                - option "Trade Show"
+                - option "Walk-in"
+                - option "Website" [selected]
+          - generic [ref=e102]:
+            - generic [ref=e103]: Assigned To
+            - combobox [ref=e104]:
+              - option "Unassigned"
+              - option "Abdullah Ali"
+              - option "Faisal Malik"
+              - option "Salman Ahmed" [selected]
+          - generic [ref=e105]:
+            - generic [ref=e106]: Notes
+            - textbox [ref=e107]
+          - button "Save Changes" [ref=e109] [cursor=pointer]:
+            - img [ref=e110]
+            - text: Save Changes
+    - contentinfo [ref=e114]:
+      - paragraph [ref=e115]: © 2026 Visionplus Technologies Pvt. All rights reserved.

@@ -1,0 +1,149 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: CRM System
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - text: Dashboard
+          - link "Leads" [ref=e17] [cursor=pointer]:
+            - /url: /leads
+            - img [ref=e19]
+            - text: Leads
+          - link "Calendar" [ref=e24] [cursor=pointer]:
+            - /url: /calendar
+            - img [ref=e25]
+            - text: Calendar
+          - link "Messages" [ref=e27] [cursor=pointer]:
+            - /url: /messages
+            - img [ref=e28]
+            - text: Messages
+        - generic [ref=e30]:
+          - paragraph [ref=e31]: Analytics
+          - generic [ref=e32]:
+            - link "Reports" [ref=e33] [cursor=pointer]:
+              - /url: /reports
+              - img [ref=e34]
+              - text: Reports
+            - link "Lead Sources" [ref=e36] [cursor=pointer]:
+              - /url: /lead-sources
+              - img [ref=e37]
+              - text: Lead Sources
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: Administration
+          - link "Employees" [ref=e44] [cursor=pointer]:
+            - /url: /employees
+            - img [ref=e45]
+            - text: Employees
+      - button "Kashif Admin Administrator" [ref=e59] [cursor=pointer]:
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: Kashif Admin
+          - paragraph [ref=e62]: Administrator
+        - img [ref=e63]
+    - generic [ref=e65]:
+      - banner [ref=e66]:
+        - button [ref=e67] [cursor=pointer]:
+          - img [ref=e68]
+      - main [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - button [ref=e75] [cursor=pointer]:
+              - img [ref=e76]
+            - generic [ref=e78]:
+              - heading "New Lead" [level=1] [ref=e79]
+              - paragraph [ref=e80]: Create a new sales lead
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]: Title *
+              - textbox "Lead title" [ref=e84]
+            - generic [ref=e85]:
+              - generic [ref=e86]: Description
+              - textbox "Brief description" [ref=e87]
+            - generic [ref=e88]:
+              - generic [ref=e89]:
+                - generic [ref=e90]: Customer Name *
+                - textbox [ref=e91]
+              - generic [ref=e92]:
+                - generic [ref=e93]: Customer Email
+                - textbox [ref=e94]
+              - generic [ref=e95]:
+                - generic [ref=e96]: Customer Phone
+                - textbox [ref=e97]
+              - generic [ref=e98]:
+                - generic [ref=e99]: Estimated Value ($)
+                - spinbutton [ref=e100]
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - generic [ref=e103]: Status
+                - combobox [ref=e104]:
+                  - option "New" [selected]
+                  - option "Contacted"
+                  - option "Qualified"
+                  - option "Proposal"
+                  - option "Closed Won"
+                  - option "Closed Lost"
+              - generic [ref=e105]:
+                - generic [ref=e106]:
+                  - img [ref=e107]
+                  - text: Lead Date
+                  - generic [ref=e109]: "*"
+                - textbox [ref=e110]: 2026-06-08
+            - generic [ref=e111]:
+              - generic [ref=e112]:
+                - generic [ref=e113]: Business Type
+                - generic [ref=e114]:
+                  - generic [ref=e115]:
+                    - combobox [ref=e116]:
+                      - option "Select business type"
+                      - option "Goods Trading"
+                      - option "Hospitals"
+                      - option "Logistics" [selected]
+                      - option "Manufacturing"
+                      - option "Pharmaceutical Manufacturing"
+                      - option "Retailer"
+                    - img
+                  - button "Add new business type" [ref=e117] [cursor=pointer]:
+                    - img [ref=e118]
+              - generic [ref=e119]:
+                - generic [ref=e120]: Lead Source
+                - generic [ref=e121]:
+                  - generic [ref=e122]:
+                    - combobox [ref=e123]:
+                      - option "Select source" [selected]
+                      - option "Email Campaign"
+                      - option "Facebook"
+                      - option "Google Ads"
+                      - option "Instagram"
+                      - option "LinkedIn"
+                      - option "Old Client"
+                      - option "Other"
+                      - option "Phone Call"
+                      - option "Reference"
+                      - option "Trade Show"
+                      - option "Walk-in"
+                      - option "Website"
+                    - img
+                  - button "Add new lead source" [ref=e124] [cursor=pointer]:
+                    - img [ref=e125]
+            - generic [ref=e126]:
+              - generic [ref=e127]: Assign To
+              - combobox [ref=e128]:
+                - option "Unassigned" [selected]
+                - option "Abdullah Ali"
+                - option "Faisal Malik"
+                - option "Salman Ahmed"
+            - generic [ref=e129]:
+              - generic [ref=e130]: Notes
+              - textbox "Internal notes" [ref=e131]
+            - generic [ref=e132]:
+              - button "Create Lead" [ref=e133] [cursor=pointer]:
+                - img [ref=e134]
+                - text: Create Lead
+              - button "Cancel" [ref=e138] [cursor=pointer]
+      - contentinfo [ref=e139]:
+        - paragraph [ref=e140]: © 2026 Visionplus Technologies Pvt. All rights reserved.
+  - status

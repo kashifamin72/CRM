@@ -1,0 +1,84 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: CRM System
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - text: Dashboard
+          - link "Leads" [ref=e17] [cursor=pointer]:
+            - /url: /leads
+            - img [ref=e18]
+            - text: Leads
+          - link "Calendar" [ref=e23] [cursor=pointer]:
+            - /url: /calendar
+            - img [ref=e24]
+            - text: Calendar
+          - link "Messages" [ref=e26] [cursor=pointer]:
+            - /url: /messages
+            - img [ref=e27]
+            - text: Messages
+        - generic [ref=e29]:
+          - paragraph [ref=e30]: Analytics
+          - generic [ref=e31]:
+            - link "Reports" [ref=e32] [cursor=pointer]:
+              - /url: /reports
+              - img [ref=e34]
+              - text: Reports
+            - link "Lead Sources" [ref=e36] [cursor=pointer]:
+              - /url: /lead-sources
+              - img [ref=e37]
+              - text: Lead Sources
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: Administration
+          - link "Employees" [ref=e44] [cursor=pointer]:
+            - /url: /employees
+            - img [ref=e45]
+            - text: Employees
+      - button "Kashif Admin Administrator" [ref=e59] [cursor=pointer]:
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: Kashif Admin
+          - paragraph [ref=e62]: Administrator
+        - img [ref=e63]
+    - generic [ref=e65]:
+      - banner [ref=e66]:
+        - button [ref=e67] [cursor=pointer]:
+          - img [ref=e68]
+      - main [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e75]:
+            - heading "Reports" [level=1] [ref=e76]
+            - paragraph [ref=e77]: Analyze your sales performance
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - generic [ref=e82]:
+                - img [ref=e83]
+                - text: From
+              - textbox "From" [ref=e85]
+            - generic [ref=e86]:
+              - generic [ref=e87]: To
+              - textbox "To" [ref=e88]
+            - generic [ref=e89]:
+              - generic [ref=e91]:
+                - img [ref=e92]
+                - text: Sales Officer
+              - combobox "Sales Officer" [ref=e96]:
+                - option "All Officers" [selected]
+                - option "Unassigned"
+            - generic [ref=e97]:
+              - generic [ref=e99]:
+                - img [ref=e100]
+                - text: Source
+              - combobox "Source" [ref=e103]:
+                - option "All Sources" [selected]
+            - button "Generate" [ref=e105] [cursor=pointer]:
+              - img [ref=e106]
+              - text: Generate
+          - img [ref=e109]
+      - contentinfo [ref=e111]:
+        - paragraph [ref=e112]: © 2026 Visionplus Technologies Pvt. All rights reserved.
+  - status

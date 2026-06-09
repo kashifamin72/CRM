@@ -1,0 +1,134 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Calendar" [ref=e23] [cursor=pointer]:
+          - /url: /calendar
+          - img [ref=e24]
+          - text: Calendar
+        - link "Messages" [ref=e26] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e27]
+          - text: Messages
+    - button "SA Salman Ahmed SalesOfficer" [ref=e31] [cursor=pointer]:
+      - generic [ref=e32]: SA
+      - generic [ref=e33]:
+        - paragraph [ref=e34]: Salman Ahmed
+        - paragraph [ref=e35]: SalesOfficer
+      - img [ref=e36]
+  - generic [ref=e38]:
+    - banner [ref=e39]:
+      - button [ref=e40] [cursor=pointer]:
+        - img [ref=e41]
+    - main [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - heading "Dashboard" [level=1] [ref=e48]
+          - paragraph [ref=e49]: Welcome back, Salman
+        - generic [ref=e50]:
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - paragraph [ref=e54]: Total Leads
+              - paragraph [ref=e55]: "6"
+            - img [ref=e57]
+          - generic [ref=e63]:
+            - generic [ref=e64]:
+              - paragraph [ref=e65]: New Leads
+              - paragraph [ref=e66]: "1"
+            - img [ref=e68]
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - paragraph [ref=e72]: Closed Won
+              - paragraph [ref=e73]: "1"
+            - img [ref=e75]
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: Est. Value
+              - paragraph [ref=e85]: $115,000
+            - img [ref=e87]
+        - generic [ref=e89]:
+          - heading "Pipeline" [level=3] [ref=e91]
+          - heading "By Source" [level=3] [ref=e94]
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - heading "Recent Leads" [level=3] [ref=e98]
+            - link "View all" [ref=e99] [cursor=pointer]:
+              - /url: /leads
+              - text: View all
+              - img [ref=e100]
+          - table [ref=e103]:
+            - rowgroup [ref=e104]:
+              - row "Title Customer Status Value Assigned To" [ref=e105]:
+                - columnheader "Title" [ref=e106]
+                - columnheader "Customer" [ref=e107]
+                - columnheader "Status" [ref=e108]
+                - columnheader "Value" [ref=e109]
+                - columnheader "Assigned To" [ref=e110]
+            - rowgroup [ref=e111]:
+              - row "AI Chatbot Integration Rabia Naz Closed Lost $15,000 Salman Ahmed" [ref=e112]:
+                - cell "AI Chatbot Integration" [ref=e113]:
+                  - link "AI Chatbot Integration" [ref=e114] [cursor=pointer]:
+                    - /url: /leads/15
+                - cell "Rabia Naz" [ref=e115]
+                - cell "Closed Lost" [ref=e116]:
+                  - generic [ref=e117]: Closed Lost
+                - cell "$15,000" [ref=e118]
+                - cell "Salman Ahmed" [ref=e119]
+              - row "Company Website Kamran Foster Closed Won $10,000 Salman Ahmed" [ref=e120]:
+                - cell "Company Website" [ref=e121]:
+                  - link "Company Website" [ref=e122] [cursor=pointer]:
+                    - /url: /leads/12
+                - cell "Kamran Foster" [ref=e123]
+                - cell "Closed Won" [ref=e124]:
+                  - generic [ref=e125]: Closed Won
+                - cell "$10,000" [ref=e126]
+                - cell "Salman Ahmed" [ref=e127]
+              - row "POS System Upgrade Mariam Bibi Proposal $18,000 Salman Ahmed" [ref=e128]:
+                - cell "POS System Upgrade" [ref=e129]:
+                  - link "POS System Upgrade" [ref=e130] [cursor=pointer]:
+                    - /url: /leads/10
+                - cell "Mariam Bibi" [ref=e131]
+                - cell "Proposal" [ref=e132]:
+                  - generic [ref=e133]: Proposal
+                - cell "$18,000" [ref=e134]
+                - cell "Salman Ahmed" [ref=e135]
+              - row "E-Commerce Platform Bilal Ahmad Qualified $45,000 Salman Ahmed" [ref=e136]:
+                - cell "E-Commerce Platform" [ref=e137]:
+                  - link "E-Commerce Platform" [ref=e138] [cursor=pointer]:
+                    - /url: /leads/7
+                - cell "Bilal Ahmad" [ref=e139]
+                - cell "Qualified" [ref=e140]:
+                  - generic [ref=e141]: Qualified
+                - cell "$45,000" [ref=e142]
+                - cell "Salman Ahmed" [ref=e143]
+              - row "CRM Implementation Omar Sheikh Contacted $12,000 Salman Ahmed" [ref=e144]:
+                - cell "CRM Implementation" [ref=e145]:
+                  - link "CRM Implementation" [ref=e146] [cursor=pointer]:
+                    - /url: /leads/5
+                - cell "Omar Sheikh" [ref=e147]
+                - cell "Contacted" [ref=e148]:
+                  - generic [ref=e149]: Contacted
+                - cell "$12,000" [ref=e150]
+                - cell "Salman Ahmed" [ref=e151]
+              - row "Website Redesign Project Ahmed Raza New $15,000 Salman Ahmed" [ref=e152]:
+                - cell "Website Redesign Project" [ref=e153]:
+                  - link "Website Redesign Project" [ref=e154] [cursor=pointer]:
+                    - /url: /leads/1
+                - cell "Ahmed Raza" [ref=e155]
+                - cell "New" [ref=e156]:
+                  - generic [ref=e157]: New
+                - cell "$15,000" [ref=e158]
+                - cell "Salman Ahmed" [ref=e159]
+    - contentinfo [ref=e160]:
+      - paragraph [ref=e161]: © 2026 Visionplus Technologies Pvt. All rights reserved.

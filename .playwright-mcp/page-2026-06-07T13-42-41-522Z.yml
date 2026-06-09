@@ -1,0 +1,421 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Messages" [ref=e23] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e24]
+          - text: Messages
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: Analytics
+        - generic [ref=e28]:
+          - link "Reports" [ref=e29] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e30]
+            - text: Reports
+          - link "Lead Sources" [ref=e32] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e33]
+            - text: Lead Sources
+      - generic [ref=e37]:
+        - paragraph [ref=e38]: Administration
+        - link "Employees" [ref=e40] [cursor=pointer]:
+          - /url: /employees
+          - img [ref=e41]
+          - text: Employees
+    - button "KA Kashif Admin Administrator" [ref=e55] [cursor=pointer]:
+      - generic [ref=e56]: KA
+      - generic [ref=e57]:
+        - paragraph [ref=e58]: Kashif Admin
+        - paragraph [ref=e59]: Administrator
+      - img [ref=e60]
+  - generic [ref=e62]:
+    - banner [ref=e63]:
+      - button [ref=e64] [cursor=pointer]:
+        - img [ref=e65]
+    - main [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - heading "Leads" [level=1] [ref=e73]
+            - paragraph [ref=e74]: Manage your sales pipeline
+          - link "New Lead" [ref=e75] [cursor=pointer]:
+            - /url: /leads/create
+            - img [ref=e76]
+            - text: New Lead
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - textbox "Search leads..." [ref=e83]
+          - combobox [ref=e84]:
+            - option "All Statuses" [selected]
+            - option "New"
+            - option "Contacted"
+            - option "Qualified"
+            - option "Proposal"
+            - option "Closed Won"
+            - option "Closed Lost"
+          - combobox [ref=e85]:
+            - option "All Sources" [selected]
+            - option "Email Campaign"
+            - option "Facebook"
+            - option "Google Ads"
+            - option "Instagram"
+            - option "LinkedIn"
+            - option "Old Client"
+            - option "Other"
+            - option "Phone Call"
+            - option "Reference"
+            - option "Trade Show"
+            - option "Walk-in"
+            - option "Website"
+          - generic [ref=e86]:
+            - button [ref=e87] [cursor=pointer]:
+              - img [ref=e88]
+            - button [ref=e89] [cursor=pointer]:
+              - img [ref=e90]
+        - generic [ref=e840]:
+          - generic [ref=e841]:
+            - generic [ref=e842]:
+              - generic [ref=e844]: New
+              - generic [ref=e845]: "2"
+            - generic [ref=e846]:
+              - button "Mobile App Development FK Fatima Khan $25,000 0d Facebook Abdullah Ali" [ref=e847]:
+                - generic [ref=e849]:
+                  - link "Mobile App Development" [ref=e850] [cursor=pointer]:
+                    - /url: /leads/2
+                  - generic [ref=e851]:
+                    - generic [ref=e852]: FK
+                    - generic [ref=e853]: Fatima Khan
+                  - generic [ref=e854]:
+                    - generic [ref=e855]: $25,000
+                    - generic [ref=e856]:
+                      - img [ref=e857]
+                      - text: 0d
+                    - generic [ref=e860]: Facebook
+                  - generic [ref=e861]:
+                    - generic [ref=e862]:
+                      - img [ref=e863]
+                      - generic [ref=e866]: Abdullah Ali
+                    - link [ref=e867] [cursor=pointer]:
+                      - /url: https://wa.me/923002345678
+                      - img [ref=e868]
+              - button "Website Redesign Project AR Ahmed Raza $15,000 0d Website Salman Ahmed" [ref=e870]:
+                - generic [ref=e872]:
+                  - link "Website Redesign Project" [ref=e873] [cursor=pointer]:
+                    - /url: /leads/1
+                  - generic [ref=e874]:
+                    - generic [ref=e875]: AR
+                    - generic [ref=e876]: Ahmed Raza
+                  - generic [ref=e877]:
+                    - generic [ref=e878]: $15,000
+                    - generic [ref=e879]:
+                      - img [ref=e880]
+                      - text: 0d
+                    - generic [ref=e883]: Website
+                  - generic [ref=e884]:
+                    - generic [ref=e885]:
+                      - img [ref=e886]
+                      - generic [ref=e889]: Salman Ahmed
+                    - link [ref=e890] [cursor=pointer]:
+                      - /url: https://wa.me/923001234567
+                      - img [ref=e891]
+          - generic [ref=e893]:
+            - generic [ref=e894]:
+              - generic [ref=e896]: Contacted
+              - generic [ref=e897]: "4"
+            - generic [ref=e898]:
+              - button "ERP System Consultation HA Hassan Ali $50,000 0d Reference Unassigned" [ref=e899]:
+                - generic [ref=e901]:
+                  - link "ERP System Consultation" [ref=e902] [cursor=pointer]:
+                    - /url: /leads/3
+                  - generic [ref=e903]:
+                    - generic [ref=e904]: HA
+                    - generic [ref=e905]: Hassan Ali
+                  - generic [ref=e906]:
+                    - generic [ref=e907]: $50,000
+                    - generic [ref=e908]:
+                      - img [ref=e909]
+                      - text: 0d
+                    - generic [ref=e912]: Reference
+                  - generic [ref=e913]:
+                    - generic [ref=e914]:
+                      - img [ref=e915]
+                      - generic [ref=e918]: Unassigned
+                    - link [ref=e919] [cursor=pointer]:
+                      - /url: https://wa.me/923003456789
+                      - img [ref=e920]
+              - button "SEO & Digital Marketing NH Nadia Hussain $8,000 0d Instagram Abdullah Ali" [ref=e922]:
+                - generic [ref=e924]:
+                  - link "SEO & Digital Marketing" [ref=e925] [cursor=pointer]:
+                    - /url: /leads/6
+                  - generic [ref=e926]:
+                    - generic [ref=e927]: NH
+                    - generic [ref=e928]: Nadia Hussain
+                  - generic [ref=e929]:
+                    - generic [ref=e930]: $8,000
+                    - generic [ref=e931]:
+                      - img [ref=e932]
+                      - text: 0d
+                    - generic [ref=e935]: Instagram
+                  - generic [ref=e936]:
+                    - generic [ref=e937]:
+                      - img [ref=e938]
+                      - generic [ref=e941]: Abdullah Ali
+                    - link [ref=e942] [cursor=pointer]:
+                      - /url: https://wa.me/923006789012
+                      - img [ref=e943]
+              - button "CRM Implementation OS Omar Sheikh $12,000 0d Phone Call Salman Ahmed" [ref=e945]:
+                - generic [ref=e947]:
+                  - link "CRM Implementation" [ref=e948] [cursor=pointer]:
+                    - /url: /leads/5
+                  - generic [ref=e949]:
+                    - generic [ref=e950]: OS
+                    - generic [ref=e951]: Omar Sheikh
+                  - generic [ref=e952]:
+                    - generic [ref=e953]: $12,000
+                    - generic [ref=e954]:
+                      - img [ref=e955]
+                      - text: 0d
+                    - generic [ref=e958]: Phone Call
+                  - generic [ref=e959]:
+                    - generic [ref=e960]:
+                      - img [ref=e961]
+                      - generic [ref=e964]: Salman Ahmed
+                    - link [ref=e965] [cursor=pointer]:
+                      - /url: https://wa.me/923005678901
+                      - img [ref=e966]
+              - button "Cloud Migration SM Sara Malik $35,000 0d Google Ads Faisal Malik" [ref=e968]:
+                - generic [ref=e970]:
+                  - link "Cloud Migration" [ref=e971] [cursor=pointer]:
+                    - /url: /leads/4
+                  - generic [ref=e972]:
+                    - generic [ref=e973]: SM
+                    - generic [ref=e974]: Sara Malik
+                  - generic [ref=e975]:
+                    - generic [ref=e976]: $35,000
+                    - generic [ref=e977]:
+                      - img [ref=e978]
+                      - text: 0d
+                    - generic [ref=e981]: Google Ads
+                  - generic [ref=e982]:
+                    - generic [ref=e983]:
+                      - img [ref=e984]
+                      - generic [ref=e987]: Faisal Malik
+                    - link [ref=e988] [cursor=pointer]:
+                      - /url: https://wa.me/923004567890
+                      - img [ref=e989]
+          - generic [ref=e991]:
+            - generic [ref=e992]:
+              - generic [ref=e994]: Qualified
+              - generic [ref=e995]: "2"
+            - generic [ref=e996]:
+              - button "Inventory Management System ZN Zainab Noor $20,000 0d LinkedIn Faisal Malik" [ref=e997]:
+                - generic [ref=e999]:
+                  - link "Inventory Management System" [ref=e1000] [cursor=pointer]:
+                    - /url: /leads/8
+                  - generic [ref=e1001]:
+                    - generic [ref=e1002]: ZN
+                    - generic [ref=e1003]: Zainab Noor
+                  - generic [ref=e1004]:
+                    - generic [ref=e1005]: $20,000
+                    - generic [ref=e1006]:
+                      - img [ref=e1007]
+                      - text: 0d
+                    - generic [ref=e1010]: LinkedIn
+                  - generic [ref=e1011]:
+                    - generic [ref=e1012]:
+                      - img [ref=e1013]
+                      - generic [ref=e1016]: Faisal Malik
+                    - link [ref=e1017] [cursor=pointer]:
+                      - /url: https://wa.me/923008901234
+                      - img [ref=e1018]
+              - button "E-Commerce Platform BA Bilal Ahmad $45,000 0d Website Salman Ahmed" [ref=e1020]:
+                - generic [ref=e1022]:
+                  - link "E-Commerce Platform" [ref=e1023] [cursor=pointer]:
+                    - /url: /leads/7
+                  - generic [ref=e1024]:
+                    - generic [ref=e1025]: BA
+                    - generic [ref=e1026]: Bilal Ahmad
+                  - generic [ref=e1027]:
+                    - generic [ref=e1028]: $45,000
+                    - generic [ref=e1029]:
+                      - img [ref=e1030]
+                      - text: 0d
+                    - generic [ref=e1033]: Website
+                  - generic [ref=e1034]:
+                    - generic [ref=e1035]:
+                      - img [ref=e1036]
+                      - generic [ref=e1039]: Salman Ahmed
+                    - link [ref=e1040] [cursor=pointer]:
+                      - /url: https://wa.me/923007890123
+                      - img [ref=e1041]
+          - generic [ref=e1043]:
+            - generic [ref=e1044]:
+              - generic [ref=e1046]: Proposal
+              - generic [ref=e1047]: "3"
+            - generic [ref=e1048]:
+              - button "Learning Management System PT Prof. Tariq Jamil $65,000 0d Reference Faisal Malik" [ref=e1049]:
+                - generic [ref=e1051]:
+                  - link "Learning Management System" [ref=e1052] [cursor=pointer]:
+                    - /url: /leads/11
+                  - generic [ref=e1053]:
+                    - generic [ref=e1054]: PT
+                    - generic [ref=e1055]: Prof. Tariq Jamil
+                  - generic [ref=e1056]:
+                    - generic [ref=e1057]: $65,000
+                    - generic [ref=e1058]:
+                      - img [ref=e1059]
+                      - text: 0d
+                    - generic [ref=e1062]: Reference
+                  - generic [ref=e1063]:
+                    - generic [ref=e1064]:
+                      - img [ref=e1065]
+                      - generic [ref=e1068]: Faisal Malik
+                    - link [ref=e1069] [cursor=pointer]:
+                      - /url: https://wa.me/923011234567
+                      - img [ref=e1070]
+              - button "POS System Upgrade MB Mariam Bibi $18,000 0d Old Client Salman Ahmed" [ref=e1072]:
+                - generic [ref=e1074]:
+                  - link "POS System Upgrade" [ref=e1075] [cursor=pointer]:
+                    - /url: /leads/10
+                  - generic [ref=e1076]:
+                    - generic [ref=e1077]: MB
+                    - generic [ref=e1078]: Mariam Bibi
+                  - generic [ref=e1079]:
+                    - generic [ref=e1080]: $18,000
+                    - generic [ref=e1081]:
+                      - img [ref=e1082]
+                      - text: 0d
+                    - generic [ref=e1085]: Old Client
+                  - generic [ref=e1086]:
+                    - generic [ref=e1087]:
+                      - img [ref=e1088]
+                      - generic [ref=e1091]: Salman Ahmed
+                    - link [ref=e1092] [cursor=pointer]:
+                      - /url: https://wa.me/923010123456
+                      - img [ref=e1093]
+              - button "Hospital Management System DI Dr. Imran Shah $80,000 0d Trade Show Abdullah Ali" [ref=e1095]:
+                - generic [ref=e1097]:
+                  - link "Hospital Management System" [ref=e1098] [cursor=pointer]:
+                    - /url: /leads/9
+                  - generic [ref=e1099]:
+                    - generic [ref=e1100]: DI
+                    - generic [ref=e1101]: Dr. Imran Shah
+                  - generic [ref=e1102]:
+                    - generic [ref=e1103]: $80,000
+                    - generic [ref=e1104]:
+                      - img [ref=e1105]
+                      - text: 0d
+                    - generic [ref=e1108]: Trade Show
+                  - generic [ref=e1109]:
+                    - generic [ref=e1110]:
+                      - img [ref=e1111]
+                      - generic [ref=e1114]: Abdullah Ali
+                    - link [ref=e1115] [cursor=pointer]:
+                      - /url: https://wa.me/923009012345
+                      - img [ref=e1116]
+          - generic [ref=e1118]:
+            - generic [ref=e1119]:
+              - generic [ref=e1121]: Closed Won
+              - generic [ref=e1122]: "2"
+            - generic [ref=e1123]:
+              - button "Email Marketing Setup AS Ayesha Siddiqui $5,000 0d Email Campaign Abdullah Ali" [ref=e1124]:
+                - generic [ref=e1126]:
+                  - link "Email Marketing Setup" [ref=e1127] [cursor=pointer]:
+                    - /url: /leads/13
+                  - generic [ref=e1128]:
+                    - generic [ref=e1129]: AS
+                    - generic [ref=e1130]: Ayesha Siddiqui
+                  - generic [ref=e1131]:
+                    - generic [ref=e1132]: $5,000
+                    - generic [ref=e1133]:
+                      - img [ref=e1134]
+                      - text: 0d
+                    - generic [ref=e1137]: Email Campaign
+                  - generic [ref=e1138]:
+                    - generic [ref=e1139]:
+                      - img [ref=e1140]
+                      - generic [ref=e1143]: Abdullah Ali
+                    - link [ref=e1144] [cursor=pointer]:
+                      - /url: https://wa.me/923013456789
+                      - img [ref=e1145]
+              - button "Company Website KF Kamran Foster $10,000 0d Walk-in Salman Ahmed" [ref=e1147]:
+                - generic [ref=e1149]:
+                  - link "Company Website" [ref=e1150] [cursor=pointer]:
+                    - /url: /leads/12
+                  - generic [ref=e1151]:
+                    - generic [ref=e1152]: KF
+                    - generic [ref=e1153]: Kamran Foster
+                  - generic [ref=e1154]:
+                    - generic [ref=e1155]: $10,000
+                    - generic [ref=e1156]:
+                      - img [ref=e1157]
+                      - text: 0d
+                    - generic [ref=e1160]: Walk-in
+                  - generic [ref=e1161]:
+                    - generic [ref=e1162]:
+                      - img [ref=e1163]
+                      - generic [ref=e1166]: Salman Ahmed
+                    - link [ref=e1167] [cursor=pointer]:
+                      - /url: https://wa.me/923012345678
+                      - img [ref=e1168]
+          - generic [ref=e1170]:
+            - generic [ref=e1171]:
+              - generic [ref=e1173]: Closed Lost
+              - generic [ref=e1174]: "2"
+            - generic [ref=e1175]:
+              - button "AI Chatbot Integration RN Rabia Naz $15,000 0d Other Salman Ahmed" [ref=e1176]:
+                - generic [ref=e1178]:
+                  - link "AI Chatbot Integration" [ref=e1179] [cursor=pointer]:
+                    - /url: /leads/15
+                  - generic [ref=e1180]:
+                    - generic [ref=e1181]: RN
+                    - generic [ref=e1182]: Rabia Naz
+                  - generic [ref=e1183]:
+                    - generic [ref=e1184]: $15,000
+                    - generic [ref=e1185]:
+                      - img [ref=e1186]
+                      - text: 0d
+                    - generic [ref=e1189]: Other
+                  - generic [ref=e1190]:
+                    - generic [ref=e1191]:
+                      - img [ref=e1192]
+                      - generic [ref=e1195]: Salman Ahmed
+                    - link [ref=e1196] [cursor=pointer]:
+                      - /url: https://wa.me/923015678901
+                      - img [ref=e1197]
+              - button "Blockchain Solution UG Usman Ghani $120,000 0d Google Ads Faisal Malik" [ref=e1199]:
+                - generic [ref=e1201]:
+                  - link "Blockchain Solution" [ref=e1202] [cursor=pointer]:
+                    - /url: /leads/14
+                  - generic [ref=e1203]:
+                    - generic [ref=e1204]: UG
+                    - generic [ref=e1205]: Usman Ghani
+                  - generic [ref=e1206]:
+                    - generic [ref=e1207]: $120,000
+                    - generic [ref=e1208]:
+                      - img [ref=e1209]
+                      - text: 0d
+                    - generic [ref=e1212]: Google Ads
+                  - generic [ref=e1213]:
+                    - generic [ref=e1214]:
+                      - img [ref=e1215]
+                      - generic [ref=e1218]: Faisal Malik
+                    - link [ref=e1219] [cursor=pointer]:
+                      - /url: https://wa.me/923014567890
+                      - img [ref=e1220]
+        - status [ref=e1222]
+    - contentinfo [ref=e98]:
+      - paragraph [ref=e99]: © 2026 Visionplus Technologies Pvt. All rights reserved.

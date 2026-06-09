@@ -1,0 +1,188 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e8]: CRM System
+      - navigation [ref=e9]:
+        - generic [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - text: Dashboard
+          - link "Leads" [ref=e17] [cursor=pointer]:
+            - /url: /leads
+            - img [ref=e19]
+            - text: Leads
+          - link "Calendar" [ref=e24] [cursor=pointer]:
+            - /url: /calendar
+            - img [ref=e25]
+            - text: Calendar
+          - link "Messages" [ref=e27] [cursor=pointer]:
+            - /url: /messages
+            - img [ref=e28]
+            - text: Messages
+        - generic [ref=e30]:
+          - paragraph [ref=e31]: Analytics
+          - generic [ref=e32]:
+            - link "Reports" [ref=e33] [cursor=pointer]:
+              - /url: /reports
+              - img [ref=e34]
+              - text: Reports
+            - link "Lead Sources" [ref=e36] [cursor=pointer]:
+              - /url: /lead-sources
+              - img [ref=e37]
+              - text: Lead Sources
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: Administration
+          - link "Employees" [ref=e44] [cursor=pointer]:
+            - /url: /employees
+            - img [ref=e45]
+            - text: Employees
+      - button "Kashif Admin Administrator" [ref=e59] [cursor=pointer]:
+        - generic [ref=e60]:
+          - paragraph [ref=e61]: Kashif Admin
+          - paragraph [ref=e62]: Administrator
+        - img [ref=e63]
+    - generic [ref=e65]:
+      - banner [ref=e66]:
+        - button [ref=e67] [cursor=pointer]:
+          - img [ref=e68]
+      - main [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - button "Back" [ref=e75] [cursor=pointer]:
+              - img [ref=e76]
+            - generic [ref=e78]:
+              - heading "New Lead" [level=1] [ref=e79]
+              - paragraph [ref=e80]: Create a new sales lead
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - heading "Customer" [level=2] [ref=e83]:
+                - generic [ref=e84]: Customer
+              - generic [ref=e87]:
+                - generic [ref=e88]:
+                  - generic [ref=e89]: Name*
+                  - textbox "Name" [ref=e90]:
+                    - /placeholder: e.g. Acme Corporation
+                - generic [ref=e91]:
+                  - generic [ref=e92]: Email
+                  - generic [ref=e93]:
+                    - img
+                    - textbox "Email" [ref=e94]:
+                      - /placeholder: contact@company.com
+                - generic [ref=e95]:
+                  - generic [ref=e96]: Phone
+                  - generic [ref=e97]:
+                    - img
+                    - textbox "Phone" [ref=e98]:
+                      - /placeholder: +92...
+            - generic [ref=e99]:
+              - heading "Classification" [level=2] [ref=e100]:
+                - generic [ref=e101]: Classification
+              - generic [ref=e104]:
+                - generic [ref=e105]:
+                  - generic [ref=e106]: Business Type
+                  - generic [ref=e108]:
+                    - generic [ref=e109]:
+                      - combobox [ref=e110]:
+                        - option "Select business type" [selected]
+                        - option "No options" [disabled]
+                      - img
+                    - button "Add new item" [ref=e111] [cursor=pointer]:
+                      - img [ref=e112]
+                - generic [ref=e113]:
+                  - generic [ref=e114]: Lead Source
+                  - generic [ref=e116]:
+                    - generic [ref=e117]:
+                      - combobox [ref=e118]:
+                        - option "Select source" [selected]
+                        - option "No options" [disabled]
+                      - img
+                    - button "Add new item" [ref=e119] [cursor=pointer]:
+                      - img [ref=e120]
+            - generic [ref=e121]:
+              - heading "Deal information" [level=2] [ref=e122]:
+                - generic [ref=e123]: Deal information
+              - generic [ref=e125]:
+                - generic [ref=e126]:
+                  - generic [ref=e127]: Title*
+                  - textbox "Title" [ref=e128]:
+                    - /placeholder: e.g. E-commerce platform redesign
+                - generic [ref=e129]:
+                  - generic [ref=e130]: Description
+                  - textbox "Description" [ref=e131]:
+                    - /placeholder: Brief description of the opportunity
+                - generic [ref=e132]:
+                  - generic [ref=e133]:
+                    - generic [ref=e134]: Status
+                    - combobox "Status" [ref=e135]:
+                      - option "New" [selected]
+                      - option "Contacted"
+                      - option "Qualified"
+                      - option "Proposal"
+                      - option "Closed Won"
+                      - option "Closed Lost"
+                  - generic [ref=e136]:
+                    - generic [ref=e137]: Lead Date*
+                    - generic [ref=e138]:
+                      - img
+                      - textbox "Lead Date" [ref=e139]: 2026-06-09
+                  - generic [ref=e140]:
+                    - generic [ref=e141]: Estimated Value
+                    - generic [ref=e142]:
+                      - img
+                      - spinbutton "Estimated Value" [ref=e143]
+                    - paragraph [ref=e144]: Best-guess deal value in USD
+                  - generic [ref=e145]:
+                    - generic [ref=e146]: Assign To
+                    - generic [ref=e147]:
+                      - img
+                      - combobox "Assign To" [ref=e148]:
+                        - option "Unassigned" [selected]
+            - generic [ref=e149]:
+              - heading "Contact Person" [level=2] [ref=e150]:
+                - generic [ref=e151]: Contact Person
+              - generic [ref=e154]:
+                - generic [ref=e155]:
+                  - generic [ref=e156]: Name
+                  - textbox "Name" [ref=e157]:
+                    - /placeholder: Full name
+                - generic [ref=e158]:
+                  - generic [ref=e159]: Designation
+                  - textbox "Designation" [ref=e160]:
+                    - /placeholder: e.g. Procurement Manager
+                - generic [ref=e161]:
+                  - generic [ref=e162]: Mobile No
+                  - generic [ref=e163]:
+                    - img
+                    - textbox "Mobile No" [ref=e164]:
+                      - /placeholder: +92...
+            - generic [ref=e165]:
+              - heading "Address" [level=2] [ref=e166]:
+                - generic [ref=e167]: Address
+              - generic [ref=e170]:
+                - generic [ref=e171]:
+                  - generic [ref=e172]: Address
+                  - generic [ref=e173]:
+                    - img
+                    - textbox "Address" [ref=e174]:
+                      - /placeholder: Street address
+                - generic [ref=e175]:
+                  - generic [ref=e176]: City
+                  - generic [ref=e177]:
+                    - img
+                    - textbox "City" [ref=e178]:
+                      - /placeholder: e.g. Lahore
+            - generic [ref=e179]:
+              - heading "Notes" [level=2] [ref=e180]:
+                - generic [ref=e181]: Notes
+              - textbox "Any additional information about this lead..." [ref=e185]
+            - generic [ref=e186]:
+              - button "Cancel" [ref=e187] [cursor=pointer]
+              - button "Create Lead" [ref=e188] [cursor=pointer]:
+                - img [ref=e189]
+                - text: Create Lead
+      - contentinfo [ref=e193]:
+        - paragraph [ref=e194]: © 2026 Visionplus Technologies Pvt. All rights reserved.
+  - status

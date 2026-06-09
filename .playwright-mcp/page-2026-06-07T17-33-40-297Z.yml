@@ -1,0 +1,85 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e6]
+      - generic [ref=e8]: CRM System
+    - navigation [ref=e9]:
+      - generic [ref=e10]:
+        - link "Dashboard" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Dashboard
+        - link "Leads" [ref=e17] [cursor=pointer]:
+          - /url: /leads
+          - img [ref=e18]
+          - text: Leads
+        - link "Calendar" [ref=e23] [cursor=pointer]:
+          - /url: /calendar
+          - img [ref=e24]
+          - text: Calendar
+        - link "Messages" [ref=e26] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e27]
+          - text: Messages
+      - generic [ref=e29]:
+        - paragraph [ref=e30]: Analytics
+        - generic [ref=e31]:
+          - link "Reports" [ref=e32] [cursor=pointer]:
+            - /url: /reports
+            - img [ref=e33]
+            - text: Reports
+          - link "Lead Sources" [ref=e35] [cursor=pointer]:
+            - /url: /lead-sources
+            - img [ref=e36]
+            - text: Lead Sources
+      - generic [ref=e40]:
+        - paragraph [ref=e41]: Administration
+        - link "Employees" [ref=e43] [cursor=pointer]:
+          - /url: /employees
+          - img [ref=e44]
+          - text: Employees
+    - button "KA Kashif Admin Administrator" [ref=e58] [cursor=pointer]:
+      - generic [ref=e59]: KA
+      - generic [ref=e60]:
+        - paragraph [ref=e61]: Kashif Admin
+        - paragraph [ref=e62]: Administrator
+      - img [ref=e63]
+  - generic [ref=e65]:
+    - banner [ref=e66]:
+      - button [ref=e67] [cursor=pointer]:
+        - img [ref=e68]
+    - main [ref=e72]:
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]:
+            - heading "Leads" [level=1] [ref=e76]
+            - paragraph [ref=e77]: Manage your sales pipeline
+          - link "New Lead" [ref=e78] [cursor=pointer]:
+            - /url: /leads/create
+            - img [ref=e79]
+            - text: New Lead
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - img [ref=e83]
+            - textbox "Search leads..." [ref=e86]
+          - combobox [ref=e87]:
+            - option "All Statuses" [selected]
+            - option "New"
+            - option "Contacted"
+            - option "Qualified"
+            - option "Proposal"
+            - option "Closed Won"
+            - option "Closed Lost"
+          - combobox [ref=e88]:
+            - option "All Sources" [selected]
+          - combobox [ref=e89]:
+            - option "All Officers" [selected]
+            - option "Unassigned"
+          - generic [ref=e90]:
+            - button [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+            - button [ref=e93] [cursor=pointer]:
+              - img [ref=e94]
+        - img [ref=e100]
+    - contentinfo [ref=e102]:
+      - paragraph [ref=e103]: © 2026 Visionplus Technologies Pvt. All rights reserved.
