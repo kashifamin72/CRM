@@ -8,3 +8,6 @@ uploads/
 keys/
 *.log
 .DS_Store
+.playwright-mcp/
+*.png
+!frontend/src/**/*.png
