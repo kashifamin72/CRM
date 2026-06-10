@@ -64,7 +64,6 @@ public class FollowUpsController : ControllerBase
     }
 
     [HttpGet("officers")]
-    [Authorize(Roles = "Administrator,Manager")]
     public async Task<IActionResult> GetOfficers()
     {
         var users = await _userManager.GetUsersInRoleAsync("SalesOfficer");
