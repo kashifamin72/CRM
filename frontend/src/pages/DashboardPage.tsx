@@ -29,6 +29,9 @@ import {
   ResponsiveContainer,
   Cell,
   LabelList,
+  PieChart,
+  Pie,
+  Legend,
 } from 'recharts';
 import { STATUS_VISUAL } from '../lib/status';
 
@@ -312,9 +315,20 @@ export default function DashboardPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-slate-900">Open Leads by Officer</h2>
-            <span className="text-xs text-slate-500">
-              {data.openLeadsByOfficer.reduce((sum, o) => sum + o.leadCount, 0)} open leads
-            </span>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-2xl font-bold text-primary-600">
+                  {data.openLeadsByOfficer.reduce((sum, o) => sum + o.leadCount, 0)}
+                </p>
+                <p className="text-xs text-slate-500">Total Open Leads</p>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-green-600">
+                  ${data.openLeadsByOfficer.reduce((sum, o) => sum + o.totalEstimatedValue, 0).toLocaleString()}
+                </p>
+                <p className="text-xs text-slate-500">Total Value</p>
+              </div>
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {data.openLeadsByOfficer.map((officer) => (
@@ -328,16 +342,16 @@ export default function DashboardPage() {
                     <img
                       src={officer.officerPicture}
                       alt=""
-                      className="h-10 w-10 rounded-full object-cover flex-shrink-0"
+                      className="h-12 w-12 rounded-full object-cover flex-shrink-0"
                     />
                   ) : (
-                    <div className="h-10 w-10 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0">
+                    <div className="h-12 w-12 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0">
                       {officer.officerId ? (
-                        <span className="text-sm font-semibold">
+                        <span className="text-base font-semibold">
                           {officer.officerName.split(' ').map(n => n[0]).join('').slice(0, 2)}
                         </span>
                       ) : (
-                        <UserCircle className="h-5 w-5" />
+                        <UserCircle className="h-6 w-6" />
                       )}
                     </div>
                   )}
@@ -345,28 +359,46 @@ export default function DashboardPage() {
                     <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-primary-600 transition-colors">
                       {officer.officerName}
                     </p>
-                    <p className="text-xs text-slate-500">
-                      {officer.leadCount} open lead{officer.leadCount !== 1 ? 's' : ''}
-                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-2xl font-bold text-primary-600">{officer.leadCount}</span>
+                      <span className="text-xs text-slate-500">lead{officer.leadCount !== 1 ? 's' : ''}</span>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-slate-900">{officer.leadCount}</p>
-                    <p className="text-[10px] uppercase tracking-wide text-slate-500">Leads</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-lg font-bold text-green-600">
-                      ${officer.totalEstimatedValue >= 1000
-                        ? `${(officer.totalEstimatedValue / 1000).toFixed(1)}k`
-                        : officer.totalEstimatedValue.toLocaleString()}
-                    </p>
-                    <p className="text-[10px] uppercase tracking-wide text-slate-500">Value</p>
+                  <div className="text-sm">
+                    <span className="text-slate-500">Value: </span>
+                    <span className="font-semibold text-green-600">
+                      ${officer.totalEstimatedValue.toLocaleString()}
+                    </span>
                   </div>
                   <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" />
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="card p-5">
+            <h3 className="text-base font-semibold text-slate-900 mb-4">Open Leads by Status</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={pipelineData.filter(s => s.name !== 'Closed Won' && s.name !== 'Closed Lost' && s.count > 0)}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, count }) => `${name}: ${count}`}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="count"
+                >
+                  {pipelineData.filter(s => s.name !== 'Closed Won' && s.name !== 'Closed Lost' && s.count > 0).map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
       )}
