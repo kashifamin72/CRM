@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import { Lead, LeadStatus, LeadStatusLabels, LeadStatusColors, LeadSource } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/Toaster';
+import { useDebounce } from '../hooks/useDebounce';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { EmptyState } from '../components/ui/EmptyState';
@@ -45,6 +46,7 @@ export default function LeadsListPage() {
   const [assignedToFilter, setAssignedToFilter] = useState('');
   const [winLostFilter, setWinLostFilter] = useState('');
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 300);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function LeadsListPage() {
       loadSources();
       loadOfficers();
     }
-  }, [statusFilter, sourceFilter, assignedToFilter, winLostFilter, search]);
+  }, [statusFilter, sourceFilter, assignedToFilter, winLostFilter, debouncedSearch]);
 
   const loadLeads = async () => {
     setLoading(true);
@@ -63,9 +65,10 @@ export default function LeadsListPage() {
       if (sourceFilter) params.set('sourceId', sourceFilter);
       if (assignedToFilter) params.set('assignedTo', assignedToFilter);
       if (winLostFilter) params.set('winLostFilter', winLostFilter);
-      if (search) params.set('search', search);
-      const result = await api.get<Lead[]>(`/leads?${params.toString()}`);
-      setLeads(result);
+      if (debouncedSearch) params.set('search', debouncedSearch);
+      params.set('pageSize', '500');
+      const result = await api.get<{ items: Lead[]; totalCount: number; page: number; pageSize: number; totalPages: number }>(`/leads?${params.toString()}`);
+      setLeads(result.items);
     } catch (err) {
       showToast('Failed to load leads', 'error');
     } finally {

@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,30 +10,29 @@ namespace CRM.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class DashboardController : ControllerBase
+public class DashboardController : BaseApiController
 {
     private readonly ApplicationDbContext _db;
 
     public DashboardController(ApplicationDbContext db) => _db = db;
 
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] string? assignedTo)
+    public async Task<IActionResult> Get([FromQuery] string? assignedTo, CancellationToken ct = default)
     {
         var userId = GetUserId();
-        var role = GetUserRole();
 
         IQueryable<Lead> leadQuery = _db.Leads
             .Include(l => l.LeadSource)
             .Include(l => l.AssignedTo)
             .Include(l => l.CreatedBy);
 
-        if (role == "SalesOfficer")
+        if (IsSalesOfficer)
             leadQuery = leadQuery.Where(l => l.AssignedToId == userId || l.CreatedById == userId);
 
-        if (!string.IsNullOrEmpty(assignedTo) && (role == "Administrator" || role == "Manager"))
+        if (!string.IsNullOrEmpty(assignedTo) && IsAdminOrManager)
             leadQuery = leadQuery.Where(l => l.AssignedToId == assignedTo);
 
-        var allLeads = await leadQuery.ToListAsync();
+        var allLeads = await leadQuery.ToListAsync(ct);
         var today = DateTime.UtcNow.Date;
         var tomorrow = today.AddDays(1);
 
@@ -43,10 +41,10 @@ public class DashboardController : ControllerBase
             .Include(f => f.CreatedBy)
             .Where(f => !f.IsCompleted);
 
-        if (role == "SalesOfficer")
+        if (IsSalesOfficer)
             followUpQuery = followUpQuery.Where(f => f.CreatedById == userId);
 
-        if (!string.IsNullOrEmpty(assignedTo) && (role == "Administrator" || role == "Manager"))
+        if (!string.IsNullOrEmpty(assignedTo) && IsAdminOrManager)
         {
             if (assignedTo == "unassigned")
                 followUpQuery = followUpQuery.Where(f => f.Lead != null && f.Lead.AssignedToId == null);
@@ -54,7 +52,7 @@ public class DashboardController : ControllerBase
                 followUpQuery = followUpQuery.Where(f => f.Lead != null && f.Lead.AssignedToId == assignedTo);
         }
 
-        var allFollowUps = await followUpQuery.ToListAsync();
+        var allFollowUps = await followUpQuery.ToListAsync(ct);
 
         var overdue = allFollowUps
             .Where(f => f.FollowUpDate.Date < today)
@@ -189,10 +187,4 @@ public class DashboardController : ControllerBase
             RecentLeads = recentLeads
         });
     }
-
-    private string GetUserId() =>
-        User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
-
-    private string GetUserRole() =>
-        User.FindFirstValue(ClaimTypes.Role) ?? "";
 }

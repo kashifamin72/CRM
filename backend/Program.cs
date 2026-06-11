@@ -1,12 +1,15 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Threading.RateLimiting;
 using CRM.Api.Data;
 using CRM.Api.Models;
 using CRM.Api.Services;
+using CRM.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,7 +112,22 @@ builder.Services.AddHttpClient<IWhatsAppService, WhatsAppService>(client =>
 });
 builder.Services.AddHealthChecks();
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("login", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 10;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueLimit = 0;
+    });
+
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
 var app = builder.Build();
+
+app.UseGlobalExceptionHandler();
+app.UseRateLimiter();
 
 using (var scope = app.Services.CreateScope())
 {

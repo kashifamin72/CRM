@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ namespace CRM.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class LeadsController : ControllerBase
+public class LeadsController : BaseApiController
 {
     private readonly ApplicationDbContext _db;
 
@@ -24,10 +23,12 @@ public class LeadsController : ControllerBase
         [FromQuery] string? assignedTo,
         [FromQuery] int? sourceId,
         [FromQuery] int? businessTypeId,
-        [FromQuery] string? winLostFilter)
+        [FromQuery] string? winLostFilter,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 100,
+        CancellationToken ct = default)
     {
         var userId = GetUserId();
-        var role = GetUserRole();
 
         IQueryable<Lead> query = _db.Leads
             .Include(l => l.LeadSource)
@@ -37,7 +38,7 @@ public class LeadsController : ControllerBase
             .Include(l => l.CreatedBy)
             .Include(l => l.FollowUps);
 
-        if (role == "SalesOfficer")
+        if (IsSalesOfficer)
             query = query.Where(l => l.AssignedToId == userId || l.CreatedById == userId);
 
         if (status.HasValue)
@@ -66,7 +67,6 @@ public class LeadsController : ControllerBase
                 l.CustomerEmail.ToLower().Contains(s));
         }
 
-        // Win/Lost filter — only affects leads with status ClosedWon or ClosedLost
         if (!string.IsNullOrEmpty(winLostFilter))
         {
             var now = DateTime.UtcNow;
@@ -90,17 +90,34 @@ public class LeadsController : ControllerBase
                     break;
                 case "all":
                 default:
-                    // No win/lost filter
                     break;
             }
         }
 
-        var leads = await query.OrderByDescending(l => l.LeadDate).ToListAsync();
-        return Ok(leads.Select(MapToLeadResponse));
+        var totalCount = await query.CountAsync(ct);
+        pageSize = Math.Clamp(pageSize, 1, 500);
+        page = Math.Max(page, 1);
+
+        var leads = await query
+            .OrderByDescending(l => l.LeadDate)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(ct);
+
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        return Ok(new
+        {
+            items = leads.Select(MapToLeadResponse),
+            totalCount,
+            page,
+            pageSize,
+            totalPages
+        });
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get(int id, CancellationToken ct = default)
     {
         var lead = await _db.Leads
             .Include(l => l.LeadSource)
@@ -110,7 +127,7 @@ public class LeadsController : ControllerBase
             .Include(l => l.CreatedBy)
             .Include(l => l.FollowUps).ThenInclude(f => f.CreatedBy)
             .Include(l => l.MessageLogs).ThenInclude(m => m.SentBy)
-            .FirstOrDefaultAsync(l => l.Id == id);
+            .FirstOrDefaultAsync(l => l.Id == id, ct);
 
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
@@ -119,14 +136,12 @@ public class LeadsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateLeadRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateLeadRequest request, CancellationToken ct = default)
     {
         var userId = GetUserId();
-        var role = GetUserRole();
 
-        // Auto-assign to creator for SalesOfficer
         var assignedToId = request.AssignedToId;
-        if (role == "SalesOfficer")
+        if (IsSalesOfficer)
             assignedToId = userId;
 
         var lead = new Lead
@@ -155,9 +170,8 @@ public class LeadsController : ControllerBase
         };
 
         _db.Leads.Add(lead);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
 
-        // Log "Created" activity
         _db.LeadActivities.Add(new LeadActivity
         {
             LeadId = lead.Id,
@@ -168,7 +182,7 @@ public class LeadsController : ControllerBase
             PerformedById = userId,
             CreatedAt = DateTime.UtcNow,
         });
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
 
         var created = await _db.Leads
             .Include(l => l.LeadSource)
@@ -177,15 +191,15 @@ public class LeadsController : ControllerBase
             .Include(l => l.AssignedTo)
             .Include(l => l.CreatedBy)
             .Include(l => l.FollowUps)
-            .FirstAsync(l => l.Id == lead.Id);
+            .FirstAsync(l => l.Id == lead.Id, ct);
 
         return Created($"/api/leads/{lead.Id}", MapToLeadResponse(created));
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateLeadRequest request)
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateLeadRequest request, CancellationToken ct = default)
     {
-        var lead = await _db.Leads.FindAsync(id);
+        var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
@@ -210,27 +224,27 @@ public class LeadsController : ControllerBase
         lead.AssignedToId = request.AssignedToId;
         lead.UpdatedAt = DateTime.UtcNow;
 
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
         return Ok(new { message = "Lead updated" });
     }
 
     [HttpDelete("{id}")]
     [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int id, CancellationToken ct = default)
     {
-        var lead = await _db.Leads.FindAsync(id);
+        var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
 
         _db.Leads.Remove(lead);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
         return Ok(new { message = "Lead deleted" });
     }
 
     [HttpPost("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusRequest request)
+    public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusRequest request, CancellationToken ct = default)
     {
         var userId = GetUserId();
-        var lead = await _db.Leads.FindAsync(id);
+        var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
@@ -252,27 +266,25 @@ public class LeadsController : ControllerBase
             });
         }
 
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
         return Ok(new { message = "Status updated", status = lead.Status });
     }
 
     [HttpPost("{id}/forward")]
     [Authorize(Roles = "Administrator,Manager,SalesOfficer")]
-    public async Task<IActionResult> Forward(int id, [FromBody] ForwardLeadRequest request)
+    public async Task<IActionResult> Forward(int id, [FromBody] ForwardLeadRequest request, CancellationToken ct = default)
     {
         var userId = GetUserId();
         var lead = await _db.Leads
             .Include(l => l.AssignedTo)
-            .FirstOrDefaultAsync(l => l.Id == id);
+            .FirstOrDefaultAsync(l => l.Id == id, ct);
         if (lead == null) return NotFound();
 
-        // SalesOfficer may only forward leads they currently own
         var role = GetUserRole();
-        if (role == "SalesOfficer" && lead.AssignedToId != userId)
+        if (IsSalesOfficer && lead.AssignedToId != userId)
             return Forbid();
 
-        // Verify target user exists and is a SalesOfficer
-        var newAssignee = await _db.Users.FindAsync(request.AssignedToId);
+        var newAssignee = await _db.Users.FindAsync(new object[] { request.AssignedToId }, ct);
         if (newAssignee == null) return BadRequest(new { message = "Target user not found" });
         if (!await _db.UserRoles.AnyAsync(ur => ur.UserId == request.AssignedToId && ur.RoleId ==
             _db.Roles.First(r => r.Name == "SalesOfficer").Id))
@@ -296,14 +308,14 @@ public class LeadsController : ControllerBase
             CreatedAt = DateTime.UtcNow,
         });
 
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
         return Ok(new { message = "Lead forwarded", assignedToId = request.AssignedToId });
     }
 
     [HttpGet("{id}/activities")]
-    public async Task<IActionResult> GetActivities(int id)
+    public async Task<IActionResult> GetActivities(int id, CancellationToken ct = default)
     {
-        var lead = await _db.Leads.FindAsync(id);
+        var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
@@ -329,15 +341,15 @@ public class LeadsController : ControllerBase
                 Notes = a.Notes,
                 CreatedAt = a.CreatedAt
             })
-            .ToListAsync();
+            .ToListAsync(ct);
 
         return Ok(activities);
     }
 
     [HttpGet("{id}/followups")]
-    public async Task<IActionResult> GetFollowUps(int id)
+    public async Task<IActionResult> GetFollowUps(int id, CancellationToken ct = default)
     {
-        var lead = await _db.Leads.FindAsync(id);
+        var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
@@ -356,15 +368,15 @@ public class LeadsController : ControllerBase
                 CreatedByName = f.CreatedBy.FirstName + " " + f.CreatedBy.LastName,
                 CreatedByPicture = f.CreatedBy.ProfilePicture
             })
-            .ToListAsync();
+            .ToListAsync(ct);
 
         return Ok(followUps);
     }
 
     [HttpPost("{id}/followups")]
-    public async Task<IActionResult> AddFollowUp(int id, [FromBody] AddFollowUpRequest request)
+    public async Task<IActionResult> AddFollowUp(int id, [FromBody] AddFollowUpRequest request, CancellationToken ct = default)
     {
-        var lead = await _db.Leads.FindAsync(id);
+        var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
@@ -379,34 +391,34 @@ public class LeadsController : ControllerBase
         };
 
         _db.FollowUps.Add(followUp);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
 
         return Ok(new { followUp.Id, followUp.Title, followUp.FollowUpDate });
     }
 
     [HttpPut("followups/{id}/complete")]
-    public async Task<IActionResult> CompleteFollowUp(int id)
+    public async Task<IActionResult> CompleteFollowUp(int id, CancellationToken ct = default)
     {
-        var followUp = await _db.FollowUps.Include(f => f.Lead).FirstOrDefaultAsync(f => f.Id == id);
+        var followUp = await _db.FollowUps.Include(f => f.Lead).FirstOrDefaultAsync(f => f.Id == id, ct);
         if (followUp == null) return NotFound();
         if (!CanAccessLead(followUp.Lead)) return Forbid();
 
         followUp.IsCompleted = true;
         followUp.CompletedAt = DateTime.UtcNow;
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
 
         return Ok(new { message = "Follow-up completed" });
     }
 
     [HttpDelete("followups/{id}")]
-    public async Task<IActionResult> DeleteFollowUp(int id)
+    public async Task<IActionResult> DeleteFollowUp(int id, CancellationToken ct = default)
     {
-        var followUp = await _db.FollowUps.Include(f => f.Lead).FirstOrDefaultAsync(f => f.Id == id);
+        var followUp = await _db.FollowUps.Include(f => f.Lead).FirstOrDefaultAsync(f => f.Id == id, ct);
         if (followUp == null) return NotFound();
         if (!CanAccessLead(followUp.Lead)) return Forbid();
 
         _db.FollowUps.Remove(followUp);
-        await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync(ct);
 
         return Ok(new { message = "Follow-up deleted" });
     }
@@ -414,16 +426,9 @@ public class LeadsController : ControllerBase
     private bool CanAccessLead(Lead lead)
     {
         var userId = GetUserId();
-        var role = GetUserRole();
-        return role == "Administrator" || role == "Manager"
+        return IsAdmin || IsManager
             || lead.AssignedToId == userId || lead.CreatedById == userId;
     }
-
-    private string GetUserId() =>
-        User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
-
-    private string GetUserRole() =>
-        User.FindFirstValue(ClaimTypes.Role) ?? "";
 
     private static LeadResponse MapToLeadResponse(Lead l) => new()
     {

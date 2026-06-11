@@ -1,13 +1,37 @@
-node_modules/
-dist/
+# Build artifacts
+bin/
+obj/
+*.dll
+*.pdb
+*.cache
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
 .env
-.env.*
+.env.local
+.env.*.local
+
+# Backups and uploads
 backups/
 db/
 uploads/
 keys/
-*.log
-.DS_Store
+
+# Playwright
 .playwright-mcp/
+
+# Screenshots (allow src images)
 *.png
 !frontend/src/**/*.png

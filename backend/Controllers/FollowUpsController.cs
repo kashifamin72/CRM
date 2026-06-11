@@ -1,10 +1,8 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CRM.Api.Data;
 using CRM.Api.Models;
-using CRM.Api.DTOs;
 
 using Microsoft.AspNetCore.Identity;
 
@@ -13,7 +11,7 @@ namespace CRM.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class FollowUpsController : ControllerBase
+public class FollowUpsController : BaseApiController
 {
     private readonly ApplicationDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -25,20 +23,19 @@ public class FollowUpsController : ControllerBase
     }
 
     [HttpGet("calendar")]
-    public async Task<IActionResult> GetCalendar([FromQuery] string? assignedTo)
+    public async Task<IActionResult> GetCalendar([FromQuery] string? assignedTo, CancellationToken ct = default)
     {
         var userId = GetUserId();
-        var role = GetUserRole();
 
         var query = _db.FollowUps
             .Include(f => f.Lead)
             .Include(f => f.CreatedBy)
             .AsQueryable();
 
-        if (role == "SalesOfficer")
+        if (IsSalesOfficer)
             query = query.Where(f => f.CreatedById == userId);
 
-        if (!string.IsNullOrEmpty(assignedTo) && (role == "Administrator" || role == "Manager"))
+        if (!string.IsNullOrEmpty(assignedTo) && IsAdminOrManager)
             query = query.Where(f => f.CreatedById == assignedTo);
 
         var followUps = await query
@@ -58,13 +55,13 @@ public class FollowUpsController : ControllerBase
                 f.CreatedAt,
                 f.CompletedAt
             })
-            .ToListAsync();
+            .ToListAsync(ct);
 
         return Ok(followUps);
     }
 
     [HttpGet("officers")]
-    public async Task<IActionResult> GetOfficers()
+    public async Task<IActionResult> GetOfficers(CancellationToken ct = default)
     {
         var users = await _userManager.GetUsersInRoleAsync("SalesOfficer");
         var result = users
@@ -81,10 +78,4 @@ public class FollowUpsController : ControllerBase
             .ToList();
         return Ok(result);
     }
-
-    private string GetUserId() =>
-        User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
-
-    private string GetUserRole() =>
-        User.FindFirstValue(ClaimTypes.Role) ?? "";
 }
