@@ -7,7 +7,7 @@ import { useToast } from '../components/Toaster';
 import { KPICard } from '../components/ui/KPICard';
 import { EmptyState } from '../components/ui/EmptyState';
 import { StatusBadge } from '../components/ui/StatusBadge';
-import { Inbox } from 'lucide-react';
+import { Inbox, UserCircle, Phone } from 'lucide-react';
 import {
   Users,
   Plus,
@@ -307,6 +307,101 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      {data.openLeadsByOfficer?.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-slate-900">Open Leads by Officer</h2>
+            <span className="text-xs text-slate-500">
+              {data.openLeadsByOfficer.reduce((sum, o) => sum + o.leadCount, 0)} open leads
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {data.openLeadsByOfficer.map((officer) => (
+              <div key={officer.officerId ?? 'unassigned'} className="card overflow-hidden">
+                <div className="flex items-center gap-3 p-4 border-b border-slate-200 bg-slate-50/50">
+                  {officer.officerPicture ? (
+                    <img
+                      src={officer.officerPicture}
+                      alt=""
+                      className="h-9 w-9 rounded-full object-cover flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="h-9 w-9 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0">
+                      {officer.officerId ? (
+                        <span className="text-sm font-semibold">
+                          {officer.officerName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                        </span>
+                      ) : (
+                        <UserCircle className="h-5 w-5" />
+                      )}
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 truncate">{officer.officerName}</p>
+                    <p className="text-xs text-slate-500">
+                      {officer.leadCount} lead{officer.leadCount !== 1 ? 's' : ''}
+                      {officer.totalEstimatedValue > 0 && (
+                        <span className="ml-1">· ${officer.totalEstimatedValue.toLocaleString()}</span>
+                      )}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold text-primary-700 bg-primary-50 px-2 py-1 rounded-full">
+                    {officer.leadCount}
+                  </span>
+                </div>
+                <div className="divide-y divide-slate-100 max-h-[280px] overflow-y-auto">
+                  {officer.leads.map((lead) => (
+                    <Link
+                      key={lead.id}
+                      to={`/leads/${lead.id}`}
+                      className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-900 truncate">{lead.title}</p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-xs text-slate-500 truncate">{lead.customerName}</span>
+                          {lead.leadSourceName && (
+                            <span
+                              className="text-[10px] font-medium px-1.5 py-0.5 rounded flex-shrink-0"
+                              style={{
+                                backgroundColor: `${lead.leadSourceColor || '#6366f1'}20`,
+                                color: lead.leadSourceColor || '#6366f1',
+                              }}
+                            >
+                              {lead.leadSourceName}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                        <StatusBadge status={lead.status} />
+                        {lead.estimatedValue ? (
+                          <span className="text-[11px] font-medium text-slate-600">
+                            ${lead.estimatedValue.toLocaleString()}
+                          </span>
+                        ) : null}
+                      </div>
+                      {lead.customerPhone && (
+                        <a
+                          href={`https://wa.me/${lead.customerPhone.replace(/[^0-9]/g, '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded transition-colors flex-shrink-0"
+                          title="WhatsApp"
+                        >
+                          <Phone className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="card">
         <div className="flex items-center justify-between p-5 border-b border-slate-200">

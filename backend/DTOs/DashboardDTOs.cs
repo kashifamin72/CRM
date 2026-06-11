@@ -13,6 +13,7 @@ public class DashboardResponse
     public List<FollowUpResponse> TodaysFollowUps { get; set; } = new();
     public List<FollowUpResponse> TomorrowsFollowUps { get; set; } = new();
     public List<LeadResponse> RecentLeads { get; set; } = new();
+    public List<OfficerOpenLeads> OpenLeadsByOfficer { get; set; } = new();
 }
 
 public class PipelineStage
@@ -27,4 +28,28 @@ public class SourceBreakdown
     public string? SourceColor { get; set; }
     public int Count { get; set; }
     public decimal EstValue { get; set; }
+}
+
+public class OfficerOpenLeads
+{
+    public string? OfficerId { get; set; }
+    public string OfficerName { get; set; } = string.Empty;
+    public string? OfficerPicture { get; set; }
+    public int LeadCount { get; set; }
+    public decimal TotalEstimatedValue { get; set; }
+    public List<OpenLeadItem> Leads { get; set; } = new();
+}
+
+public class OpenLeadItem
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string CustomerName { get; set; } = string.Empty;
+    public string CustomerPhone { get; set; } = string.Empty;
+    public LeadStatus Status { get; set; }
+    public decimal? EstimatedValue { get; set; }
+    public string? LeadSourceName { get; set; }
+    public string? LeadSourceColor { get; set; }
+    public string? LeadSourceIcon { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }

@@ -174,6 +174,49 @@ public class DashboardController : BaseApiController
             })
             .ToList();
 
+        var openLeadsQuery = _db.Leads
+            .Include(l => l.AssignedTo)
+            .Include(l => l.LeadSource)
+            .Where(l => l.Status != LeadStatus.ClosedWon && l.Status != LeadStatus.ClosedLost);
+
+        if (IsSalesOfficer)
+            openLeadsQuery = openLeadsQuery.Where(l => l.AssignedToId == userId || l.CreatedById == userId);
+
+        var openLeads = await openLeadsQuery
+            .OrderByDescending(l => l.UpdatedAt)
+            .ToListAsync(ct);
+
+        var openLeadsByOfficer = openLeads
+            .GroupBy(l => l.AssignedToId ?? "unassigned")
+            .Select(g =>
+            {
+                var firstLead = g.First();
+                var officer = firstLead.AssignedTo;
+                return new OfficerOpenLeads
+                {
+                    OfficerId = g.Key == "unassigned" ? null : g.Key,
+                    OfficerName = officer != null ? $"{officer.FirstName} {officer.LastName}" : "Unassigned",
+                    OfficerPicture = officer?.ProfilePicture,
+                    LeadCount = g.Count(),
+                    TotalEstimatedValue = g.Where(l => l.EstimatedValue.HasValue).Sum(l => l.EstimatedValue!.Value),
+                    Leads = g.Select(l => new OpenLeadItem
+                    {
+                        Id = l.Id,
+                        Title = l.Title,
+                        CustomerName = l.CustomerName,
+                        CustomerPhone = l.CustomerPhone,
+                        Status = l.Status,
+                        EstimatedValue = l.EstimatedValue,
+                        LeadSourceName = l.LeadSource?.Name,
+                        LeadSourceColor = l.LeadSource?.Color,
+                        LeadSourceIcon = l.LeadSource?.Icon,
+                        UpdatedAt = l.UpdatedAt
+                    }).ToList()
+                };
+            })
+            .OrderByDescending(o => o.LeadCount)
+            .ToList();
+
         return Ok(new DashboardResponse
         {
             TotalLeads = allLeads.Count,
@@ -184,7 +227,8 @@ public class DashboardController : BaseApiController
             SourceBreakdown = sourceBreakdown,
             TodaysFollowUps = overdue.Concat(todaysFollowUps).ToList(),
             TomorrowsFollowUps = tomorrowsFollowUps,
-            RecentLeads = recentLeads
+            RecentLeads = recentLeads,
+            OpenLeadsByOfficer = openLeadsByOfficer
         });
     }
 }

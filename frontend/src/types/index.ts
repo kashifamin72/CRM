@@ -198,6 +198,29 @@ export interface DashboardData {
   todaysFollowUps: FollowUp[];
   tomorrowsFollowUps: FollowUp[];
   recentLeads: Lead[];
+  openLeadsByOfficer: OfficerOpenLeads[];
+}
+
+export interface OfficerOpenLeads {
+  officerId: string | null;
+  officerName: string;
+  officerPicture?: string;
+  leadCount: number;
+  totalEstimatedValue: number;
+  leads: OpenLeadItem[];
+}
+
+export interface OpenLeadItem {
+  id: number;
+  title: string;
+  customerName: string;
+  customerPhone: string;
+  status: LeadStatus;
+  estimatedValue?: number;
+  leadSourceName?: string;
+  leadSourceColor?: string;
+  leadSourceIcon?: string;
+  updatedAt: string;
 }
 
 export interface ReportData {
