@@ -35,7 +35,7 @@ import { STATUS_VISUAL } from '../lib/status';
 interface Officer { id: string; firstName: string; lastName: string; }
 
 export default function DashboardPage() {
-  const { user, isAdmin, isManager } = useAuth();
+  const { user, isAdmin, isManager, isSalesOfficer } = useAuth();
   const { showToast } = useToast();
   const canManage = isAdmin || isManager;
   const [data, setData] = useState<DashboardData | null>(null);
@@ -308,68 +308,35 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {data.openLeadsByOfficer?.length > 0 && (
+      {data.openLeadsByOfficer?.length > 0 && !isSalesOfficer && (
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-slate-900">Open Leads by Officer</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {data.openLeadsByOfficer.map((officer) => {
               const total = officer.statusBreakdown.reduce((sum, s) => sum + s.count, 0);
               return (
                 <Link
                   key={officer.officerId ?? 'unassigned'}
                   to={`/leads${officer.officerId ? `?assignedTo=${officer.officerId}` : '?assignedTo=unassigned'}`}
-                  className="card p-5 hover:shadow-md transition-shadow cursor-pointer group"
+                  className="card p-3 hover:shadow-md transition-shadow cursor-pointer group"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    {officer.officerPicture ? (
-                      <img
-                        src={officer.officerPicture}
-                        alt=""
-                        className="h-10 w-10 rounded-full object-cover flex-shrink-0"
-                      />
-                    ) : (
-                      <div className="h-10 w-10 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0">
-                        {officer.officerId ? (
-                          <span className="text-sm font-semibold">
-                            {officer.officerName.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                          </span>
-                        ) : (
-                          <UserCircle className="h-5 w-5" />
-                        )}
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-primary-600 transition-colors">
-                        {officer.officerName}
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        {officer.leadCount} open lead{officer.leadCount !== 1 ? 's' : ''} · ${officer.totalEstimatedValue.toLocaleString()}
-                      </p>
-                    </div>
-                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-primary-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
-                  </div>
                   {officer.statusBreakdown.length > 0 && (
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 mb-3">
                       {officer.statusBreakdown.map((s) => {
                         const pct = total > 0 ? Math.round((s.count / total) * 100) : 0;
                         return (
-                          <div key={s.status} className="group/bar">
-                            <div className="flex items-center justify-between text-sm mb-1">
-                              <div className="flex items-center gap-2 min-w-0">
+                          <div key={s.status}>
+                            <div className="flex items-center justify-between mb-0.5">
+                              <div className="flex items-center gap-1.5 min-w-0">
                                 <span
-                                  className="h-2.5 w-2.5 rounded-sm flex-shrink-0"
+                                  className="h-2 w-2 rounded-sm flex-shrink-0"
                                   style={{ backgroundColor: s.color }}
                                 />
-                                <span className="text-xs font-medium text-slate-700 truncate">{s.status}</span>
+                                <span className="text-[11px] font-medium text-slate-700 truncate">{s.status}</span>
                               </div>
-                              <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                                <span className="text-xs font-semibold text-slate-900 tabular-nums">{s.count}</span>
-                                <span className="text-xs text-slate-500 tabular-nums w-8 text-right">
-                                  {pct}%
-                                </span>
-                              </div>
+                              <span className="text-[11px] font-semibold text-slate-900 tabular-nums">{s.count}</span>
                             </div>
-                            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
                               <div
                                 className="h-full rounded-full transition-all duration-500"
                                 style={{ width: `${pct}%`, backgroundColor: s.color }}
@@ -380,6 +347,34 @@ export default function DashboardPage() {
                       })}
                     </div>
                   )}
+                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    {officer.officerPicture ? (
+                      <img
+                        src={officer.officerPicture}
+                        alt=""
+                        className="h-7 w-7 rounded-full object-cover flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="h-7 w-7 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center flex-shrink-0">
+                        {officer.officerId ? (
+                          <span className="text-[10px] font-semibold">
+                            {officer.officerName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                          </span>
+                        ) : (
+                          <UserCircle className="h-4 w-4" />
+                        )}
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-slate-900 truncate group-hover:text-primary-600 transition-colors">
+                        {officer.officerName}
+                      </p>
+                      <p className="text-[10px] text-slate-500">
+                        {officer.leadCount} lead{officer.leadCount !== 1 ? 's' : ''}
+                      </p>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                  </div>
                 </Link>
               );
             })}
