@@ -207,6 +207,13 @@ export interface OfficerOpenLeads {
   officerPicture?: string;
   leadCount: number;
   totalEstimatedValue: number;
+  statusBreakdown: OfficerStatusBreakdown[];
+}
+
+export interface OfficerStatusBreakdown {
+  status: string;
+  color: string;
+  count: number;
 }
 
 export interface ReportData {

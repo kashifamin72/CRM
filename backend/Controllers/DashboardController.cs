@@ -192,13 +192,25 @@ public class DashboardController : BaseApiController
             {
                 var firstLead = g.First();
                 var officer = firstLead.AssignedTo;
+                var statusBreakdown = g
+                    .GroupBy(l => l.Status)
+                    .Select(sg => new OfficerStatusBreakdown
+                    {
+                        Status = sg.Key.ToString(),
+                        Color = GetStatusColor(sg.Key),
+                        Count = sg.Count()
+                    })
+                    .OrderByDescending(s => s.Count)
+                    .ToList();
+
                 return new OfficerOpenLeads
                 {
                     OfficerId = g.Key == "unassigned" ? null : g.Key,
                     OfficerName = officer != null ? $"{officer.FirstName} {officer.LastName}" : "Unassigned",
                     OfficerPicture = officer?.ProfilePicture,
                     LeadCount = g.Count(),
-                    TotalEstimatedValue = g.Where(l => l.EstimatedValue.HasValue).Sum(l => l.EstimatedValue!.Value)
+                    TotalEstimatedValue = g.Where(l => l.EstimatedValue.HasValue).Sum(l => l.EstimatedValue!.Value),
+                    StatusBreakdown = statusBreakdown
                 };
             })
             .OrderByDescending(o => o.LeadCount)
@@ -218,4 +230,15 @@ public class DashboardController : BaseApiController
             OpenLeadsByOfficer = openLeadsByOfficer
         });
     }
+
+    private static string GetStatusColor(LeadStatus status) => status switch
+    {
+        LeadStatus.New => "#f59e0b",
+        LeadStatus.Contacted => "#06b6d4",
+        LeadStatus.Qualified => "#3b82f6",
+        LeadStatus.Proposal => "#8b5cf6",
+        LeadStatus.ClosedWon => "#10b981",
+        LeadStatus.ClosedLost => "#ef4444",
+        _ => "#64748b"
+    };
 }

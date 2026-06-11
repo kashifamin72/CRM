@@ -37,4 +37,12 @@ public class OfficerOpenLeads
     public string? OfficerPicture { get; set; }
     public int LeadCount { get; set; }
     public decimal TotalEstimatedValue { get; set; }
+    public List<OfficerStatusBreakdown> StatusBreakdown { get; set; } = new();
+}
+
+public class OfficerStatusBreakdown
+{
+    public string Status { get; set; } = string.Empty;
+    public string Color { get; set; } = string.Empty;
+    public int Count { get; set; }
 }
