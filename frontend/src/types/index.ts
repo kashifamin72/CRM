@@ -207,20 +207,6 @@ export interface OfficerOpenLeads {
   officerPicture?: string;
   leadCount: number;
   totalEstimatedValue: number;
-  leads: OpenLeadItem[];
-}
-
-export interface OpenLeadItem {
-  id: number;
-  title: string;
-  customerName: string;
-  customerPhone: string;
-  status: LeadStatus;
-  estimatedValue?: number;
-  leadSourceName?: string;
-  leadSourceColor?: string;
-  leadSourceIcon?: string;
-  updatedAt: string;
 }
 
 export interface ReportData {

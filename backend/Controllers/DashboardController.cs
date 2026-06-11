@@ -198,20 +198,7 @@ public class DashboardController : BaseApiController
                     OfficerName = officer != null ? $"{officer.FirstName} {officer.LastName}" : "Unassigned",
                     OfficerPicture = officer?.ProfilePicture,
                     LeadCount = g.Count(),
-                    TotalEstimatedValue = g.Where(l => l.EstimatedValue.HasValue).Sum(l => l.EstimatedValue!.Value),
-                    Leads = g.Select(l => new OpenLeadItem
-                    {
-                        Id = l.Id,
-                        Title = l.Title,
-                        CustomerName = l.CustomerName,
-                        CustomerPhone = l.CustomerPhone,
-                        Status = l.Status,
-                        EstimatedValue = l.EstimatedValue,
-                        LeadSourceName = l.LeadSource?.Name,
-                        LeadSourceColor = l.LeadSource?.Color,
-                        LeadSourceIcon = l.LeadSource?.Icon,
-                        UpdatedAt = l.UpdatedAt
-                    }).ToList()
+                    TotalEstimatedValue = g.Where(l => l.EstimatedValue.HasValue).Sum(l => l.EstimatedValue!.Value)
                 };
             })
             .OrderByDescending(o => o.LeadCount)
