@@ -46,6 +46,14 @@ public class DashboardController : ControllerBase
         if (role == "SalesOfficer")
             followUpQuery = followUpQuery.Where(f => f.CreatedById == userId);
 
+        if (!string.IsNullOrEmpty(assignedTo) && (role == "Administrator" || role == "Manager"))
+        {
+            if (assignedTo == "unassigned")
+                followUpQuery = followUpQuery.Where(f => f.Lead != null && f.Lead.AssignedToId == null);
+            else
+                followUpQuery = followUpQuery.Where(f => f.Lead != null && f.Lead.AssignedToId == assignedTo);
+        }
+
         var allFollowUps = await followUpQuery.ToListAsync();
 
         var overdue = allFollowUps

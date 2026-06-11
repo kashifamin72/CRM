@@ -7,11 +7,11 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-crm_db}
       POSTGRES_USER: ${POSTGRES_USER:-crm_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SecureP@ssw0rd2024!}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-NewSecureP@ss2024!}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     networks:
       - crm-network
     healthcheck:
@@ -32,16 +32,18 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-crm_db};Username=${POSTGRES_USER:-crm_user};Password=${POSTGRES_PASSWORD:-SecureP@ssw0rd2024!}"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-crm_db};Username=${POSTGRES_USER:-crm_user};Password=NewCrmP@ss2024!"
       Jwt__Key: ${JWT_SECRET_KEY:-YourSuperSecretKeyAtLeast32CharactersLong!}
       Jwt__Issuer: ${JWT_ISSUER:-crm.visionplusapps.com}
       Jwt__Audience: ${JWT_AUDIENCE:-crm.visionplusapps.com}
       Jwt__ExpirationInMinutes: ${JWT_EXPIRATION:-60}
-      WhatsApp__WebhookUrl: ${WHATSAPP_WEBHOOK_URL:-http://n8n:5678/webhook/whatsapp-bridge}
+      WhatsApp__WebhookUrl: ${WHATSAPP_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/whatsapp-bridge}
       AllowedOrigins: ${ALLOWED_ORIGINS:-https://crm.visionplusapps.com}
     volumes:
       - uploads_data:/app/wwwroot/uploads
       - dataprotection_keys:/app/keys
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - crm-network
 
@@ -80,8 +82,8 @@ services:
       - crm-network
 
 volumes:
-  postgres_data:
-    driver: local
+  postgres-data:
+    external: true
   uploads_data:
     driver: local
   dataprotection_keys:
