@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import { Lead, LeadStatus, LeadStatusLabels, LeadStatusColors, LeadSource } from '../types';
@@ -30,8 +30,25 @@ import {
   Calendar,
   Trophy,
   XCircle,
+  ArrowUp,
+  ArrowDown,
+  ArrowUpDown,
 } from 'lucide-react';
 import clsx from 'clsx';
+
+type SortField = 'title' | 'customerName' | 'status' | 'leadDate' | 'leadSourceName' | 'estimatedValue' | 'assignedToName' | 'updatedAt';
+type SortDir = 'asc' | 'desc';
+
+const SORT_LABELS: Record<SortField, string> = {
+  title: 'Title',
+  customerName: 'Customer',
+  status: 'Status',
+  leadDate: 'Date',
+  leadSourceName: 'Source',
+  estimatedValue: 'Value',
+  assignedToName: 'Assigned To',
+  updatedAt: 'Last Updated',
+};
 
 export default function LeadsListPage() {
   const { user, isAdmin, isManager } = useAuth();
@@ -48,6 +65,43 @@ export default function LeadsListPage() {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 300);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [sortField, setSortField] = useState<SortField>('updatedAt');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
+
+  const toggleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDir(field === 'title' || field === 'customerName' || field === 'assignedToName' || field === 'leadSourceName' ? 'asc' : 'desc');
+    }
+  };
+
+  const sortedLeads = useMemo(() => {
+    const sorted = [...leads];
+    sorted.sort((a, b) => {
+      let aVal: string | number | null | undefined;
+      let bVal: string | number | null | undefined;
+      switch (sortField) {
+        case 'title': aVal = a.title; bVal = b.title; break;
+        case 'customerName': aVal = a.customerName; bVal = b.customerName; break;
+        case 'status': aVal = a.status; bVal = b.status; break;
+        case 'leadDate': aVal = a.leadDate; bVal = b.leadDate; break;
+        case 'leadSourceName': aVal = a.leadSourceName ?? ''; bVal = b.leadSourceName ?? ''; break;
+        case 'estimatedValue': aVal = a.estimatedValue ?? 0; bVal = b.estimatedValue ?? 0; break;
+        case 'assignedToName': aVal = a.assignedToName ?? 'zzz'; bVal = b.assignedToName ?? 'zzz'; break;
+        case 'updatedAt': aVal = a.updatedAt; bVal = b.updatedAt; break;
+        default: return 0;
+      }
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDir === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+      const aStr = String(aVal ?? '').toLowerCase();
+      const bStr = String(bVal ?? '').toLowerCase();
+      return sortDir === 'asc' ? aStr.localeCompare(bStr) : bStr.localeCompare(aStr);
+    });
+    return sorted;
+  }, [leads, sortField, sortDir]);
 
   useEffect(() => {
     loadLeads();
@@ -119,6 +173,22 @@ export default function LeadsListPage() {
       showToast('Failed to delete lead', 'error');
     }
   };
+
+  const SortHeader = ({ field, children, className }: { field: SortField; children: React.ReactNode; className?: string }) => (
+    <th
+      className={clsx('text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5 cursor-pointer hover:text-slate-700 select-none transition-colors', className)}
+      onClick={() => toggleSort(field)}
+    >
+      <div className="flex items-center gap-1.5">
+        {children}
+        {sortField === field ? (
+          sortDir === 'asc' ? <ArrowUp className="h-3 w-3 text-primary-600" /> : <ArrowDown className="h-3 w-3 text-primary-600" />
+        ) : (
+          <ArrowUpDown className="h-3 w-3 opacity-30" />
+        )}
+      </div>
+    </th>
+  );
 
   return (
     <div className="space-y-4">
@@ -197,6 +267,26 @@ export default function LeadsListPage() {
               ))}
             </select>
           )}
+          <div className="flex items-center gap-1.5">
+            <ArrowUpDown className="h-3.5 w-3.5 text-slate-400" />
+            <select
+              value={`${sortField}:${sortDir}`}
+              onChange={(e) => {
+                const [field, dir] = e.target.value.split(':');
+                setSortField(field as SortField);
+                setSortDir(dir as SortDir);
+              }}
+              aria-label="Sort leads by"
+              className="input w-full sm:w-auto"
+            >
+              {Object.entries(SORT_LABELS).map(([val, label]) => (
+                <option key={`${val}-asc`} value={`${val}:asc`}>{label} (A→Z)</option>
+              ))}
+              {Object.entries(SORT_LABELS).map(([val, label]) => (
+                <option key={`${val}-desc`} value={`${val}:desc`}>{label} (Z→A)</option>
+              ))}
+            </select>
+          </div>
           <div className="flex gap-1 bg-slate-100 p-1 rounded-lg">
             <button
               onClick={() => setView('table')}
@@ -226,32 +316,32 @@ export default function LeadsListPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50">
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><Briefcase className="h-3 w-3" /> Title</div>
-                  </th>
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><UserCircle2 className="h-3 w-3" /> Customer</div>
-                  </th>
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><Activity className="h-3 w-3" /> Status</div>
-                  </th>
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><Calendar className="h-3 w-3" /> Date</div>
-                  </th>
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><Tag className="h-3 w-3" /> Source</div>
-                  </th>
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><DollarSign className="h-3 w-3" /> Value</div>
-                  </th>
-                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">
-                    <div className="flex items-center gap-1.5"><UserCheck className="h-3 w-3" /> Assigned</div>
-                  </th>
+                  <SortHeader field="title">
+                    <Briefcase className="h-3 w-3" /> Title
+                  </SortHeader>
+                  <SortHeader field="customerName">
+                    <UserCircle2 className="h-3 w-3" /> Customer
+                  </SortHeader>
+                  <SortHeader field="status">
+                    <Activity className="h-3 w-3" /> Status
+                  </SortHeader>
+                  <SortHeader field="leadDate">
+                    <Calendar className="h-3 w-3" /> Date
+                  </SortHeader>
+                  <SortHeader field="leadSourceName">
+                    <Tag className="h-3 w-3" /> Source
+                  </SortHeader>
+                  <SortHeader field="estimatedValue">
+                    <DollarSign className="h-3 w-3" /> Value
+                  </SortHeader>
+                  <SortHeader field="assignedToName">
+                    <UserCheck className="h-3 w-3" /> Assigned
+                  </SortHeader>
                   <th className="text-right text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-4 py-2.5">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {leads.map((lead) => (
+                {sortedLeads.map((lead) => (
                   <tr key={lead.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-2.5">
                       <Link to={`/leads/${lead.id}`} className="text-sm font-medium text-slate-900 hover:text-primary-600 line-clamp-1">
