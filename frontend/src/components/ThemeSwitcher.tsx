@@ -10,8 +10,8 @@ export function ThemeSwitcher() {
     <div className="space-y-3">
       <div>
         <div className="flex items-center gap-2 px-3 mb-3">
-          <Palette className="h-3.5 w-3.5 text-slate-500" />
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <Palette className="h-3.5 w-3.5 text-white/40" />
+          <p className="text-xs font-semibold text-white/40 uppercase tracking-wider">
             Theme
           </p>
         </div>
@@ -40,8 +40,8 @@ export function ThemeSwitcher() {
 
       <div>
         <div className="flex items-center gap-2 px-3 mb-2">
-          <Sun className="h-3.5 w-3.5 text-slate-500" />
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <Sun className="h-3.5 w-3.5 text-white/40" />
+          <p className="text-xs font-semibold text-white/40 uppercase tracking-wider">
             Mode
           </p>
         </div>
@@ -50,8 +50,8 @@ export function ThemeSwitcher() {
             onClick={() => setMode('light')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md text-xs font-medium transition-all duration-150 ${
               mode === 'light'
-                ? 'bg-slate-700 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-300 hover:bg-slate-700/50'
+                ? 'bg-white/20 text-white shadow-sm'
+                : 'text-white/50 hover:text-white/70 hover:bg-white/10'
             }`}
           >
             <Sun className="h-3.5 w-3.5" />
@@ -61,8 +61,8 @@ export function ThemeSwitcher() {
             onClick={() => setMode('dark')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md text-xs font-medium transition-all duration-150 ${
               mode === 'dark'
-                ? 'bg-slate-700 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-300 hover:bg-slate-700/50'
+                ? 'bg-white/20 text-white shadow-sm'
+                : 'text-white/50 hover:text-white/70 hover:bg-white/10'
             }`}
           >
             <Moon className="h-3.5 w-3.5" />
