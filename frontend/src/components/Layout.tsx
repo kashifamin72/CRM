@@ -20,8 +20,9 @@ import {
   Bell,
   Calendar,
   Search,
-  Clock,
   ArrowUp,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import clsx from 'clsx';
@@ -43,11 +44,22 @@ export function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    return localStorage.getItem('sidebar-collapsed') === 'true';
+  });
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [followUps, setFollowUps] = useState<FollowUpItem[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [showBackToTop, setShowBackToTop] = useState(false);
+
+  const toggleCollapsed = useCallback(() => {
+    setCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem('sidebar-collapsed', String(next));
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -115,22 +127,28 @@ export function Layout({ children }: LayoutProps) {
         <Link
           key={item.to}
           to={item.to}
+          title={collapsed ? item.label : undefined}
           aria-current={isActive(item.to) ? 'page' : undefined}
           className={clsx(
-            'relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group',
+            'relative flex items-center rounded-xl text-sm font-medium transition-all duration-200 group',
+            collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2.5',
             isActive(item.to)
               ? 'bg-white/20 text-white shadow-lg shadow-black/15'
               : 'text-white/70 hover:bg-white/12 hover:text-white'
           )}
         >
           {isActive(item.to) && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 bg-white rounded-r-full" />
+            <span className={clsx(
+              'absolute bg-white rounded-r-full',
+              collapsed ? 'top-0 bottom-0 left-0 w-1' : 'left-0 top-1/2 -translate-y-1/2 h-5 w-1'
+            )} />
           )}
           <item.icon className={clsx(
-            'h-5 w-5 transition-colors flex-shrink-0',
+            'transition-colors flex-shrink-0',
+            collapsed ? 'h-5 w-5' : 'h-5 w-5',
             isActive(item.to) ? 'text-white' : 'text-white/50 group-hover:text-white'
           )} />
-          {item.label}
+          {!collapsed && item.label}
         </Link>
       ))}
     </div>
@@ -147,76 +165,118 @@ export function Layout({ children }: LayoutProps) {
 
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 w-[260px] flex flex-col transition-transform duration-300 lg:translate-x-0',
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          'fixed inset-y-0 left-0 z-50 flex flex-col transition-all duration-300',
+          collapsed ? 'w-[72px]' : 'w-[260px]',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
         style={{
           background: 'linear-gradient(180deg, rgb(var(--color-sidebar)) 0%, rgb(var(--color-sidebar) / 0.95) 100%)',
         }}
       >
-        <div className="flex items-center gap-3 px-6 h-16 border-b border-white/10">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
-            <Shield className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <span className="text-base font-bold text-white font-display">VisionPlus</span>
-            <span className="text-xs text-slate-400 block -mt-0.5">CRM System</span>
-          </div>
+        {/* Header */}
+        <div className={clsx(
+          'flex items-center h-16 border-b border-white/10',
+          collapsed ? 'justify-center px-2' : 'gap-3 px-6'
+        )}>
+          {collapsed ? (
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
+              <Shield className="h-5 w-5 text-white" />
+            </div>
+          ) : (
+            <>
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
+                <Shield className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <span className="text-base font-bold text-white font-display">VisionPlus</span>
+                <span className="text-xs text-slate-400 block -mt-0.5">CRM System</span>
+              </div>
+            </>
+          )}
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-4 px-3">
+        {/* Nav */}
+        <nav className={clsx(
+          'flex-1 overflow-y-auto py-4',
+          collapsed ? 'px-2' : 'px-3'
+        )}>
           <NavGroup items={navItems} />
 
           {analyticsItems.length > 0 && (
             <div className="mt-6">
-              <p className="px-3 mb-2 text-xs font-semibold text-white/40 uppercase tracking-wider">
-                Analytics
-              </p>
+              {!collapsed && (
+                <p className="px-3 mb-2 text-xs font-semibold text-white/40 uppercase tracking-wider">
+                  Analytics
+                </p>
+              )}
+              {collapsed && <div className="mx-auto mb-2 w-6 h-px bg-white/20" />}
               <NavGroup items={analyticsItems} />
             </div>
           )}
 
           {adminItems.length > 0 && (
             <div className="mt-6">
-              <p className="px-3 mb-2 text-xs font-semibold text-white/40 uppercase tracking-wider">
-                Administration
-              </p>
+              {!collapsed && (
+                <p className="px-3 mb-2 text-xs font-semibold text-white/40 uppercase tracking-wider">
+                  Administration
+                </p>
+              )}
+              {collapsed && <div className="mx-auto mb-2 w-6 h-px bg-white/20" />}
               <NavGroup items={adminItems} />
             </div>
           )}
         </nav>
 
-        <div className="border-t border-white/10 px-4 py-3">
-          <ThemeSwitcher />
+        {/* Theme Switcher */}
+        <div className={clsx(
+          'border-t border-white/10',
+          collapsed ? 'px-2 py-3' : 'px-4 py-3'
+        )}>
+          {!collapsed ? (
+            <ThemeSwitcher />
+          ) : (
+            <div className="flex justify-center" title="Theme">
+              <div className="h-5 w-5 rounded-full bg-gradient-to-br from-primary-400 to-primary-600" />
+            </div>
+          )}
         </div>
 
+        {/* User */}
         <div className="border-t border-white/10 p-3">
           <div className="relative">
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200"
+              title={collapsed ? `${user?.firstName} ${user?.lastName}` : undefined}
+              className={clsx(
+                'w-full flex items-center rounded-xl hover:bg-white/10 transition-all duration-200',
+                collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2.5'
+              )}
             >
               {user?.profilePicture ? (
                 <img
                   src={user.profilePicture}
                   alt=""
-                  className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/20"
+                  className="h-10 w-10 rounded-xl object-cover ring-2 ring-white/20 flex-shrink-0"
                 />
               ) : (
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-semibold shadow-lg shadow-primary-500/20">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-semibold shadow-lg shadow-primary-500/20 flex-shrink-0">
                   {getInitials()}
                 </div>
               )}
-              <div className="flex-1 text-left min-w-0">
-                <p className="text-sm font-semibold text-white truncate">
-                  {user?.firstName} {user?.lastName}
-                </p>
-                <p className="text-xs text-white/50 truncate">{user?.designation}</p>
-              </div>
-              <ChevronDown className={clsx(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
-                userMenuOpen && 'rotate-180'
-              )} />
+              {!collapsed && (
+                <>
+                  <div className="flex-1 text-left min-w-0">
+                    <p className="text-sm font-semibold text-white truncate">
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p className="text-xs text-white/50 truncate">{user?.designation}</p>
+                  </div>
+                  <ChevronDown className={clsx(
+                    'h-4 w-4 text-white/40 transition-transform duration-200',
+                    userMenuOpen && 'rotate-180'
+                  )} />
+                </>
+              )}
             </button>
 
             {userMenuOpen && (
@@ -225,7 +285,10 @@ export function Layout({ children }: LayoutProps) {
                   className="fixed inset-0 z-40"
                   onClick={() => setUserMenuOpen(false)}
                 />
-                <div className="absolute bottom-full left-0 right-0 mb-2 card py-2 z-50 animate-scale-in">
+                <div className={clsx(
+                  'absolute bottom-full mb-2 card py-2 z-50 animate-scale-in',
+                  collapsed ? 'left-0 w-52' : 'left-0 right-0'
+                )}>
                   <Link
                     to="/profile"
                     onClick={() => setUserMenuOpen(false)}
@@ -268,14 +331,30 @@ export function Layout({ children }: LayoutProps) {
         </div>
       </aside>
 
-      <div className="flex-1 lg:ml-[260px] min-h-screen flex flex-col">
+      <div className={clsx(
+        'flex-1 min-h-screen flex flex-col transition-all duration-300',
+        collapsed ? 'lg:ml-[72px]' : 'lg:ml-[260px]'
+      )}>
         <header className="sticky top-0 z-30 h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 flex items-center px-4 lg:px-6 gap-4">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <button
+              onClick={toggleCollapsed}
+              className="hidden lg:flex p-2 -ml-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 rounded-xl transition-colors"
+              title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              {collapsed ? (
+                <PanelLeftOpen className="h-5 w-5" />
+              ) : (
+                <PanelLeftClose className="h-5 w-5" />
+              )}
+            </button>
+          </div>
           <form onSubmit={handleSearch} className="hidden md:flex items-center gap-2 flex-1 max-w-md">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
