@@ -480,7 +480,7 @@ export default function LeadEditPage() {
                 <StatusIcon className="h-3 w-3" />
                 {LeadStatusLabels[lead?.status ?? LeadStatus.New]}
               </span>
-              <h1 className="text-xl font-bold text-slate-900 truncate">{lead?.title}</h1>
+              <h1 className="page-title truncate">{lead?.title}</h1>
             </div>
             <div className="flex items-center gap-3 mt-1 text-sm text-slate-500 flex-wrap">
               <span className="inline-flex items-center gap-1"><UserIcon className="h-3.5 w-3.5" />{lead?.customerName}</span>
@@ -565,7 +565,7 @@ export default function LeadEditPage() {
 
       {activeTab === 'details' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-2">
+          <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-2">
             {/* Customer */}
             <FlatSection title="Customer">
               <FlatGrid cols={3}>

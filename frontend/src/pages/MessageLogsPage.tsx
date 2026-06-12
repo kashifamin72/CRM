@@ -49,7 +49,7 @@ export default function MessageLogsPage() {
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">Message Logs</h1>
+          <h1 className="page-title">Message Logs</h1>
           <p className="text-slate-500 text-xs">WhatsApp message history</p>
         </div>
         {isAdmin && messages.length > 0 && (

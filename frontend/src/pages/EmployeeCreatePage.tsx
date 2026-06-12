@@ -39,7 +39,7 @@ export default function EmployeeCreatePage() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Add Employee</h1>
+          <h1 className="page-title">Add Employee</h1>
           <p className="text-slate-500 mt-1">Create a new team member account</p>
         </div>
       </div>

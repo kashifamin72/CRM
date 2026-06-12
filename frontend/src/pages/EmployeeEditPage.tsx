@@ -72,7 +72,7 @@ export default function EmployeeEditPage() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Edit Employee</h1>
+          <h1 className="page-title">Edit Employee</h1>
           <p className="text-slate-500 mt-1">Update employee information</p>
         </div>
       </div>

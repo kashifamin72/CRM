@@ -115,7 +115,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+          <h1 className="page-title">Dashboard</h1>
           <p className="text-slate-500 mt-1">Welcome back, {user?.firstName}</p>
         </div>
         {canManage && (
@@ -149,7 +149,7 @@ export default function DashboardPage() {
 
       {data.openLeadsByOfficer?.length > 0 && !isSalesOfficer && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-slate-900">Open Leads by Officer</h2>
+          <h2 className="section-title">Open Leads by Officer</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {data.openLeadsByOfficer.map((officer) => {
               const total = officer.statusBreakdown.reduce((sum, s) => sum + s.count, 0);
@@ -157,7 +157,7 @@ export default function DashboardPage() {
                 <Link
                   key={officer.officerId ?? 'unassigned'}
                   to={`/leads${officer.officerId ? `?assignedTo=${officer.officerId}` : '?assignedTo=unassigned'}`}
-                  className="card p-3 hover:shadow-md transition-shadow cursor-pointer group"
+                  className="card p-3 hover:shadow-card-hover transition-all duration-200 cursor-pointer group"
                 >
                   <div className="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
                     {officer.officerPicture ? (
@@ -226,10 +226,10 @@ export default function DashboardPage() {
           {data.todaysFollowUps?.length > 0 && (
             <div className="card p-5">
               <div className="flex items-center gap-2 mb-3">
-                <div className="h-8 w-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-xl bg-amber-100 flex items-center justify-center">
                   <Calendar className="h-4 w-4 text-amber-600" />
                 </div>
-                <h3 className="text-sm font-semibold text-slate-900">Today's Follow-ups</h3>
+                <h3 className="text-sm font-semibold text-slate-900 font-display">Today's Follow-ups</h3>
                 {data.todaysFollowUps.some(f => f.isOverdue) && (
                   <span className="ml-auto inline-flex items-center gap-1 text-xs font-medium text-red-700 bg-red-100 px-2 py-0.5 rounded-full">
                     <Clock className="h-3 w-3" />
@@ -278,10 +278,10 @@ export default function DashboardPage() {
           {data.tomorrowsFollowUps?.length > 0 && (
             <div className="card p-5">
               <div className="flex items-center gap-2 mb-3">
-                <div className="h-8 w-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-xl bg-blue-100 flex items-center justify-center">
                   <Calendar className="h-4 w-4 text-blue-600" />
                 </div>
-                <h3 className="text-sm font-semibold text-slate-900">Tomorrow's Follow-ups</h3>
+                <h3 className="text-sm font-semibold text-slate-900 font-display">Tomorrow's Follow-ups</h3>
               </div>
               <div className="space-y-1.5">
                 {data.tomorrowsFollowUps.map((fu) => (
@@ -310,15 +310,15 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card p-5">
-          <h3 className="text-base font-semibold text-slate-900 mb-4">Pipeline</h3>
+          <h3 className="section-title mb-4">Pipeline</h3>
           {pipelineData.length > 0 ? (
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={pipelineData} margin={{ top: 16, right: 8, left: 0, bottom: 0 }}>
                 <XAxis dataKey="name" tick={{ fontSize: 12 }} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#94a3b8" allowDecimals={false} />
                 <Tooltip
-                  cursor={{ fill: 'rgba(37, 99, 235, 0.05)' }}
-                  contentStyle={{ borderRadius: 8, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}
+                  cursor={{ fill: 'rgba(99, 102, 241, 0.05)' }}
+                  contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 8px 24px rgba(0,0,0,0.08)', padding: '8px 12px' }}
                 />
                 <Bar dataKey="count" radius={[6, 6, 0, 0]}>
                   {pipelineData.map((entry, index) => (
@@ -335,7 +335,7 @@ export default function DashboardPage() {
 
         <div className="card p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-semibold text-slate-900">Leads by Source</h3>
+            <h3 className="section-title">Leads by Source</h3>
             <span className="text-xs text-slate-500">
               Total: <span className="font-semibold text-slate-700">
                 {sourceData.reduce((s, x) => s + x.value, 0)}
@@ -384,7 +384,7 @@ export default function DashboardPage() {
 
       <div className="card">
         <div className="flex items-center justify-between p-5 border-b border-slate-200">
-          <h3 className="text-base font-semibold text-slate-900">Recent Leads</h3>
+          <h3 className="section-title">Recent Leads</h3>
           <Link to="/leads" className="text-sm text-primary-600 hover:text-primary-700 inline-flex items-center gap-1 font-medium">
             View all <ArrowRight className="h-4 w-4" />
           </Link>

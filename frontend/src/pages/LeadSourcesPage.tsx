@@ -86,7 +86,7 @@ export default function LeadSourcesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Lead Sources</h1>
+          <h1 className="page-title">Lead Sources</h1>
           <p className="text-slate-500 mt-1">Manage where your leads come from</p>
         </div>
         <button onClick={openCreate} className="btn-primary flex items-center gap-2">
@@ -105,11 +105,11 @@ export default function LeadSourcesPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200">
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Source</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Color</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Status</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Usage</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Actions</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Source</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Color</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Status</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Usage</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -156,7 +156,7 @@ export default function LeadSourcesPage() {
           <div className="absolute inset-0 bg-black/50" onClick={() => setModalOpen(false)} />
           <div className="relative bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-slate-900">
+              <h2 className="section-title font-display">
                 {editingId ? 'Edit Source' : 'Add Source'}
               </h2>
               <button onClick={() => setModalOpen(false)} className="p-1 text-slate-400 hover:text-slate-600">

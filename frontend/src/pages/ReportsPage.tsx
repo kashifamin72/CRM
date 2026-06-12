@@ -163,7 +163,7 @@ export default function ReportsPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Reports</h1>
+          <h1 className="page-title">Reports</h1>
           <p className="text-slate-500 mt-1 text-sm sm:text-base">Analyze your sales performance</p>
         </div>
         {data && hasActiveFilters && (
@@ -287,7 +287,7 @@ export default function ReportsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="card p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-semibold text-slate-900">Status Distribution</h3>
+                <h3 className="section-title font-display">Status Distribution</h3>
                 <span className="text-xs text-slate-500">{data.totalLeads} total</span>
               </div>
               <ResponsiveContainer width="100%" height={280}>
@@ -310,7 +310,7 @@ export default function ReportsPage() {
 
             <div className="card p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-semibold text-slate-900">Leads by Source</h3>
+                <h3 className="section-title font-display">Leads by Source</h3>
                 <span className="text-xs text-slate-500">{sourceTotal} total</span>
               </div>
               {sourceData.length > 0 ? (
@@ -357,7 +357,7 @@ export default function ReportsPage() {
                 <div className="h-8 w-8 rounded-lg bg-green-100 flex items-center justify-center">
                   <TrendingUp className="h-4 w-4 text-green-600" />
                 </div>
-                <h3 className="text-base font-semibold text-slate-900">Conversion</h3>
+                <h3 className="section-title font-display">Conversion</h3>
               </div>
               {data.totalLeads > 0 ? (
                 <div className="space-y-4">
@@ -435,7 +435,7 @@ export default function ReportsPage() {
                 <div className="h-8 w-8 rounded-lg bg-primary-100 flex items-center justify-center">
                   <BarChart3 className="h-4 w-4 text-primary-600" />
                 </div>
-                <h3 className="text-base font-semibold text-slate-900">Lead Distribution by Status</h3>
+                <h3 className="section-title font-display">Lead Distribution by Status</h3>
               </div>
               {data.totalLeads > 0 ? (
                 <div className="space-y-3">
@@ -475,14 +475,14 @@ export default function ReportsPage() {
                 <div className="h-8 w-8 rounded-lg bg-amber-100 flex items-center justify-center">
                   <Trophy className="h-4 w-4 text-amber-600" />
                 </div>
-                <h3 className="text-base font-semibold text-slate-900">Top Performers</h3>
+                <h3 className="section-title font-display">Top Performers</h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                 {officerRanked.map((officer, i) => {
                   const initials = officer.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
                   const winRate = officer.total > 0 ? Math.round((officer.won / officer.total) * 100) : 0;
                   return (
-                    <div key={officer.id} className="relative card p-4 border border-slate-200 hover:shadow-md transition-shadow">
+                    <div key={officer.id} className="relative card p-4 border border-slate-200 hover:shadow-card-hover transition-all duration-200 cursor-pointer">
                       {i === 0 && officer.won > 0 && (
                         <div className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-amber-400 text-white flex items-center justify-center text-xs font-bold">
                           1
@@ -518,41 +518,41 @@ export default function ReportsPage() {
           {data.leads && data.leads.length > 0 && (
             <div className="card overflow-hidden">
               <div className="flex items-center justify-between p-5 border-b border-slate-200">
-                <h3 className="text-base font-semibold text-slate-900">Lead Details</h3>
+                <h3 className="section-title font-display">Lead Details</h3>
                 <span className="text-sm text-slate-500">{data.leads.length} leads</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-slate-200 bg-slate-50/50">
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5" /> Title</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><UserCircle2 className="h-3.5 w-3.5" /> Customer</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><UserCircle2 className="h-3.5 w-3.5" /> Contact</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Status</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" /> Lead Date</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><Tag className="h-3.5 w-3.5" /> Source</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5" /> Business</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><DollarSign className="h-3.5 w-3.5" /> Value</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><UserCheck className="h-3.5 w-3.5" /> Assigned</div>
                       </th>
-                      <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
+                      <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">
                         <div className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" /> Created</div>
                       </th>
                     </tr>

@@ -170,12 +170,12 @@ export default function LeadCreatePage() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-xl font-bold text-slate-900">New Lead</h1>
+          <h1 className="page-title">New Lead</h1>
           <p className="text-slate-500 text-xs">Create a new sales lead</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-2">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-2">
         {/* Customer */}
         <FlatSection title="Customer">
           <FlatGrid cols={3}>

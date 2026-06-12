@@ -64,12 +64,12 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">My Profile</h1>
+        <h1 className="page-title">My Profile</h1>
         <p className="text-slate-500 mt-1">View and manage your account</p>
       </div>
 
       <div className="card overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-primary-600 to-primary-800" />
+        <div className="h-32" style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-500)), rgb(var(--color-primary-700)))' }} />
         <div className="px-6 pb-6">
           <div className="flex flex-col sm:flex-row sm:items-end gap-4 -mt-12">
             <div className="relative flex-shrink-0">

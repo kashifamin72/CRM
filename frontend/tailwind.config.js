@@ -20,11 +20,21 @@ export default {
           900: 'rgb(var(--color-primary-900) / <alpha-value>)',
         },
         sidebar: 'rgb(var(--color-sidebar) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        dm: ['"DM Sans"', 'system-ui', 'sans-serif'],
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        display: ['Poppins', 'system-ui', 'sans-serif'],
+      },
+      boxShadow: {
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+        'glass-lg': '0 8px 40px 0 rgba(31, 38, 135, 0.12)',
+        'card': '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03)',
+        'card-hover': '0 4px 16px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04)',
+      },
+      borderRadius: {
+        '2xl': '1rem',
+        '3xl': '1.25rem',
       },
     },
   },

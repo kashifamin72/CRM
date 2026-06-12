@@ -63,7 +63,7 @@ export default function EmployeesListPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Employees</h1>
+          <h1 className="page-title">Employees</h1>
           <p className="text-slate-500 mt-1">Manage team members</p>
         </div>
         <Link to="/employees/create" className="btn-primary flex items-center gap-2">
@@ -106,12 +106,12 @@ export default function EmployeesListPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200">
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Employee</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Mobile</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Designation</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Role</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Status</th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Actions</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Employee</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Mobile</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Designation</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Role</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Status</th>
+                  <th className="text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider px-5 py-3">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">

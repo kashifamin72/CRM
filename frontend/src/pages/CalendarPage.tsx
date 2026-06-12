@@ -140,7 +140,7 @@ export default function CalendarPage() {
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Calendar</h1>
+          <h1 className="page-title">Calendar</h1>
           <p className="text-slate-500 mt-1 text-sm sm:text-base">View and manage follow-up tasks</p>
         </div>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
@@ -311,7 +311,7 @@ export default function CalendarPage() {
               {DAYS.map((day) => (
                 <div
                   key={day}
-                  className="px-2 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider"
+                  className="px-2 py-3 text-center text-[11px] font-semibold text-slate-500 uppercase tracking-wider"
                 >
                   {day}
                 </div>
