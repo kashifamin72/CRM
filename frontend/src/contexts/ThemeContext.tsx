@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
-export type Theme = 'default' | 'emerald' | 'sunset' | 'purple' | 'midnight';
+export type Theme = 'default' | 'emerald' | 'sunset' | 'purple' | 'midnight' | 'modern';
 export type Mode = 'light' | 'dark';
 
 export const ThemeLabels: Record<Theme, string> = {
@@ -9,6 +9,7 @@ export const ThemeLabels: Record<Theme, string> = {
   sunset: 'Sunset',
   purple: 'Purple',
   midnight: 'Midnight',
+  modern: 'Modern (New)',
 };
 
 export const ThemeColors: Record<Theme, string> = {
@@ -17,6 +18,7 @@ export const ThemeColors: Record<Theme, string> = {
   sunset: '#ea580c',
   purple: '#9333ea',
   midnight: '#4f46e5',
+  modern: '#0d9488',
 };
 
 interface ThemeContextType {
@@ -32,7 +34,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 function getInitialTheme(): Theme {
   try {
     const stored = localStorage.getItem('theme');
-    if (stored && ['default', 'emerald', 'sunset', 'purple', 'midnight'].includes(stored)) {
+    if (stored && ['default', 'emerald', 'sunset', 'purple', 'midnight', 'modern'].includes(stored)) {
       return stored as Theme;
     }
   } catch {}

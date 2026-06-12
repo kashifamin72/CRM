@@ -261,12 +261,20 @@ export default function LeadEditPage() {
     try {
       await api.put(`/leads/${id}`, {
         ...form,
+        customerEmail: form.customerEmail || null,
+        customerPhone: form.customerPhone || null,
+        contactPerson: form.contactPerson || null,
+        contactDesignation: form.contactDesignation || null,
+        contactMobile: form.contactMobile || null,
+        address: form.address || null,
+        description: form.description || null,
         estimatedValue: form.estimatedValue ? Number(form.estimatedValue) : null,
         leadSourceId: form.leadSourceId ? Number(form.leadSourceId) : null,
         businessTypeId: form.businessTypeId ? Number(form.businessTypeId) : null,
         cityId: form.cityId ? Number(form.cityId) : null,
         leadDate: form.leadDate ? new Date(form.leadDate).toISOString() : null,
         assignedToId: form.assignedToId || null,
+        notes: form.notes || null,
       });
       showToast('Lead updated', 'success');
       loadLead();

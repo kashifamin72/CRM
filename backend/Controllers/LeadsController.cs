@@ -147,10 +147,10 @@ public class LeadsController : BaseApiController
         var lead = new Lead
         {
             Title = request.Title,
-            Description = request.Description,
+            Description = request.Description ?? string.Empty,
             CustomerName = request.CustomerName,
-            CustomerEmail = request.CustomerEmail,
-            CustomerPhone = request.CustomerPhone,
+            CustomerEmail = request.CustomerEmail ?? string.Empty,
+            CustomerPhone = request.CustomerPhone ?? string.Empty,
             ContactPerson = request.ContactPerson,
             ContactDesignation = request.ContactDesignation,
             ContactMobile = request.ContactMobile,
@@ -204,10 +204,10 @@ public class LeadsController : BaseApiController
         if (!CanAccessLead(lead)) return Forbid();
 
         lead.Title = request.Title;
-        lead.Description = request.Description;
+        lead.Description = request.Description ?? string.Empty;
         lead.CustomerName = request.CustomerName;
-        lead.CustomerEmail = request.CustomerEmail;
-        lead.CustomerPhone = request.CustomerPhone;
+        lead.CustomerEmail = request.CustomerEmail ?? string.Empty;
+        lead.CustomerPhone = request.CustomerPhone ?? string.Empty;
         lead.ContactPerson = request.ContactPerson;
         lead.ContactDesignation = request.ContactDesignation;
         lead.ContactMobile = request.ContactMobile;

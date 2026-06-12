@@ -47,7 +47,7 @@ public class CreateLeadRequest
     public string Title { get; set; } = string.Empty;
 
     [MaxLength(5000, ErrorMessage = "Description cannot exceed 5000 characters")]
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; }
 
     [Required(ErrorMessage = "Customer name is required")]
     [MaxLength(200, ErrorMessage = "Customer name cannot exceed 200 characters")]
@@ -55,10 +55,10 @@ public class CreateLeadRequest
 
     [EmailAddress(ErrorMessage = "Invalid email format")]
     [MaxLength(200)]
-    public string CustomerEmail { get; set; } = string.Empty;
+    public string? CustomerEmail { get; set; }
 
     [MaxLength(50)]
-    public string CustomerPhone { get; set; } = string.Empty;
+    public string? CustomerPhone { get; set; }
 
     [MaxLength(200)]
     public string? ContactPerson { get; set; }
@@ -99,7 +99,7 @@ public class UpdateLeadRequest
     public string Title { get; set; } = string.Empty;
 
     [MaxLength(5000, ErrorMessage = "Description cannot exceed 5000 characters")]
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; }
 
     [Required(ErrorMessage = "Customer name is required")]
     [MaxLength(200, ErrorMessage = "Customer name cannot exceed 200 characters")]
@@ -107,10 +107,10 @@ public class UpdateLeadRequest
 
     [EmailAddress(ErrorMessage = "Invalid email format")]
     [MaxLength(200)]
-    public string CustomerEmail { get; set; } = string.Empty;
+    public string? CustomerEmail { get; set; }
 
     [MaxLength(50)]
-    public string CustomerPhone { get; set; } = string.Empty;
+    public string? CustomerPhone { get; set; }
 
     [MaxLength(200)]
     public string? ContactPerson { get; set; }

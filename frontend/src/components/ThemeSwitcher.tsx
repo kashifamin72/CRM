@@ -4,7 +4,7 @@ import { Palette, Sun, Moon } from 'lucide-react';
 export function ThemeSwitcher() {
   const { theme, setTheme, mode, setMode } = useTheme();
 
-  const themes: Theme[] = ['default', 'emerald', 'sunset', 'purple', 'midnight'];
+  const themes: Theme[] = ['default', 'emerald', 'sunset', 'purple', 'midnight', 'modern'];
 
   return (
     <div className="space-y-3">
