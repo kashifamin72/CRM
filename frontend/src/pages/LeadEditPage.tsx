@@ -458,10 +458,11 @@ export default function LeadEditPage() {
   }
 
   const StatusIcon = STATUS_ICONS[lead?.status ?? LeadStatus.New];
+  const pendingFollowUps = followUps.filter(f => !f.isCompleted).length;
   const tabs = [
     { key: 'details', label: 'Details' },
-    { key: 'followups', label: 'Follow-ups' },
-    { key: 'messages', label: 'Messages' },
+    { key: 'followups', label: 'Follow-ups', count: followUps.length },
+    { key: 'messages', label: 'Messages', count: messages.length },
   ] as const;
 
   // Show Forward Lead to: Admins/Managers (any lead), or SalesOfficer who is the current assignee
@@ -552,13 +553,23 @@ export default function LeadEditPage() {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={clsx(
-              'px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
+              'px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap inline-flex items-center gap-1.5',
               activeTab === tab.key
                 ? 'border-primary-600 text-primary-600'
                 : 'border-transparent text-slate-500 hover:text-slate-700'
             )}
           >
             {tab.label}
+            {'count' in tab && tab.count !== undefined && tab.count > 0 && (
+              <span className={clsx(
+                'inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-bold',
+                activeTab === tab.key
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'bg-slate-100 text-slate-600'
+              )}>
+                {tab.count}
+              </span>
+            )}
           </button>
         ))}
       </div>

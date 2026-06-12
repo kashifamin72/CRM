@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { api } from '../services/api';
 import {
   LayoutDashboard,
   Users,
@@ -19,6 +20,8 @@ import {
   Bell,
   Calendar,
   Search,
+  Clock,
+  ArrowUp,
 } from 'lucide-react';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import clsx from 'clsx';
@@ -27,16 +30,58 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+interface FollowUpItem {
+  id: number;
+  title: string;
+  leadId: number;
+  leadTitle: string;
+  isOverdue: boolean;
+}
+
 export function Layout({ children }: LayoutProps) {
   const { user, logout, isAdmin, isManager } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [followUps, setFollowUps] = useState<FollowUpItem[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     setSidebarOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const loadFollowUps = async () => {
+      try {
+        const result = await api.get<{ todaysFollowUps: FollowUpItem[] }>('/dashboard');
+        setFollowUps(result.todaysFollowUps || []);
+      } catch {}
+    };
+    loadFollowUps();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleSearch = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchValue.trim()) {
+      navigate(`/leads?search=${encodeURIComponent(searchValue.trim())}`);
+      setSearchValue('');
+    }
+  }, [searchValue, navigate]);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const navItems = [
     { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
@@ -180,7 +225,7 @@ export function Layout({ children }: LayoutProps) {
                   className="fixed inset-0 z-40"
                   onClick={() => setUserMenuOpen(false)}
                 />
-                <div className="absolute bottom-full left-0 right-0 mb-2 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-scale-in">
+                <div className="absolute bottom-full left-0 right-0 mb-2 card py-2 z-50 animate-scale-in">
                   <Link
                     to="/profile"
                     onClick={() => setUserMenuOpen(false)}
@@ -231,21 +276,74 @@ export function Layout({ children }: LayoutProps) {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <div className="hidden md:flex items-center gap-2 flex-1 max-w-md">
+          <form onSubmit={handleSearch} className="hidden md:flex items-center gap-2 flex-1 max-w-md">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
                 type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Search leads, contacts..."
                 className="w-full pl-10 pr-4 py-2 bg-slate-100/80 border-0 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:bg-white transition-all"
               />
             </div>
-          </div>
+          </form>
           <div className="flex-1 md:hidden" />
-          <button className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl relative transition-colors">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full ring-2 ring-white" />
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setNotifOpen(!notifOpen)}
+              className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl relative transition-colors"
+            >
+              <Bell className="h-5 w-5" />
+              {followUps.length > 0 && (
+                <span className="absolute top-1.5 right-1.5 h-4 w-4 bg-red-500 rounded-full ring-2 ring-white flex items-center justify-center">
+                  <span className="text-[9px] font-bold text-white">{followUps.length}</span>
+                </span>
+              )}
+            </button>
+            {notifOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
+                <div className="absolute right-0 top-full mt-2 w-80 card py-2 z-50 animate-scale-in">
+                  <div className="px-4 py-2 border-b border-slate-100">
+                    <h4 className="text-sm font-semibold text-slate-900">Today's Follow-ups</h4>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {followUps.length === 0 ? (
+                      <div className="px-4 py-6 text-center">
+                        <Calendar className="h-6 w-6 text-slate-300 mx-auto mb-1" />
+                        <p className="text-xs text-slate-500">No follow-ups today</p>
+                      </div>
+                    ) : (
+                      followUps.map((fu) => (
+                        <Link
+                          key={fu.id}
+                          to={`/leads/${fu.leadId}`}
+                          onClick={() => setNotifOpen(false)}
+                          className={clsx(
+                            'flex items-start gap-2 px-4 py-2.5 hover:bg-slate-50 transition-colors text-sm',
+                            fu.isOverdue && 'bg-red-50/50'
+                          )}
+                        >
+                          <div className={clsx(
+                            'mt-1 h-2 w-2 rounded-full flex-shrink-0',
+                            fu.isOverdue ? 'bg-red-500' : 'bg-amber-500'
+                          )} />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-slate-900 truncate">{fu.title}</p>
+                            <p className="text-xs text-slate-500 truncate">{fu.leadTitle}</p>
+                          </div>
+                          {fu.isOverdue && (
+                            <span className="text-[10px] font-semibold text-red-600 flex-shrink-0">Overdue</span>
+                          )}
+                        </Link>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </header>
 
         <main className="flex-1 p-4 lg:p-6">
@@ -258,6 +356,16 @@ export function Layout({ children }: LayoutProps) {
           </p>
         </footer>
       </div>
+
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-40 h-10 w-10 rounded-full bg-primary-600 text-white shadow-lg shadow-primary-500/30 flex items-center justify-center hover:bg-primary-700 transition-all animate-fade-in-up"
+          aria-label="Back to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </button>
+      )}
     </div>
   );
 }

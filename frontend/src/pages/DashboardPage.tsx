@@ -94,6 +94,13 @@ export default function DashboardPage() {
     color: s.sourceColor,
   })) || [], [data]);
 
+  const greeting = useMemo(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
+  }, []);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -116,7 +123,7 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
           <h1 className="page-title">Dashboard</h1>
-          <p className="text-slate-500 mt-1">Welcome back, {user?.firstName}</p>
+          <p className="text-slate-500 mt-1">{greeting}, {user?.firstName}</p>
         </div>
         {canManage && (
           <select

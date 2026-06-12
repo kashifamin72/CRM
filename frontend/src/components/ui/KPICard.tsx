@@ -25,7 +25,7 @@ export function KPICard({ icon: Icon, label, value, gradient, change, className 
               </p>
             )}
           </div>
-          <div className={clsx('rounded-xl p-3 shadow-lg transition-transform duration-200 group-hover:scale-110', gradient.replace('bg-gradient-to-r', 'bg').split(' ')[0])}>
+          <div className={clsx('rounded-xl p-3 shadow-lg transition-transform duration-200 group-hover:scale-110', gradient)}>
             <Icon className="h-5 w-5 text-white" />
           </div>
         </div>
