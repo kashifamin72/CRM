@@ -151,7 +151,7 @@ export function Layout({ children }: LayoutProps) {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         style={{
-          background: 'linear-gradient(180deg, rgb(var(--color-sidebar)) 0%, rgba(var(--color-sidebar), 0.95) 100%)',
+          background: 'linear-gradient(180deg, rgb(var(--color-sidebar)) 0%, rgb(var(--color-sidebar) / 0.95) 100%)',
         }}
       >
         <div className="flex items-center gap-3 px-6 h-16 border-b border-white/10">
