@@ -4,6 +4,15 @@ obj/
 *.dll
 *.pdb
 *.cache
+*.swp
+
+# .NET build output
+backend/bin/
+backend/obj/
+frontend/tsconfig.tsbuildinfo
+
+# OpenCode
+.opencode/
 
 # Node
 node_modules/
