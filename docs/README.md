@@ -1,5 +1,8 @@
 # VisionPlus CRM — User Reference Manual
 
+## Download
+📄 **[VisionPlus-CRM-User-Manual.docx](VisionPlus-CRM-User-Manual.docx)** — Complete manual as a Word document (18 chapters, title page, system flow diagrams, tables)
+
 ## Table of Contents
 
 | # | Chapter | Description |
