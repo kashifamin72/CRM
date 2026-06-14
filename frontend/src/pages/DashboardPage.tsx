@@ -228,6 +228,8 @@ export default function DashboardPage() {
         </div>
       )}
 
+      <hr className="border-t border-slate-200/60" />
+
       {(data.todaysFollowUps?.length > 0 || data.tomorrowsFollowUps?.length > 0) && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {data.todaysFollowUps?.length > 0 && (
@@ -315,6 +317,8 @@ export default function DashboardPage() {
         </div>
       )}
 
+      <hr className="border-t border-slate-200/60" />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card p-5">
           <h3 className="section-title mb-4">Pipeline</h3>
@@ -388,6 +392,8 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      <hr className="border-t border-slate-200/60" />
 
       <div className="card">
         <div className="flex items-center justify-between p-5 border-b border-slate-200">

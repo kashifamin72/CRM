@@ -365,7 +365,7 @@ export default function LeadsListPage() {
         <div className="card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead>
+              <thead className="sticky top-0 z-10">
                 <tr className="border-b border-slate-200 bg-slate-50">
                   <SortHeader field="title">
                     <Briefcase className="h-3 w-3" /> Title
@@ -392,8 +392,8 @@ export default function LeadsListPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {sortedLeads.map((lead) => (
-                  <tr key={lead.id} className="hover:bg-slate-50 transition-colors">
+                {sortedLeads.map((lead, idx) => (
+                  <tr key={lead.id} className={clsx('transition-colors', idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50', 'hover:bg-primary-50/50')}>
                     <td className="px-4 py-2.5">
                       <Link to={`/leads/${lead.id}`} className="text-sm font-medium text-slate-900 hover:text-primary-600 line-clamp-1">
                         {lead.title}

@@ -52,6 +52,7 @@ export function Layout({ children }: LayoutProps) {
   const [followUps, setFollowUps] = useState<FollowUpItem[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [leadCounts, setLeadCounts] = useState<{ total: number; pending: number }>({ total: 0, pending: 0 });
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed((prev) => {
@@ -73,6 +74,16 @@ export function Layout({ children }: LayoutProps) {
       } catch {}
     };
     loadFollowUps();
+  }, []);
+
+  useEffect(() => {
+    const loadCounts = async () => {
+      try {
+        const result = await api.get<{ totalCount: number }>('/leads?pageSize=1');
+        setLeadCounts({ total: result.totalCount || 0, pending: 0 });
+      } catch {}
+    };
+    loadCounts();
   }, []);
 
   useEffect(() => {
@@ -124,7 +135,9 @@ export function Layout({ children }: LayoutProps) {
 
   const NavGroup = ({ items }: { items: typeof navItems }) => (
     <div className="space-y-1">
-      {items.map((item) => (
+      {items.map((item) => {
+        const showBadge = item.to === '/leads' && leadCounts.total > 0;
+        return (
         <Link
           key={item.to}
           to={item.to}
@@ -150,8 +163,14 @@ export function Layout({ children }: LayoutProps) {
             isActive(item.to) ? 'text-white' : 'text-white/50 group-hover:text-white'
           )} />
           {!collapsed && item.label}
+          {!collapsed && showBadge && (
+            <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-white/20 text-white text-[10px] font-bold">
+              {leadCounts.total}
+            </span>
+          )}
         </Link>
-      ))}
+        );
+      })}
     </div>
   );
 
@@ -426,7 +445,7 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </header>
 
-        <main className="flex-1 p-4 lg:p-6">
+        <main className="flex-1 p-4 lg:p-6 animate-fadeIn" key={location.pathname}>
           {children}
         </main>
 
