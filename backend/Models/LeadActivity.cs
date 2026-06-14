@@ -19,6 +19,8 @@ public class LeadActivity
     public string? ToUserId { get; set; }
     public string PerformedById { get; set; } = string.Empty;
     public string? Notes { get; set; }
+    public string? Reason { get; set; }
+    public string? Remark { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public Lead Lead { get; set; } = null!;

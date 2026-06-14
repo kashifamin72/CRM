@@ -156,6 +156,17 @@ export interface LeadActivity {
   performedByName: string;
   performedByPicture?: string;
   notes?: string;
+  reason?: string;
+  remark?: string;
+  createdAt: string;
+}
+
+export interface StatusReason {
+  id: number;
+  status: number;
+  reason: string;
+  sortOrder: number;
+  isActive: boolean;
   createdAt: string;
 }
 

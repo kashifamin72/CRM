@@ -9,6 +9,7 @@ import { ConfirmDialog } from '../components/ConfirmDialog';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { EmptyState } from '../components/ui/EmptyState';
 import KanbanBoard from '../components/KanbanBoard';
+import StatusChangeModal from '../components/StatusChangeModal';
 import { Officer } from '../types';
 import {
   Plus,
@@ -67,6 +68,11 @@ export default function LeadsListPage() {
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [sortField, setSortField] = useState<SortField>('updatedAt');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const [statusModal, setStatusModal] = useState<{
+    isOpen: boolean;
+    leadId: number | null;
+    newStatus: LeadStatus | null;
+  }>({ isOpen: false, leadId: null, newStatus: null });
 
   const toggleSort = (field: SortField) => {
     if (sortField === field) {
@@ -145,6 +151,12 @@ export default function LeadsListPage() {
   };
 
   const updateStatus = async (leadId: number, status: LeadStatus) => {
+    // Show modal for Closed Lost/Won
+    if (status === LeadStatus.ClosedLost || status === LeadStatus.ClosedWon) {
+      setStatusModal({ isOpen: true, leadId, newStatus: status });
+      return;
+    }
+
     const previous = leads.find(l => l.id === leadId);
     if (previous && previous.status === status) return;
     if (previous) {
@@ -154,6 +166,37 @@ export default function LeadsListPage() {
     }
     try {
       await api.post(`/leads/${leadId}/status`, { status });
+    } catch {
+      if (previous) {
+        setLeads((prev) =>
+          prev.map((l) => (l.id === leadId ? { ...l, status: previous.status } : l))
+        );
+      }
+      showToast('Failed to update status', 'error');
+    }
+  };
+
+  const handleStatusConfirm = async (reason: string, remark: string) => {
+    if (!statusModal.leadId || !statusModal.newStatus) return;
+    
+    const leadId = statusModal.leadId;
+    const newStatus = statusModal.newStatus;
+    const previous = leads.find(l => l.id === leadId);
+    
+    if (previous) {
+      setLeads((prev) =>
+        prev.map((l) => (l.id === leadId ? { ...l, status: newStatus } : l))
+      );
+    }
+    
+    try {
+      await api.post(`/leads/${leadId}/status`, {
+        status: newStatus,
+        reason,
+        remark,
+      });
+      showToast('Status updated', 'success');
+      setStatusModal({ isOpen: false, leadId: null, newStatus: null });
     } catch {
       if (previous) {
         setLeads((prev) =>
@@ -460,6 +503,13 @@ export default function LeadsListPage() {
         description="This action cannot be undone. All related data (follow-ups, messages) will be permanently removed."
         confirmLabel="Delete Lead"
         variant="danger"
+      />
+
+      <StatusChangeModal
+        isOpen={statusModal.isOpen}
+        onClose={() => setStatusModal({ isOpen: false, leadId: null, newStatus: null })}
+        onConfirm={handleStatusConfirm}
+        newStatus={statusModal.newStatus || LeadStatus.ClosedLost}
       />
     </div>
   );

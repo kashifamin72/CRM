@@ -1,4 +1,4 @@
-# Build stage
+# Development stage - for hot-reload with Vite
 FROM node:20-alpine AS build
 WORKDIR /app
 
@@ -8,15 +8,18 @@ COPY package*.json ./
 # Install dependencies
 RUN npm ci
 
-# Copy source code
+# Copy source code (will be mounted as volume in dev mode)
 COPY . .
 
 # Build argument for API URL
 ARG VITE_API_URL=https://crm.visionplusapps.com/api
 ENV VITE_API_URL=$VITE_API_URL
 
-# Build the app
-RUN npm run build
+# Expose Vite dev server port
+EXPOSE 5173
+
+# Default command for development (overridden by docker-compose)
+CMD ["npm", "run", "dev"]
 
 # Production stage
 FROM nginx:alpine AS production

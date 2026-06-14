@@ -15,6 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<FollowUp> FollowUps => Set<FollowUp>();
     public DbSet<MessageLog> MessageLogs => Set<MessageLog>();
     public DbSet<LeadActivity> LeadActivities => Set<LeadActivity>();
+    public DbSet<StatusReason> StatusReasons => Set<StatusReason>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -75,6 +76,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<BusinessType>(e =>
         {
             e.HasIndex(b => b.Name).IsUnique();
+        });
+
+        builder.Entity<StatusReason>(e =>
+        {
+            e.HasIndex(s => new { s.Status, s.Reason }).IsUnique();
         });
 
         SeedData(builder);
@@ -146,6 +152,24 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             new City { Id = 38, Name = "Dera Ismail Khan" },
             new City { Id = 39, Name = "Charsadda" },
             new City { Id = 40, Name = "Nowshera" }
+        );
+
+        // Seed Status Reasons
+        builder.Entity<StatusReason>().HasData(
+            // Closed Lost reasons (Status = 5)
+            new StatusReason { Id = 1, Status = 5, Reason = "Price too high", SortOrder = 1, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 2, Status = 5, Reason = "Chose competitor", SortOrder = 2, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 3, Status = 5, Reason = "No budget/timing", SortOrder = 3, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 4, Status = 5, Reason = "Product doesn't fit", SortOrder = 4, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 5, Status = 5, Reason = "Decision maker unavailable", SortOrder = 5, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 6, Status = 5, Reason = "Other", SortOrder = 6, IsActive = true, CreatedAt = DateTime.UtcNow },
+            // Closed Won reasons (Status = 4)
+            new StatusReason { Id = 7, Status = 4, Reason = "Good price/value", SortOrder = 1, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 8, Status = 4, Reason = "Best solution fit", SortOrder = 2, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 9, Status = 4, Reason = "Strong relationship", SortOrder = 3, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 10, Status = 4, Reason = "Quick implementation", SortOrder = 4, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 11, Status = 4, Reason = "Good reviews/referral", SortOrder = 5, IsActive = true, CreatedAt = DateTime.UtcNow },
+            new StatusReason { Id = 12, Status = 4, Reason = "Other", SortOrder = 6, IsActive = true, CreatedAt = DateTime.UtcNow }
         );
     }
 }

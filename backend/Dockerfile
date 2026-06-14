@@ -1,4 +1,4 @@
-# Build stage
+# Development stage - for hot-reload with dotnet watch
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
@@ -6,11 +6,16 @@ WORKDIR /src
 COPY *.csproj ./
 RUN dotnet restore
 
-# Copy everything and build
+# Copy everything (source will be mounted as volume in dev mode)
 COPY . .
-RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
-# Runtime stage
+# Expose port for development
+EXPOSE 5000
+
+# Default command for development (overridden by docker-compose)
+CMD ["dotnet", "watch", "run", "--no-launch-profile"]
+
+# Production stage
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 

@@ -22,6 +22,7 @@ import InlineAddSelect from '../components/InlineAddSelect';
 import { FormSection, Field, FieldGrid, IconInput } from '../components/FormSection';
 import { FlatSection, FlatField, FlatGrid, FlatIconInput } from '../components/FlatSection';
 import ForwardLeadModal from '../components/ForwardLeadModal';
+import StatusChangeModal from '../components/StatusChangeModal';
 import {
   ArrowLeft,
   Save,
@@ -113,6 +114,10 @@ export default function LeadEditPage() {
   const [messageBody, setMessageBody] = useState('');
   const [sendingMessage, setSendingMessage] = useState(false);
   const [forwardOpen, setForwardOpen] = useState(false);
+  const [statusModal, setStatusModal] = useState<{
+    isOpen: boolean;
+    newStatus: LeadStatus | null;
+  }>({ isOpen: false, newStatus: null });
 
   useEffect(() => {
     loadLead();
@@ -242,6 +247,13 @@ export default function LeadEditPage() {
 
   const updateStatusInline = async (newStatus: LeadStatus) => {
     if (!lead || lead.status === newStatus) return;
+    
+    // Show modal for Closed Lost/Won
+    if (newStatus === LeadStatus.ClosedLost || newStatus === LeadStatus.ClosedWon) {
+      setStatusModal({ isOpen: true, newStatus });
+      return;
+    }
+    
     const previous = lead.status;
     setLead({ ...lead, status: newStatus });
     setForm({ ...form, status: newStatus });
@@ -252,6 +264,27 @@ export default function LeadEditPage() {
       setLead({ ...lead, status: previous });
       setForm({ ...form, status: previous });
       showToast('Failed to update status', 'error');
+    }
+  };
+
+  const handleStatusConfirm = async (reason: string, remark: string) => {
+    if (!statusModal.newStatus || !lead) return;
+    
+    setSaving(true);
+    try {
+      await api.post(`/leads/${id}/status`, {
+        status: statusModal.newStatus,
+        reason,
+        remark,
+      });
+      showToast('Status updated', 'success');
+      setStatusModal({ isOpen: false, newStatus: null });
+      loadLead();
+      loadActivities();
+    } catch (err: any) {
+      showToast(err.message || 'Failed to update status', 'error');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -362,8 +395,21 @@ export default function LeadEditPage() {
             <span className="font-medium text-slate-700">{fromLabel}</span>
             <ArrowRight className="inline h-3 w-3 mx-1 text-slate-400" />
             <span className="font-medium text-slate-700">{toLabel}</span>
+            {a.reason && (
+              <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600">
+                {a.reason}
+              </span>
+            )}
           </p>
         );
+        if (a.remark) {
+          body = (
+            <>
+              {body}
+              <p className="text-xs text-slate-500 mt-0.5 italic">"{a.remark}"</p>
+            </>
+          );
+        }
       } else if (a.type === LeadActivityType.Forwarded) {
         body = (
           <p className="text-xs text-slate-600 mt-0.5">
@@ -1098,6 +1144,14 @@ export default function LeadEditPage() {
         leadId={Number(id)}
         currentAssigneeName={lead?.assignedToName}
         onForwarded={handleForwarded}
+      />
+
+      <StatusChangeModal
+        isOpen={statusModal.isOpen}
+        onClose={() => setStatusModal({ isOpen: false, newStatus: null })}
+        onConfirm={handleStatusConfirm}
+        newStatus={statusModal.newStatus || LeadStatus.ClosedLost}
+        loading={saving}
       />
     </div>
   );

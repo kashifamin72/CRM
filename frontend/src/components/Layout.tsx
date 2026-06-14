@@ -109,6 +109,7 @@ export function Layout({ children }: LayoutProps) {
 
   const adminItems = [
     ...(isAdmin ? [{ to: '/employees', icon: UserCog, label: 'Employees' }] : []),
+    ...(isAdmin ? [{ to: '/status-reasons', icon: Database, label: 'Status Reasons' }] : []),
   ];
 
   const isActive = (path: string) => {

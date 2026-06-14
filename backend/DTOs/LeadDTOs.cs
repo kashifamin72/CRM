@@ -197,6 +197,8 @@ public class LeadActivityResponse
     public string PerformedByName { get; set; } = string.Empty;
     public string? PerformedByPicture { get; set; }
     public string? Notes { get; set; }
+    public string? Reason { get; set; }
+    public string? Remark { get; set; }
     public DateTime CreatedAt { get; set; }
 }
 

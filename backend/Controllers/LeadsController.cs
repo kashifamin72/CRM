@@ -241,7 +241,7 @@ public class LeadsController : BaseApiController
     }
 
     [HttpPost("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusRequest request, CancellationToken ct = default)
+    public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusWithReasonRequest request, CancellationToken ct = default)
     {
         var userId = GetUserId();
         var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
@@ -250,6 +250,17 @@ public class LeadsController : BaseApiController
 
         var fromStatus = lead.Status;
         var toStatus = (LeadStatus)request.Status;
+
+        // Validate that Closed Lost/Won requires reason and remark
+        if (toStatus == LeadStatus.ClosedLost || toStatus == LeadStatus.ClosedWon)
+        {
+            if (string.IsNullOrWhiteSpace(request.Reason))
+                return BadRequest(new { message = "Reason is required for closing leads" });
+
+            if (string.IsNullOrWhiteSpace(request.Remark) || request.Remark.Length < 10)
+                return BadRequest(new { message = "Remark must be at least 10 characters" });
+        }
+
         lead.Status = toStatus;
         lead.UpdatedAt = DateTime.UtcNow;
 
@@ -261,6 +272,8 @@ public class LeadsController : BaseApiController
                 Type = LeadActivityType.StatusChanged,
                 FromStatus = fromStatus,
                 ToStatus = toStatus,
+                Reason = request.Reason,
+                Remark = request.Remark,
                 PerformedById = userId,
                 CreatedAt = DateTime.UtcNow,
             });
@@ -339,6 +352,8 @@ public class LeadsController : BaseApiController
                 PerformedByName = a.PerformedBy.FirstName + " " + a.PerformedBy.LastName,
                 PerformedByPicture = a.PerformedBy.ProfilePicture,
                 Notes = a.Notes,
+                Reason = a.Reason,
+                Remark = a.Remark,
                 CreatedAt = a.CreatedAt
             })
             .ToListAsync(ct);

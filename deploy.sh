@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# CRM Deployment Script for crm.visionplusapps.com
+# CRM PRODUCTION Deployment Script for crm.visionplusapps.com
 # Usage: ./deploy.sh [command]
+#
+# ⚠️  WARNING: THIS IS FOR PRODUCTION DEPLOYMENT ONLY  ⚠️
+# For local development, use: ./dev.sh
 #
 # DATA SAFETY POLICY
 # ------------------
@@ -113,9 +116,23 @@ obtain_certificate() {
     print_status "Certificate obtained successfully"
 }
 
-# Build and start services
+# Build and start services (PRODUCTION ONLY)
 deploy() {
-    print_status "Building and deploying CRM application..."
+    echo ""
+    echo -e "${RED}╔══════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║  ⚠️  PRODUCTION DEPLOYMENT - crm.visionplusapps.com  ⚠️   ║${NC}"
+    echo -e "${RED}╚══════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    print_warning "This will deploy to PRODUCTION server!"
+    print_warning "For local development, use: ./dev.sh"
+    echo ""
+    read -p "Are you sure you want to deploy to production? (yes/no): " confirm
+    if [[ "$confirm" != "yes" ]]; then
+        print_error "Deployment cancelled."
+        exit 0
+    fi
+
+    print_status "Building and deploying CRM application to PRODUCTION..."
 
     cd "$PROJECT_DIR"
 
@@ -129,13 +146,27 @@ deploy() {
         docker-compose up -d --build
     fi
 
-    print_status "Deployment completed successfully!"
+    print_status "Production deployment completed successfully!"
     print_status "Application is available at: https://$DOMAIN"
 }
 
-# Rebuild only the API image and restart the API container.
+# Rebuild only the API image and restart the API container (PRODUCTION ONLY).
 # The PostgreSQL data volume is never touched.
 deploy_api() {
+    echo ""
+    echo -e "${RED}╔══════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║  ⚠️  PRODUCTION API DEPLOYMENT - crm.visionplusapps.com  ⚠️ ║${NC}"
+    echo -e "${RED}╚══════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    print_warning "This will deploy API to PRODUCTION server!"
+    print_warning "For local development, use: ./dev.sh"
+    echo ""
+    read -p "Are you sure you want to deploy API to production? (yes/no): " confirm
+    if [[ "$confirm" != "yes" ]]; then
+        print_error "Deployment cancelled."
+        exit 0
+    fi
+
     print_status "Rebuilding API image and restarting $API_CONTAINER..."
     cd "$PROJECT_DIR"
     backup_db_quiet
@@ -158,8 +189,22 @@ deploy_api() {
     print_status "API redeployed. Data volume untouched."
 }
 
-# Rebuild only the frontend image and restart the frontend container.
+# Rebuild only the frontend image and restart the frontend container (PRODUCTION ONLY).
 deploy_frontend() {
+    echo ""
+    echo -e "${RED}╔══════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║  ⚠️  PRODUCTION FRONTEND DEPLOYMENT                       ║${NC}"
+    echo -e "${RED}╚══════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    print_warning "This will deploy frontend to PRODUCTION server!"
+    print_warning "For local development, use: ./dev.sh"
+    echo ""
+    read -p "Are you sure you want to deploy frontend to production? (yes/no): " confirm
+    if [[ "$confirm" != "yes" ]]; then
+        print_error "Deployment cancelled."
+        exit 0
+    fi
+
     print_status "Rebuilding frontend image and restarting $FRONTEND_CONTAINER..."
     cd "$PROJECT_DIR"
 
@@ -277,14 +322,18 @@ restore_db() {
 
 # Show help
 show_help() {
-    echo "CRM Deployment Script"
+    echo -e "${RED}╔══════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║  ⚠️  PRODUCTION DEPLOYMENT SCRIPT - USE WITH CAUTION  ⚠️   ║${NC}"
+    echo -e "${RED}╚══════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo "For LOCAL development, use: ./dev.sh"
     echo ""
     echo "Usage: ./deploy.sh [command]"
     echo ""
     echo "Commands:"
-    echo "  deploy          Build and deploy all services (auto-backup first)"
-    echo "  deploy-api      Rebuild only the API image + restart api container"
-    echo "  deploy-frontend Rebuild only the frontend image + restart frontend container"
+    echo "  deploy          Build and deploy all services to PRODUCTION (auto-backup first)"
+    echo "  deploy-api      Rebuild only the API image + restart api container (PRODUCTION)"
+    echo "  deploy-frontend Rebuild only the frontend image + restart frontend container (PRODUCTION)"
     echo "  stop            Stop all services (data volume is preserved)"
     echo "  start           Start all services"
     echo "  restart         Restart all services (auto-backup first)"
@@ -301,11 +350,10 @@ show_help() {
     echo "the crm-react_postgres_data volume. Every deploy first takes a backup."
     echo ""
     echo "Examples:"
-    echo "  ./deploy.sh deploy         # First time / full deploy"
-    echo "  ./deploy.sh deploy-api     # Update only the backend"
-    echo "  ./deploy.sh deploy-frontend # Update only the frontend"
-    echo "  ./deploy.sh logs           # View application logs"
-    echo "  ./deploy.sh backup         # Manual backup"
+    echo "  ./dev.sh start            # Start local development (auto-rebuild)"
+    echo "  ./deploy.sh deploy        # Deploy to PRODUCTION (with confirmation)"
+    echo "  ./deploy.sh deploy-api    # Deploy API to PRODUCTION"
+    echo "  ./deploy.sh backup        # Manual backup"
 }
 
 # Main script

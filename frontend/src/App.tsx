@@ -11,6 +11,7 @@ import EmployeesListPage from './pages/EmployeesListPage';
 import EmployeeCreatePage from './pages/EmployeeCreatePage';
 import EmployeeEditPage from './pages/EmployeeEditPage';
 import LeadSourcesPage from './pages/LeadSourcesPage';
+import StatusReasonsPage from './pages/StatusReasonsPage';
 import ReportsPage from './pages/ReportsPage';
 import MessageLogsPage from './pages/MessageLogsPage';
 import CalendarPage from './pages/CalendarPage';
@@ -88,6 +89,15 @@ function App() {
           element={
             <ProtectedRoute requiredRoles={['Administrator', 'Manager']}>
               <Layout><LeadSourcesPage /></Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/status-reasons"
+          element={
+            <ProtectedRoute requiredRoles={['Administrator']}>
+              <Layout><StatusReasonsPage /></Layout>
             </ProtectedRoute>
           }
         />
