@@ -13,7 +13,7 @@ import {
   closestCorners,
 } from '@dnd-kit/core';
 import { Lead, LeadStatus, LeadStatusLabels, LeadStatusColors } from '../types';
-import { MessageSquare, Clock, User, Calendar, Pencil, Briefcase } from 'lucide-react';
+import { MessageSquare, Clock, User, Calendar, Pencil, Briefcase, Lock } from 'lucide-react';
 import { renderSourcePill } from '../lib/icons';
 import clsx from 'clsx';
 
@@ -107,13 +107,18 @@ function KanbanCard({ lead }: { lead: Lead }) {
     >
       <div className={clsx('h-1 rounded-t-lg', statusBarColors[lead.status])} />
       <div className="p-3 space-y-2">
-        <Link
-          to={`/leads/${lead.id}`}
-          onClick={(e) => e.stopPropagation()}
-          className="text-sm font-medium text-slate-900 hover:text-primary-600 line-clamp-1 block"
-        >
-          {lead.title}
-        </Link>
+        <div className="flex items-center gap-1">
+          {(lead.status === LeadStatus.ClosedWon || lead.status === LeadStatus.ClosedLost) && (
+            <Lock className="h-3 w-3 text-slate-400 flex-shrink-0" />
+          )}
+          <Link
+            to={`/leads/${lead.id}`}
+            onClick={(e) => e.stopPropagation()}
+            className="text-sm font-medium text-slate-900 hover:text-primary-600 line-clamp-1 block flex-1"
+          >
+            {lead.title}
+          </Link>
+        </div>
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-primary-100 text-primary-700 text-[10px] font-semibold flex items-center justify-center flex-shrink-0">
             {getInitials(lead.customerName)}
@@ -234,9 +239,11 @@ function DragCard({ lead }: { lead: Lead }) {
 export default function KanbanBoard({
   leads,
   onStatusChange,
+  isAdmin = false,
 }: {
   leads: Lead[];
   onStatusChange: (leadId: number, status: LeadStatus) => void;
+  isAdmin?: boolean;
 }) {
   const [activeLead, setActiveLead] = useState<Lead | null>(null);
 
@@ -259,9 +266,13 @@ export default function KanbanBoard({
     const id = event.active.id as string;
     if (id.startsWith('lead-')) {
       const lead = event.active.data.current?.lead as Lead;
+      // Prevent drag for closed leads unless admin
+      if ((lead.status === LeadStatus.ClosedWon || lead.status === LeadStatus.ClosedLost) && !isAdmin) {
+        return;
+      }
       setActiveLead(lead);
     }
-  }, []);
+  }, [isAdmin]);
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {

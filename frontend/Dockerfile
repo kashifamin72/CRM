@@ -15,6 +15,9 @@ COPY . .
 ARG VITE_API_URL=https://crm.visionplusapps.com/api
 ENV VITE_API_URL=$VITE_API_URL
 
+# Build the application
+RUN npm run build
+
 # Expose Vite dev server port
 EXPOSE 5173
 

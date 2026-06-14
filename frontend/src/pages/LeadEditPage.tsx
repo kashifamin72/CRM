@@ -55,6 +55,7 @@ import {
   DollarSign,
   MapPin,
   Hash,
+  Lock,
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -247,7 +248,13 @@ export default function LeadEditPage() {
 
   const updateStatusInline = async (newStatus: LeadStatus) => {
     if (!lead || lead.status === newStatus) return;
-    
+
+    // Block any status change on closed leads for non-admin users
+    if (isLeadClosed && !isAdmin) {
+      showToast('Only System Administrator can modify a closed lead', 'error');
+      return;
+    }
+
     // Show modal for Closed Lost/Won
     if (newStatus === LeadStatus.ClosedLost || newStatus === LeadStatus.ClosedWon) {
       setStatusModal({ isOpen: true, newStatus });
@@ -290,6 +297,10 @@ export default function LeadEditPage() {
 
   const handleSave = async () => {
     if (saving) return;
+    if (!canModifyClosed) {
+      showToast('Only System Administrator can modify a closed lead', 'error');
+      return;
+    }
     setSaving(true);
     try {
       await api.put(`/leads/${id}`, {
@@ -320,6 +331,10 @@ export default function LeadEditPage() {
   };
 
   const addFollowUp = async () => {
+    if (!canModifyClosed) {
+      showToast('Only System Administrator can modify a closed lead', 'error');
+      return;
+    }
     if (!newFollowUp.title || !newFollowUp.followUpDate) return;
     if (addingFollowUp) return;
     setAddingFollowUp(true);
@@ -503,6 +518,9 @@ export default function LeadEditPage() {
     );
   }
 
+  const isLeadClosed = lead?.status === LeadStatus.ClosedWon || lead?.status === LeadStatus.ClosedLost;
+  const canModifyClosed = isAdmin || !isLeadClosed;
+
   const StatusIcon = STATUS_ICONS[lead?.status ?? LeadStatus.New];
   const pendingFollowUps = followUps.filter(f => !f.isCompleted).length;
   const tabs = [
@@ -585,13 +603,20 @@ export default function LeadEditPage() {
             )}
           </div>
         </div>
-        {canForward && (
+        {canForward && canModifyClosed && (
           <button onClick={() => setForwardOpen(true)} className="btn-secondary flex-shrink-0 w-full sm:w-auto">
             <ArrowRight className="h-4 w-4" />
             Forward Lead
           </button>
         )}
       </div>
+
+      {isLeadClosed && !isAdmin && (
+        <div className="flex items-center gap-2 p-3 rounded-xl bg-slate-100 border border-slate-200 text-sm text-slate-600">
+          <Lock className="h-4 w-4 text-slate-400" />
+          This lead is <strong className="text-slate-700">{LeadStatusLabels[lead!.status]}</strong>. Only System Administrator can modify closed leads.
+        </div>
+      )}
 
       <div className="flex gap-1 border-b border-slate-200 overflow-x-auto">
         {tabs.map((tab) => (
@@ -623,6 +648,7 @@ export default function LeadEditPage() {
       {activeTab === 'details' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-2">
+            <fieldset disabled={!canModifyClosed} className={clsx(!canModifyClosed && 'opacity-70')}>
             {/* Customer */}
             <FlatSection title="Customer">
               <FlatGrid cols={3}>
@@ -752,7 +778,9 @@ export default function LeadEditPage() {
                     id="status"
                     value={form.status}
                     onChange={(e) => updateStatusInline(Number(e.target.value) as LeadStatus)}
-                    className={clsx('input font-medium', LeadStatusColors[form.status])}
+                    disabled={isLeadClosed && !isAdmin}
+                    className={clsx('input font-medium', LeadStatusColors[form.status], (isLeadClosed && !isAdmin) && 'opacity-60 cursor-not-allowed')}
+                    title={isLeadClosed && !isAdmin ? 'Only System Administrator can modify a closed lead' : ''}
                   >
                     {Object.entries(LeadStatusLabels).map(([val, label]) => (
                       <option key={val} value={val}>{label}</option>
@@ -872,11 +900,14 @@ export default function LeadEditPage() {
               <button type="button" onClick={() => navigate(-1)} className="btn-secondary flex items-center">
                 Cancel
               </button>
-              <button onClick={handleSave} disabled={saving} className="btn-primary flex items-center gap-2">
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                Save Changes
-              </button>
+              {canModifyClosed && (
+                <button onClick={handleSave} disabled={saving} className="btn-primary flex items-center gap-2">
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                  Save Changes
+                </button>
+              )}
             </div>
+          </fieldset>
           </div>
 
           <div className="lg:col-span-1">
@@ -1025,6 +1056,12 @@ export default function LeadEditPage() {
           <div>
             <div className="card p-4 lg:sticky lg:top-4">
               <h3 className="text-sm font-semibold text-slate-900 mb-3">Schedule New Follow-up</h3>
+              {!canModifyClosed ? (
+                <div className="text-center py-6">
+                  <Lock className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+                  <p className="text-xs text-slate-500">Only System Administrator can add follow-ups to a closed lead</p>
+                </div>
+              ) : (
               <div className="space-y-3">
                 <div>
                   <label htmlFor="fu-title" className="block text-xs font-medium text-slate-700 mb-1">Title</label>
@@ -1067,6 +1104,7 @@ export default function LeadEditPage() {
                   Schedule Follow-up
                 </button>
               </div>
+              )}
             </div>
           </div>
         </div>
@@ -1077,7 +1115,12 @@ export default function LeadEditPage() {
           <div>
             <div className="card p-4 lg:sticky lg:top-4">
               <h3 className="text-sm font-semibold text-slate-900 mb-3">Send WhatsApp Message</h3>
-              {lead?.customerPhone ? (
+              {!canModifyClosed ? (
+                <div className="text-center py-6">
+                  <Lock className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+                  <p className="text-xs text-slate-500">Only System Administrator can send messages for a closed lead</p>
+                </div>
+              ) : lead?.customerPhone ? (
                 <div className="space-y-3">
                   <div className="text-xs text-slate-600 bg-slate-50 rounded-lg p-2.5 flex items-center gap-2">
                     <Phone className="h-3.5 w-3.5" />

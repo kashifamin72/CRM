@@ -203,6 +203,10 @@ public class LeadsController : BaseApiController
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
+        // Once a lead is Closed Won or Closed Lost, only Administrator can edit it
+        if ((lead.Status == LeadStatus.ClosedWon || lead.Status == LeadStatus.ClosedLost) && !IsAdmin)
+            return BadRequest(new { message = "Only System Administrator can modify a closed lead" });
+
         lead.Title = request.Title;
         lead.Description = request.Description ?? string.Empty;
         lead.CustomerName = request.CustomerName;
@@ -248,6 +252,10 @@ public class LeadsController : BaseApiController
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
 
+        // Once a lead is Closed Won or Closed Lost, only Administrator can change it
+        if ((lead.Status == LeadStatus.ClosedWon || lead.Status == LeadStatus.ClosedLost) && !IsAdmin)
+            return BadRequest(new { message = "Only System Administrator can modify a closed lead" });
+
         var fromStatus = lead.Status;
         var toStatus = (LeadStatus)request.Status;
 
@@ -292,6 +300,10 @@ public class LeadsController : BaseApiController
             .Include(l => l.AssignedTo)
             .FirstOrDefaultAsync(l => l.Id == id, ct);
         if (lead == null) return NotFound();
+
+        // Once a lead is Closed Won or Closed Lost, only Administrator can forward it
+        if ((lead.Status == LeadStatus.ClosedWon || lead.Status == LeadStatus.ClosedLost) && !IsAdmin)
+            return BadRequest(new { message = "Only System Administrator can forward a closed lead" });
 
         var role = GetUserRole();
         if (IsSalesOfficer && lead.AssignedToId != userId)
@@ -394,6 +406,10 @@ public class LeadsController : BaseApiController
         var lead = await _db.Leads.FindAsync(new object[] { id }, ct);
         if (lead == null) return NotFound();
         if (!CanAccessLead(lead)) return Forbid();
+
+        // Once a lead is Closed Won or Closed Lost, only Administrator can add follow-ups
+        if ((lead.Status == LeadStatus.ClosedWon || lead.Status == LeadStatus.ClosedLost) && !IsAdmin)
+            return BadRequest(new { message = "Only System Administrator can add follow-ups to a closed lead" });
 
         var followUp = new FollowUp
         {

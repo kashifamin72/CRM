@@ -34,6 +34,7 @@ import {
   ArrowUp,
   ArrowDown,
   ArrowUpDown,
+  Lock,
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -151,13 +152,20 @@ export default function LeadsListPage() {
   };
 
   const updateStatus = async (leadId: number, status: LeadStatus) => {
+    const previous = leads.find(l => l.id === leadId);
+
+    // Block any status change on closed leads for non-admin users
+    if (previous && (previous.status === LeadStatus.ClosedWon || previous.status === LeadStatus.ClosedLost) && !isAdmin) {
+      showToast('Only System Administrator can modify a closed lead', 'error');
+      return;
+    }
+
     // Show modal for Closed Lost/Won
     if (status === LeadStatus.ClosedLost || status === LeadStatus.ClosedWon) {
       setStatusModal({ isOpen: true, leadId, newStatus: status });
       return;
     }
 
-    const previous = leads.find(l => l.id === leadId);
     if (previous && previous.status === status) return;
     if (previous) {
       setLeads((prev) =>
@@ -403,16 +411,23 @@ export default function LeadsListPage() {
                       )}
                     </td>
                     <td className="px-4 py-2.5">
-                      <select
-                        value={lead.status}
-                        onChange={(e) => updateStatus(lead.id, Number(e.target.value) as LeadStatus)}
-                        aria-label={`Change status for ${lead.title}`}
-                        className={clsx('badge cursor-pointer border-0 ring-1 ring-inset ring-transparent hover:ring-current/20 transition-shadow', LeadStatusColors[lead.status])}
-                      >
-                        {Object.entries(LeadStatusLabels).map(([val, label]) => (
-                          <option key={val} value={val}>{label}</option>
-                        ))}
-                      </select>
+                      <div className="flex items-center gap-1">
+                        <select
+                          value={lead.status}
+                          onChange={(e) => updateStatus(lead.id, Number(e.target.value) as LeadStatus)}
+                          disabled={(lead.status === LeadStatus.ClosedWon || lead.status === LeadStatus.ClosedLost) && !isAdmin}
+                          aria-label={`Change status for ${lead.title}`}
+                          className={clsx('badge cursor-pointer border-0 ring-1 ring-inset ring-transparent hover:ring-current/20 transition-shadow', LeadStatusColors[lead.status], ((lead.status === LeadStatus.ClosedWon || lead.status === LeadStatus.ClosedLost) && !isAdmin) && '!cursor-not-allowed opacity-70')}
+                          title={(lead.status === LeadStatus.ClosedWon || lead.status === LeadStatus.ClosedLost) && !isAdmin ? 'Only System Administrator can modify a closed lead' : ''}
+                        >
+                          {Object.entries(LeadStatusLabels).map(([val, label]) => (
+                            <option key={val} value={val}>{label}</option>
+                          ))}
+                        </select>
+                        {(lead.status === LeadStatus.ClosedWon || lead.status === LeadStatus.ClosedLost) && (
+                          <span title="Closed lead"><Lock className="h-3 w-3 text-slate-400 flex-shrink-0" /></span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-2.5 text-xs text-slate-600 whitespace-nowrap">
                       {lead.leadDate ? new Date(lead.leadDate).toLocaleDateString() : '—'}
@@ -489,7 +504,7 @@ export default function LeadsListPage() {
           </div>
         </div>
       ) : (
-        <KanbanBoard leads={leads} onStatusChange={updateStatus} />
+        <KanbanBoard leads={leads} onStatusChange={updateStatus} isAdmin={isAdmin} />
       )}
 
       <ConfirmDialog
