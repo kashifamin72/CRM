@@ -151,4 +151,22 @@ public class EmployeesController : ControllerBase
 
         return Ok(new { isActive = user.IsActive });
     }
+
+    [HttpPost("{id}/reset-password")]
+    public async Task<IActionResult> ResetPassword(string id, [FromBody] ResetPasswordRequest request)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null) return NotFound();
+
+        // Remove existing password and set new one
+        var removeResult = await _userManager.RemovePasswordAsync(user);
+        if (!removeResult.Succeeded)
+            return BadRequest(new { errors = removeResult.Errors.Select(e => e.Description) });
+
+        var addResult = await _userManager.AddPasswordAsync(user, request.NewPassword);
+        if (!addResult.Succeeded)
+            return BadRequest(new { errors = addResult.Errors.Select(e => e.Description) });
+
+        return Ok(new { message = "Password updated" });
+    }
 }

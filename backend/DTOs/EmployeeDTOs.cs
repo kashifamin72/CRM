@@ -68,3 +68,10 @@ public class UpdateEmployeeRequest
     public string? PhoneNumber { get; set; }
     public bool IsActive { get; set; } = true;
 }
+
+public class ResetPasswordRequest
+{
+    [Required(ErrorMessage = "New password is required")]
+    [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
+    public string NewPassword { get; set; } = string.Empty;
+}

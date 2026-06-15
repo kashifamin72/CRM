@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../services/api';
 import { User } from '../types';
 import { useToast } from '../components/Toaster';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, Loader2, KeyRound } from 'lucide-react';
 
 export default function EmployeeEditPage() {
   const { id } = useParams();
@@ -19,6 +19,10 @@ export default function EmployeeEditPage() {
     designation: '',
     role: '',
   });
+  const [resetPwOpen, setResetPwOpen] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [resettingPw, setResettingPw] = useState(false);
 
   useEffect(() => {
     loadEmployee();
@@ -161,6 +165,73 @@ export default function EmployeeEditPage() {
           </button>
         </div>
       </form>
+
+      <div className="card p-6">
+        <button
+          type="button"
+          onClick={() => setResetPwOpen(!resetPwOpen)}
+          className="flex items-center gap-2 text-sm font-semibold text-slate-900 w-full"
+        >
+          <KeyRound className="h-4 w-4" />
+          Reset Password
+          <span className="ml-auto text-xs text-slate-400">{resetPwOpen ? 'Click to hide' : 'Click to change'}</span>
+        </button>
+
+        {resetPwOpen && (
+          <div className="mt-4 space-y-4 border-t border-slate-100 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="label">New Password</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="input"
+                  placeholder="Min 6 characters"
+                  minLength={6}
+                />
+              </div>
+              <div>
+                <label className="label">Confirm Password</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="input"
+                  placeholder="Repeat new password"
+                />
+              </div>
+            </div>
+            {newPassword && confirmPassword && newPassword !== confirmPassword && (
+              <p className="text-xs text-red-600">Passwords do not match</p>
+            )}
+            <button
+              type="button"
+              onClick={async () => {
+                if (newPassword.length < 6) { showToast('Password must be at least 6 characters', 'error'); return; }
+                if (newPassword !== confirmPassword) { showToast('Passwords do not match', 'error'); return; }
+                setResettingPw(true);
+                try {
+                  await api.post(`/employees/${id}/reset-password`, { newPassword });
+                  showToast('Password reset successful', 'success');
+                  setResetPwOpen(false);
+                  setNewPassword('');
+                  setConfirmPassword('');
+                } catch (err: any) {
+                  showToast(err.message || 'Failed to reset password', 'error');
+                } finally {
+                  setResettingPw(false);
+                }
+              }}
+              disabled={resettingPw || !newPassword || !confirmPassword}
+              className="btn-primary flex items-center gap-2"
+            >
+              {resettingPw ? <Loader2 className="h-4 w-4 animate-spin" /> : <KeyRound className="h-4 w-4" />}
+              Reset Password
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
