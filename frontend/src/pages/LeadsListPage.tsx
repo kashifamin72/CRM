@@ -362,10 +362,10 @@ export default function LeadsListPage() {
           <Loader2 className="h-8 w-8 animate-spin text-primary-600" />
         </div>
       ) : view === 'table' ? (
-        <div className="card overflow-hidden">
-          <div className="overflow-x-auto">
+        <div className="card" style={{ maxHeight: 'calc(100vh - 280px)' }}>
+          <div className="overflow-y-auto overflow-x-auto" style={{ maxHeight: 'calc(100vh - 280px)' }}>
             <table className="w-full">
-              <thead className="sticky top-0 z-10">
+              <thead className="sticky top-0 z-10 bg-slate-50 shadow-sm">
                 <tr className="border-b border-slate-200 bg-slate-50">
                   <SortHeader field="title">
                     <Briefcase className="h-3 w-3" /> Title

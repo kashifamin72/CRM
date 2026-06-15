@@ -154,7 +154,7 @@ services:
     environment:
       POSTGRES_DB: crm_db
       POSTGRES_USER: crm_user
-      POSTGRES_PASSWORD: CrM_S3cur3_P@ss_2024!
+      POSTGRES_PASSWORD: CrM_Pr0d_S3cur3!2024#xK9
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
@@ -176,7 +176,7 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=crm_db;Username=crm_user;Password=CrM_S3cur3_P@ss_2024!
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=crm_db;Username=crm_user;Password=CrM_Pr0d_S3cur3!2024#xK9
       Jwt__Key: Xk9mPz7vB2nQ8wR5tY3uI6oA1sD4fG7hJ0kL9zX3cV6bN8mP2qW5eR7tY1uI4o
       Jwt__Issuer: crm.visionplusapps.com
       Jwt__Audience: crm.visionplusapps.com
@@ -245,7 +245,7 @@ networks:
 # Database Configuration
 POSTGRES_DB=crm_db
 POSTGRES_USER=crm_user
-POSTGRES_PASSWORD=CrM_S3cur3_P@ss_2024!
+POSTGRES_PASSWORD=CrM_Pr0d_S3cur3!2024#xK9
 
 # JWT Configuration
 JWT_SECRET_KEY=Xk9mPz7vB2nQ8wR5tY3uI6oA1sD4fG7hJ0kL9zX3cV6bN8mP2qW5eR7tY1uI4o
@@ -357,22 +357,15 @@ docker compose -f docker-compose.production.yml up -d api
 
 ---
 
-## 8. Automated Backup Cron
+## 8. Automated Backup
 
-To set up automated daily backups on production:
+Daily backup runs at **7:00 AM** via cron:
 ```bash
-ssh kashif@216.106.182.21
-crontab -e
+# Cron job (already configured on production)
+0 7 * * * /home/kashif/crm-app/backup-daily.sh
 ```
 
-Add:
-```
-# Daily CRM database backup at 2 AM
-0 2 * * * cd /home/kashif/crm-app && docker exec crm-postgres pg_dump -U crm_user -d crm_db > backups/crm_db_$(date +\%Y\%m\%d_\%H\%M\%S).sql 2>> backups/cron.log
-
-# Cleanup backups older than 30 days at 3 AM
-0 3 * * * find /home/kashif/crm-app/backups -name "crm_db_*.sql" -mtime +30 -delete
-```
+Backups are stored in `/home/kashif/crm-app/backups/` and auto-cleaned after 30 days.
 
 ---
 
@@ -389,7 +382,34 @@ Add:
 
 ---
 
-## 10. Current Production State
+## 10. Security
+
+### Database Security
+- PostgreSQL port **NOT exposed** to internet (only internal Docker network)
+- Authentication: `scram-sha-256` for network connections
+- Password changed from default to strong random password
+- `pg_hba.conf` uses `trust` only for local socket (container-internal)
+
+### Why Previous PostgreSQL Was Hacked
+- Port 5432 was exposed to the internet
+- Default/weak password used
+- No firewall rules
+
+### Current Protections
+- PostgreSQL only accessible within Docker network (`crm-app_crm-network`)
+- Only Nginx (ports 80/443) is public
+- Strong database password
+- Daily backups at 7:00 AM
+
+### Never Do
+- Never expose port 5432 publicly
+- Never use default `postgres` password
+- Never run `docker compose down -v` (deletes all data)
+- Never commit `.env` to git
+
+---
+
+## 11. Current Production State
 
 | Item | Value |
 |------|-------|
@@ -400,6 +420,8 @@ Add:
 | **SSL Expiry** | Sep 5, 2026 |
 | **Docker Compose File** | `docker-compose.production.yml` |
 | **Deploy Script** | `deploy-production.sh` |
+| **Backup Script** | `backup-daily.sh` (cron at 7:00 AM) |
+| **DB Password** | `CrM_Pr0d_S3cur3!2024#xK9` |
 
 ---
 
