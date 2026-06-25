@@ -125,8 +125,8 @@ export default function LeadEditPage() {
     loadActivities();
     loadFollowUps();
     loadMessages();
+    loadSources();
     if (isAdmin || isManager) {
-      loadSources();
       loadEmployees();
     }
     loadBusinessTypes();
@@ -724,31 +724,26 @@ export default function LeadEditPage() {
                     showColorDot
                   />
                 </FlatField>
-                {(isAdmin || isManager) ? (
-                  <FlatField label="Lead Source" htmlFor="leadSourceId">
-                    <InlineAddSelect
-                      value={form.leadSourceId}
-                      onChange={(v) => setForm({ ...form, leadSourceId: v })}
-                      options={sources.map(s => ({ id: s.id, name: s.name, color: s.color, isActive: s.isActive }))}
-                      onAdd={async (name) => {
-                        try {
-                          const created = await api.post<LeadSource>('/leadsources', { name, icon: 'bi-three-dots', color: '#6366f1' });
-                          setSources(prev => [...prev, created].sort((a, b) => a.name.localeCompare(b.name)));
-                          return created;
-                        } catch (err: any) {
-                          showToast(err?.message || 'Failed to add source', 'error');
-                          return null;
-                        }
-                      }}
-                      placeholder="Select source"
-                      showColorDot
-                    />
-                  </FlatField>
-                ) : (
-                  <FlatField label="Lead Source">
-                    <p className="text-sm text-slate-700 mt-1.5">{lead?.leadSourceName || '—'}</p>
-                  </FlatField>
-                )}
+                <FlatField label="Lead Source" htmlFor="leadSourceId">
+                  <InlineAddSelect
+                    value={form.leadSourceId}
+                    onChange={(v) => setForm({ ...form, leadSourceId: v })}
+                    options={sources.map(s => ({ id: s.id, name: s.name, color: s.color, isActive: s.isActive }))}
+                    onAdd={(isAdmin || isManager) ? async (name) => {
+                      try {
+                        const created = await api.post<LeadSource>('/leadsources', { name, icon: 'bi-three-dots', color: '#6366f1' });
+                        setSources(prev => [...prev, created].sort((a, b) => a.name.localeCompare(b.name)));
+                        return created;
+                      } catch (err: any) {
+                        showToast(err?.message || 'Failed to add source', 'error');
+                        return null;
+                      }
+                    } : undefined}
+                    hideAddButton={!(isAdmin || isManager)}
+                    placeholder="Select source"
+                    showColorDot
+                  />
+                </FlatField>
               </FlatGrid>
             </FlatSection>
 

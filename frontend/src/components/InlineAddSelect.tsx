@@ -14,10 +14,11 @@ interface InlineAddSelectProps {
   value: string | number;
   onChange: (value: string) => void;
   options: InlineAddSelectOption[];
-  onAdd: (name: string) => Promise<InlineAddSelectOption | null>;
+  onAdd?: (name: string) => Promise<InlineAddSelectOption | null>;
   placeholder?: string;
   required?: boolean;
   hideForNonAdmin?: boolean;
+  hideAddButton?: boolean;
   hidden?: boolean;
   showColorDot?: boolean;
   emptyMessage?: string;
@@ -33,6 +34,7 @@ export default function InlineAddSelect({
   required,
   hidden,
   showColorDot,
+  hideAddButton,
   emptyMessage = 'No options',
 }: InlineAddSelectProps) {
   const safeLabel = label ?? 'item';
@@ -50,7 +52,7 @@ export default function InlineAddSelect({
 
   const handleAdd = async () => {
     const trimmed = newName.trim();
-    if (!trimmed) return;
+    if (!trimmed || !onAdd) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -112,15 +114,17 @@ export default function InlineAddSelect({
             })()
           )}
         </div>
-        <button
-          type="button"
-          onClick={() => { setAdding(true); setError(null); }}
-          className="btn-icon flex-shrink-0"
-          title={`Add ${safeLabel.toLowerCase()}`}
-          aria-label={`Add new ${safeLabel.toLowerCase()}`}
-        >
-          <Plus className="h-4 w-4" />
-        </button>
+        {onAdd && !hideAddButton && (
+          <button
+            type="button"
+            onClick={() => { setAdding(true); setError(null); }}
+            className="btn-icon flex-shrink-0"
+            title={`Add ${safeLabel.toLowerCase()}`}
+            aria-label={`Add new ${safeLabel.toLowerCase()}`}
+          >
+            <Plus className="h-4 w-4" />
+          </button>
+        )}
       </div>
 
       {adding && (

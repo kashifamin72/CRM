@@ -9,7 +9,7 @@ namespace CRM.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Administrator,Manager")]
+[Authorize]
 public class LeadSourcesController : ControllerBase
 {
     private readonly ApplicationDbContext _db;
@@ -37,6 +37,7 @@ public class LeadSourcesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrator,Manager")]
     public async Task<IActionResult> Create([FromBody] CreateLeadSourceRequest request)
     {
         var exists = await _db.LeadSources.AnyAsync(s =>
@@ -69,6 +70,7 @@ public class LeadSourcesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Administrator,Manager")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateLeadSourceRequest request)
     {
         var source = await _db.LeadSources.FindAsync(id);
@@ -89,6 +91,7 @@ public class LeadSourcesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator,Manager")]
     public async Task<IActionResult> Delete(int id)
     {
         var source = await _db.LeadSources.Include(s => s.Leads).FirstOrDefaultAsync(s => s.Id == id);

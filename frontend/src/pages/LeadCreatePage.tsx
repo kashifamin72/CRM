@@ -50,8 +50,8 @@ export default function LeadCreatePage() {
   });
 
   useEffect(() => {
+    loadSources();
     if (isAdmin || isManager) {
-      loadSources();
       loadEmployees();
     }
     loadBusinessTypes();
@@ -253,28 +253,17 @@ export default function LeadCreatePage() {
                 showColorDot
               />
             </FlatField>
-            {(isAdmin || isManager) ? (
-              <FlatField label="Lead Source" htmlFor="leadSourceId">
-                <InlineAddSelect
-                  value={form.leadSourceId}
-                  onChange={(v) => setForm({ ...form, leadSourceId: v })}
-                  options={sources.map(s => ({ id: s.id, name: s.name, color: s.color }))}
-                  onAdd={addSource}
-                  placeholder="Select source"
-                  showColorDot
-                />
-              </FlatField>
-            ) : (
-              <FlatField label="Lead Source">
-                <input
-                  type="text"
-                  className="input bg-slate-50"
-                  value={form.leadSourceId ? (sources.find(s => s.id.toString() === form.leadSourceId)?.name ?? '') : ''}
-                  readOnly
-                  placeholder="Set by your manager"
-                />
-              </FlatField>
-            )}
+            <FlatField label="Lead Source" htmlFor="leadSourceId">
+              <InlineAddSelect
+                value={form.leadSourceId}
+                onChange={(v) => setForm({ ...form, leadSourceId: v })}
+                options={sources.map(s => ({ id: s.id, name: s.name, color: s.color }))}
+                onAdd={(isAdmin || isManager) ? addSource : undefined}
+                hideAddButton={!(isAdmin || isManager)}
+                placeholder="Select source"
+                showColorDot
+              />
+            </FlatField>
           </FlatGrid>
         </FlatSection>
 
