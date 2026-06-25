@@ -3,6 +3,15 @@
 > **IMPORTANT:** This file is the single source of truth for production deployment.
 > Any AI model or developer MUST read this file before making changes.
 > Every deployment MUST backup the database FIRST. NEVER delete production data.
+>
+> The same server `216.106.182.21` currently hosts **two** isolated CRM tenants:
+>
+> - `https://crm.visionplusapps.com` — the **pilot** (VisionPlus), `/home/kashif/crm-app/`
+> - `https://ocean.visionplusapps.com` — **first customer** (Ocean), `/home/kashif/ocean-crm/`
+>
+> See **§11 Multi-Tenant Architecture** for the full design and the per-tenant
+> details. Most commands in this file target the **pilot** — for the Ocean
+> tenant use the equivalents under `/home/kashif/ocean-crm/` (see §11.2).
 
 ---
 
@@ -25,26 +34,42 @@
 
 ## 1. Quick Reference
 
-### Deploy After Code Push
+> The commands below target the **CRM pilot** (`crm.visionplusapps.com`,
+> `/home/kashif/crm-app/`). For the **Ocean** tenant use the equivalent
+> commands under `/home/kashif/ocean-crm/` — see §11.2 for the full list.
+
+### Deploy CRM pilot (after code push)
 ```bash
 ssh kashif@216.106.182.21
 cd /home/kashif/crm-app
 ./deploy-production.sh deploy
 ```
 
-### Deploy Backend Only
+### Deploy CRM pilot — Backend Only
 ```bash
 ./deploy-production.sh deploy-api
 ```
 
-### Deploy Frontend Only
+### Deploy CRM pilot — Frontend Only
 ```bash
 ./deploy-production.sh deploy-frontend
 ```
 
-### Backup Database
+### Backup CRM pilot database
 ```bash
 ./deploy-production.sh backup
+```
+
+### Deploy Ocean tenant (first customer)
+```bash
+ssh kashif@216.106.182.21
+cd /home/kashif/ocean-crm
+./deploy-ocean.sh deploy
+```
+
+### Backup Ocean database
+```bash
+cd /home/kashif/ocean-crm && ./deploy-ocean.sh backup
 ```
 
 ---
@@ -54,11 +79,12 @@ cd /home/kashif/crm-app
 | Property | Value |
 |----------|-------|
 | **Production IP** | `216.106.182.21` |
-| **Production Domain** | `crm.visionplusapps.com` |
+| **Production Domains** | `crm.visionplusapps.com` (pilot, VisionPlus), `ocean.visionplusapps.com` (first customer, Ocean) |
 | **SSH Username** | `kashif` |
 | **SSH Password** | `#Pakistan123#` |
-| **Project Path** | `/home/kashif/crm-app` |
-| **GitHub Repo** | `https://github.com/kashifamin72/CRM.git` |
+| **Pilot project path** | `/home/kashif/crm-app` |
+| **Ocean project path** | `/home/kashif/ocean-crm` |
+| **GitHub Repo** | `https://github.com/kashifamin72/CRM.git` (single source for both tenants; see §11) |
 
 ### Local Development Server
 | Property | Value |
@@ -76,78 +102,130 @@ cd /home/kashif/crm-app
 │                  216.106.182.21                          │
 │                                                          │
 │  ┌──────────────────────────────────────────────────┐   │
-│  │  Nginx (Ports 80/443)                            │   │
-│  │  SSL Termination + Reverse Proxy                  │   │
-│  │  Domain: crm.visionplusapps.com                   │   │
-│  └──────────┬────────────────────┬──────────────────┘   │
-│             │                    │                       │
-│  ┌──────────▼──────┐  ┌─────────▼──────────┐           │
-│  │  React Frontend  │  │  .NET API Backend   │           │
-│  │  (Port 80)       │  │  (Port 5000)        │           │
-│  │  Container:      │  │  Container:         │           │
-│  │  crm-frontend    │  │  crm-api            │           │
-│  └─────────────────┘  └─────────┬──────────┘           │
-│                                  │                       │
-│                    ┌─────────────▼─────────────┐        │
-│                    │  PostgreSQL Database       │        │
-│                    │  (Port 5432 internal)      │        │
-│                    │  Container: crm-postgres   │        │
-│                    │  Volume: postgres-data      │        │
-│                    └───────────────────────────┘        │
+│  │  crm-nginx  (nginx:alpine, shared reverse proxy) │   │
+│  │  SSL termination for ALL tenant domains:          │   │
+│  │    - crm.visionplusapps.com   → pilot            │   │
+│  │    - ocean.visionplusapps.com → first customer   │   │
+│  │    - (new tenants append a `server { ... }` blk) │   │
+│  └──────────┬───────────────────┬──────────────────┘   │
+│             │                   │                        │
+│  ┌──────────▼─────────┐  ┌──────▼─────────────┐         │
+│  │  Pilot (VisionPlus) │  │  Ocean (1st cust.) │         │
+│  │  crm-frontend       │  │  ocean-crm-frontend│        │
+│  │  crm-api            │  │  ocean-crm-api     │        │
+│  │  crm-postgres       │  │  ocean-crm-postgres│        │
+│  │  (crm_db / crm_user)│  │  (ocean_crm_db /   │        │
+│  │                     │  │   ocean_crm_user)  │        │
+│  └─────────────────────┘  └────────────────────┘        │
+│   /home/kashif/crm-app/      /home/kashif/ocean-crm/     │
+│   image: crm-app-*           image: ocean-crm-*          │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ### Docker Containers (Production)
-| Container | Image | Port | Purpose |
-|-----------|-------|------|---------|
-| `crm-nginx` | nginx:alpine | 80, 443 | SSL + Reverse Proxy |
-| `crm-frontend` | crm-app-frontend:latest | 80 (internal) | React SPA |
-| `crm-api` | crm-app-api:latest | 5000 (internal) | .NET API |
-| `crm-postgres` | postgres:16-alpine | 5432 (internal) | Database |
+
+The `crm-nginx` container is **shared** by all tenants. Everything else is
+per-tenant and prefixed with the tenant slug so containers from different
+tenants can share the `crm-app_crm-network` without collisions.
+
+| Container | Image | Port | Tenant | Purpose |
+|-----------|-------|------|--------|---------|
+| `crm-nginx` | nginx:alpine | 80, 443 | (shared) | SSL + reverse proxy for every tenant domain |
+| `crm-frontend` | crm-app-frontend:latest | 80 (internal) | pilot | Pilot React SPA |
+| `crm-api` | crm-app-api:latest | 5000 (internal) | pilot | Pilot .NET API |
+| `crm-postgres` | postgres:16-alpine | 5432 (internal) | pilot | Pilot database (`crm_db` / `crm_user`) |
+| `ocean-crm-frontend` | ocean-crm-frontend:latest | 80 (internal) | ocean | Ocean React SPA |
+| `ocean-crm-api` | ocean-crm-api:latest | 5000 (internal) | ocean | Ocean .NET API |
+| `ocean-crm-postgres` | postgres:16-alpine | 5432 (internal) | ocean | Ocean database (`ocean_crm_db` / `ocean_crm_user`) |
+
+For full per-tenant isolation details see **§11 Multi-Tenant Architecture**.
 
 ---
 
 ## 4. Deployment Commands
 
-### Full Deploy (after both backend + frontend changes)
+> All commands use `sshpass` so the script can be run from CI or a local
+> terminal non-interactively. Run from any host that can reach
+> `216.106.182.21`. Each command targets one tenant — pick the one you
+> intend to deploy and **backup the matching database first** (RULE 1).
+
+### 4.1 CRM pilot — `crm.visionplusapps.com`
+
+#### Full Deploy (after both backend + frontend changes)
 ```bash
 sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
   "cd /home/kashif/crm-app && ./deploy-production.sh deploy"
 ```
 
-### Backend Only (after C# / API changes)
+#### Backend Only (after C# / API changes)
 ```bash
 sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
   "cd /home/kashif/crm-app && ./deploy-production.sh deploy-api"
 ```
 
-### Frontend Only (after React / TypeScript changes)
+#### Frontend Only (after React / TypeScript changes)
 ```bash
 sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
   "cd /home/kashif/crm-app && ./deploy-production.sh deploy-frontend"
 ```
 
-### Backup Database (ALWAYS run before any deploy)
+#### Backup Database (ALWAYS run before any deploy)
 ```bash
 sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
   "cd /home/kashif/crm-app && ./deploy-production.sh backup"
 ```
 
-### View Logs
+#### View Logs
 ```bash
 sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
   "cd /home/kashif/crm-app && ./deploy-production.sh logs"
 ```
 
-### Check Status
+#### Check Status
 ```bash
 sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
   "cd /home/kashif/crm-app && ./deploy-production.sh status"
 ```
 
+### 4.2 Ocean tenant — `ocean.visionplusapps.com` (first customer)
+
+The same shape as the pilot, with project path `/home/kashif/ocean-crm/`
+and script `./deploy-ocean.sh`:
+
+```bash
+# Full deploy
+sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
+  "cd /home/kashif/ocean-crm && ./deploy-ocean.sh deploy"
+
+# API only
+sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
+  "cd /home/kashif/ocean-crm && ./deploy-ocean.sh deploy-api"
+
+# Frontend only
+sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
+  "cd /home/kashif/ocean-crm && ./deploy-ocean.sh deploy-frontend"
+
+# Backup
+sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
+  "cd /home/kashif/ocean-crm && ./deploy-ocean.sh backup"
+
+# Logs / status
+sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
+  "cd /home/kashif/ocean-crm && ./deploy-ocean.sh logs"
+sshpass -p '#Pakistan123#' ssh -o StrictHostKeyChecking=no kashif@216.106.182.21 \
+  "cd /home/kashif/ocean-crm && ./deploy-ocean.sh status"
+```
+
 ---
 
 ## 5. Configuration Files
+
+> Two tenants are live, each with its own `docker-compose.production.yml`
+> and `.env` file. The samples below are for the **CRM pilot**; the Ocean
+> tenant uses the same shape with different values, hosted under
+> `/home/kashif/ocean-crm/`. The reference copies of Ocean's compose,
+> deploy, and backup scripts are committed in the repo at
+> `tenants/ocean-crm/`.
 
 ### 5.1 Production docker-compose (on server: `/home/kashif/crm-app/docker-compose.production.yml`)
 ```yaml
@@ -267,28 +345,75 @@ WHATSAPP_WEBHOOK_URL=http://host.docker.internal:5678/webhook/whatsapp-bridge
 ```
 
 ### 5.3 Nginx Config (on server: `/home/kashif/crm-app/nginx/nginx.conf`)
-- Handles SSL termination for `crm.visionplusapps.com`
-- Proxies `/api/` to `api:5000`
-- Proxies `/` to `frontend:80`
+- Handles SSL termination for **all** tenant domains
+- Currently routes:
+  - `crm.visionplusapps.com` → `crm-api:5000` / `crm-frontend:80` (pilot)
+  - `ocean.visionplusapps.com` → `ocean-crm-api:5000` / `ocean-crm-frontend:80` (first customer)
 - Rate limiting on API (10 req/s)
 - Security headers enabled
-- Let's Encrypt SSL certificates
+- Let's Encrypt SSL certificates for every tenant
+
+### 5.4 Ocean tenant docker-compose (on server: `/home/kashif/ocean-crm/docker-compose.production.yml`)
+Same structure as §5.1, with these key differences:
+
+- **Container names** are prefixed with `ocean-crm-` (e.g. `ocean-crm-postgres`)
+- **Service name** for Postgres is `ocean-postgres` (NOT `postgres`) to avoid DNS collision on the shared `crm-app_crm-network` (the API's `Host=ocean-postgres` reflects this)
+- **Networks** references the shared `crm-app_crm-network` as `external: true` so `crm-nginx` can reach the new containers
+- **Volume names** are prefixed with `ocean-` (e.g. `ocean-postgres-data`, `ocean-uploads_data`, `ocean-dataprotection_keys`)
+- No `nginx` service — Ocean is reverse-proxied by the shared `crm-nginx`
+
+Reference copy committed in the repo: `tenants/ocean-crm/docker-compose.production.yml`.
+
+### 5.5 Ocean tenant .env (on server: `/home/kashif/ocean-crm/.env`)
+```env
+# Database Configuration (ISOLATED from the CRM pilot)
+POSTGRES_DB=ocean_crm_db
+POSTGRES_USER=ocean_crm_user
+POSTGRES_PASSWORD=<unique strong random; never the same as the pilot's>
+
+# JWT Configuration
+JWT_SECRET_KEY=<unique 48+ char random; never the same as the pilot's>
+JWT_ISSUER=ocean.visionplusapps.com
+JWT_AUDIENCE=ocean.visionplusapps.com
+JWT_EXPIRATION=60
+
+# API Configuration
+VITE_API_URL=https://ocean.visionplusapps.com/api
+ALLOWED_ORIGINS=https://ocean.visionplusapps.com
+
+# WhatsApp Integration
+WHATSAPP_WEBHOOK_URL=http://host.docker.internal:5678/webhook/whatsapp-bridge
+```
+
+Secrets are generated with `openssl rand -base64 48 | tr -d '/+='` and stored
+in `/home/kashif/ocean-crm/.env` with mode `600`. The file is **never**
+committed to git.
 
 ---
 
 ## 6. Safety Rules
 
 ### RULE 1: ALWAYS Backup Before Deploy
+The deploy scripts backup automatically, but for manual deploys the
+exact command depends on which tenant you are touching:
+
 ```bash
-# This runs automatically with deploy-production.sh, but for manual deploys:
-docker exec crm-postgres pg_dump -U crm_user -d crm_db > /home/kashif/crm-app/backups/crm_db_$(date +%Y%m%d_%H%M%S).sql
+# CRM pilot
+docker exec crm-postgres pg_dump -U crm_user -d crm_db \
+  > /home/kashif/crm-app/backups/crm_db_$(date +%Y%m%d_%H%M%S).sql
+
+# Ocean
+docker exec ocean-crm-postgres pg_dump -U ocean_crm_user -d ocean_crm_db \
+  > /home/kashif/ocean-crm/backups/ocean_crm_db_$(date +%Y%m%d_%H%M%S).sql
 ```
 
 ### RULE 2: NEVER Delete Production Data
-- NEVER run `docker volume rm` on `postgres-data`
+- NEVER run `docker volume rm` on any tenant's `*postgres-data` volume
+  (e.g. `crm-app_postgres-data`, `ocean-crm_ocean-postgres-data`)
 - NEVER run `docker compose down -v` (the `-v` flag deletes volumes)
-- NEVER run `DROP TABLE` or `DELETE FROM` on production database
-- NEVER modify the `.env` file on production unless explicitly asked
+- NEVER run `DROP TABLE` or `DELETE FROM` on a production database
+- NEVER modify a tenant's `.env` file on production unless explicitly asked
+- NEVER edit `nginx.conf` without first checking every tenant is unaffected
 
 ### RULE 3: Database Schema Changes Are Safe
 - EF Core migrations run automatically on API startup
@@ -315,9 +440,13 @@ docker exec crm-postgres pg_dump -U crm_user -d crm_db > /home/kashif/crm-app/ba
 - Will be lost if volume is deleted
 
 ### RULE 6: Backups Location
-- Production backups: `/home/kashif/crm-app/backups/`
-- Format: `crm_db_YYYYMMDD_HHMMSS.sql`
-- Retention: 30 days (auto-cleanup via cron)
+- **CRM pilot** backups: `/home/kashif/crm-app/backups/`
+  - Format: `crm_db_YYYYMMDD_HHMMSS.sql`
+  - Daily cron at **07:00 AM** (`/home/kashif/crm-app/backup-daily.sh`)
+- **Ocean** backups: `/home/kashif/ocean-crm/backups/`
+  - Format: `ocean_crm_db_YYYYMMDD_HHMMSS.sql`
+  - Daily cron at **07:30 AM** (`/home/kashif/ocean-crm/backup-ocean-daily.sh`)
+- Retention: **30 days** (auto-cleanup inside each backup script)
 
 ---
 
@@ -326,36 +455,63 @@ docker exec crm-postgres pg_dump -U crm_user -d crm_db > /home/kashif/crm-app/ba
 ### Container Not Starting
 ```bash
 ssh kashif@216.106.182.21
-docker logs crm-api        # Check API errors
-docker logs crm-frontend   # Check frontend errors
-docker logs crm-postgres   # Check database errors
-docker logs crm-nginx      # Check nginx errors
+
+# CRM pilot
+docker logs crm-api
+docker logs crm-frontend
+docker logs crm-postgres
+
+# Ocean
+docker logs ocean-crm-api
+docker logs ocean-crm-frontend
+docker logs ocean-crm-postgres
+
+# Shared reverse proxy
+docker logs crm-nginx
 ```
 
 ### Database Connection Issues
 ```bash
+# CRM pilot
 docker exec crm-postgres pg_isready -U crm_user -d crm_db
-docker exec crm-postgres psql -U crm_user -d crm_db -c "SELECT COUNT(*) FROM \"AspNetUsers\";"
+docker exec crm-postgres psql -U crm_user -d crm_db -c 'SELECT COUNT(*) FROM "AspNetUsers";'
+
+# Ocean
+docker exec ocean-crm-postgres pg_isready -U ocean_crm_user -d ocean_crm_db
+docker exec ocean-crm-postgres psql -U ocean_crm_user -d ocean_crm_db -c 'SELECT COUNT(*) FROM "AspNetUsers";'
 ```
 
 ### SSL Certificate Issues
 ```bash
-# Check certificate expiry
+# CRM pilot cert
 openssl x509 -in /home/kashif/crm-app/nginx/ssl/crm.visionplusapps.com/fullchain.pem -text -noout | grep "Not After"
+
+# Ocean cert
+openssl x509 -in /home/kashif/crm-app/nginx/ssl/ocean.visionplusapps.com/live/ocean.visionplusapps.com/fullchain.pem -text -noout | grep "Not After"
 ```
 
 ### Restore Database from Backup
 ```bash
-# List backups
+# CRM pilot
 ls -la /home/kashif/crm-app/backups/
+docker exec -i crm-postgres psql -U crm_user -d crm_db \
+  < /home/kashif/crm-app/backups/crm_db_YYYYMMDD_HHMMSS.sql
 
-# Restore specific backup
-docker exec -i crm-postgres psql -U crm_user -d crm_db < /home/kashif/crm-app/backups/crm_db_YYYYMMDD_HHMMSS.sql
+# Ocean
+ls -la /home/kashif/ocean-crm/backups/
+docker exec -i ocean-crm-postgres psql -U ocean_crm_user -d ocean_crm_db \
+  < /home/kashif/ocean-crm/backups/ocean_crm_db_YYYYMMDD_HHMMSS.sql
 ```
 
 ### Force Rebuild (if images are cached)
 ```bash
+# CRM pilot
 cd /home/kashif/crm-app
+docker compose -f docker-compose.production.yml build --no-cache api
+docker compose -f docker-compose.production.yml up -d api
+
+# Ocean
+cd /home/kashif/ocean-crm
 docker compose -f docker-compose.production.yml build --no-cache api
 docker compose -f docker-compose.production.yml up -d api
 ```
@@ -364,17 +520,32 @@ docker compose -f docker-compose.production.yml up -d api
 
 ## 8. Automated Backup
 
-Daily backup runs at **7:00 AM** via cron:
-```bash
-# Cron job (already configured on production)
+Two daily cron jobs are configured on the production server, one per
+tenant, with a 30-minute offset to avoid simultaneous `pg_dump` runs:
+
+```cron
+# CRM pilot — daily at 07:00 AM
 0 7 * * * /home/kashif/crm-app/backup-daily.sh
+
+# Ocean (first customer) — daily at 07:30 AM
+30 7 * * * /home/kashif/ocean-crm/backup-ocean-daily.sh
 ```
 
-Backups are stored in `/home/kashif/crm-app/backups/` and auto-cleaned after 30 days.
+| Tenant | Backup file | Location | Cron |
+|--------|-------------|----------|------|
+| CRM pilot | `crm_db_YYYYMMDD_HHMMSS.sql` | `/home/kashif/crm-app/backups/` | `0 7 * * *` |
+| Ocean | `ocean_crm_db_YYYYMMDD_HHMMSS.sql` | `/home/kashif/ocean-crm/backups/` | `30 7 * * *` |
+
+Each script logs to `<backup-dir>/backup.log` and auto-deletes files older
+than 30 days.
 
 ---
 
 ## 9. Default Users (Production)
+
+Every tenant is seeded with the same six default users on first start
+(`SeedDataService.SeedAsync`). They are **independent per tenant** — the
+admin in the CRM pilot cannot log in to Ocean, and vice versa.
 
 | Name | Email | Password | Role |
 |------|-------|----------|------|
@@ -384,6 +555,10 @@ Backups are stored in `/home/kashif/crm-app/backups/` and auto-cleaned after 30 
 | Salman | salman@visionplus.com.pk | Sales@123 | SalesOfficer |
 | Abdullah | abdullah@visionplus.com.pk | Sales@123 | SalesOfficer |
 | Faisal | faisal@visionplus.com.pk | Sales@123 | SalesOfficer |
+
+> **Important:** change the Administrator password from `Admin@123` on
+> every new tenant before giving the customer access. The seed is a
+> convenience, not a security boundary.
 
 ---
 
@@ -516,6 +691,9 @@ expiry, then reloads nginx):
 
 | Item | Value |
 |------|-------|
+| **Company name (in-app)** | `VisionPlus` (set via Branding settings) |
+| **Tagline (in-app)** | `VisionPlus Technologies` |
+| **Accent color** | (default `#2563eb`) |
 | **Users** | 6 |
 | **Leads** | 110 |
 | **Lead Sources** | 12 |
@@ -530,6 +708,9 @@ expiry, then reloads nginx):
 
 | Item | Value |
 |------|-------|
+| **Company name (in-app)** | `Ocean` (set via Branding settings) |
+| **Tagline (in-app)** | `Ocean Sales CRM` |
+| **Accent color** | `#0ea5e9` |
 | **Users** | 6 (seeded, fresh) |
 | **Leads** | 0 (fresh) |
 | **Lead Sources** | 12 (seeded) |
@@ -538,7 +719,13 @@ expiry, then reloads nginx):
 | **Deploy Script** | `deploy-ocean.sh` |
 | **Backup Script** | `backup-ocean-daily.sh` (cron at 7:30 AM) |
 
+> In-app brand values (name, tagline, color, logo) are stored in the
+> `TenantSettings` table and editable by any Administrator at
+> `Settings → Branding` (no rebuild required).
+
 ---
 
 *Last updated: June 25, 2026*
-*Production server: 216.106.182.21 — tenants: crm.visionplusapps.com, ocean.visionplusapps.com*
+*Production server: 216.106.182.21 — tenants:*
+- *`https://crm.visionplusapps.com` (pilot, VisionPlus)*
+- *`https://ocean.visionplusapps.com` (first customer, Ocean)*
