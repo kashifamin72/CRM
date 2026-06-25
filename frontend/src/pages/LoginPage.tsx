@@ -59,12 +59,12 @@ export default function LoginPage() {
           <div className="absolute -bottom-10 -left-10 h-48 w-48 bg-white/8 rounded-full blur-2xl animate-pulse-soft" />
         </div>
         <div className="relative z-10 flex flex-col justify-center px-12 xl:px-20 py-12 max-w-xl">
-          <div className="flex items-center gap-3 mb-10">
+          <div className="flex items-center gap-3 mb-10 min-w-0">
             {branding.logoUrl ? (
               <img
                 src={branding.logoUrl}
                 alt={companyName}
-                className="h-12 w-12 rounded-2xl object-cover bg-white/15 border border-white/20 flex-shrink-0"
+                className="h-12 w-auto max-w-[220px] object-contain bg-white/15 border border-white/20 rounded-2xl px-1.5 flex-shrink-0"
               />
             ) : (
               <div className="h-12 w-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20 flex-shrink-0">
@@ -107,12 +107,12 @@ export default function LoginPage() {
 
       <div className="flex-1 flex items-center justify-center p-6 sm:p-8">
         <div className="w-full max-w-md">
-          <div className="lg:hidden flex items-center gap-3 mb-8">
+          <div className="lg:hidden flex items-center gap-3 mb-8 min-w-0">
             {branding.logoUrl ? (
               <img
                 src={branding.logoUrl}
                 alt={companyName}
-                className="h-10 w-10 rounded-xl object-cover shadow-lg flex-shrink-0"
+                className="h-10 w-auto max-w-[180px] object-contain rounded-xl shadow-lg bg-white px-1.5 flex-shrink-0"
               />
             ) : (
               <div className="h-10 w-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0"

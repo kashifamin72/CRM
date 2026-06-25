@@ -196,16 +196,17 @@ export default function BrandingSettingsPage() {
             Logo
           </h2>
           <div className="flex items-start gap-5">
-            <div className="h-20 w-20 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <div className="h-20 w-40 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden flex-shrink-0 p-2">
               {liveLogo ? (
-                <img src={liveLogo} alt="Logo" className="h-full w-full object-contain" />
+                <img src={liveLogo} alt="Logo" className="max-h-full max-w-full object-contain" />
               ) : (
                 <Building2 className="h-8 w-8 text-slate-400" />
               )}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs text-slate-500 mb-2">
-                JPG, PNG, WebP or SVG. Max 2MB. Square logos work best.
+                JPG, PNG, WebP or SVG. Max 2MB. Wide logos (e.g. 200×60) and
+                square logos both work — the layout adapts to the aspect ratio.
               </p>
               <div className="flex flex-wrap gap-2">
                 <button

@@ -199,7 +199,7 @@ export function Layout({ children }: LayoutProps) {
       >
         {/* Header */}
         <div className={clsx(
-          'flex items-center h-16 border-b border-white/10',
+          'flex items-center h-16 border-b border-white/10 overflow-hidden',
           collapsed ? 'justify-center px-2' : 'gap-3 px-6'
         )}>
           {collapsed ? (
@@ -207,10 +207,10 @@ export function Layout({ children }: LayoutProps) {
               <img
                 src={branding.logoUrl}
                 alt={branding.companyName}
-                className="h-9 w-9 rounded-xl object-cover bg-white/10"
+                className="h-9 w-9 rounded-xl object-contain bg-white/10 flex-shrink-0"
               />
             ) : (
-              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20 flex-shrink-0">
                 <Shield className="h-5 w-5 text-white" />
               </div>
             )
@@ -220,7 +220,7 @@ export function Layout({ children }: LayoutProps) {
                 <img
                   src={branding.logoUrl}
                   alt={branding.companyName}
-                  className="h-9 w-9 rounded-xl object-cover bg-white/10 flex-shrink-0"
+                  className="h-9 w-auto max-w-[180px] object-contain bg-white/10 rounded-lg px-1 flex-shrink-0"
                 />
               ) : (
                 <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20 flex-shrink-0">
