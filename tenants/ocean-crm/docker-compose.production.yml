@@ -1,0 +1,75 @@
+services:
+  # PostgreSQL Database (ISOLATED from crm.visionplusapps.com)
+  # Service name is 'ocean-postgres' (not 'postgres') to avoid DNS collision
+  # with the crm.visionplusapps.com tenant on the shared crm-app_crm-network.
+  ocean-postgres:
+    image: postgres:16-alpine
+    container_name: ocean-crm-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ocean_crm_db}
+      POSTGRES_USER: ${POSTGRES_USER:-ocean_crm_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ocean-postgres-data:/var/lib/postgresql/data
+    networks:
+      crm-network:
+        aliases:
+          - ocean-postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ocean_crm_user} -d ${POSTGRES_DB:-ocean_crm_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # .NET 10 Web API Backend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ocean-crm-api
+    restart: unless-stopped
+    depends_on:
+      ocean-postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=ocean-postgres;Port=5432;Database=${POSTGRES_DB:-ocean_crm_db};Username=${POSTGRES_USER:-ocean_crm_user};Password=${POSTGRES_PASSWORD}"
+      Jwt__Key: ${JWT_SECRET_KEY}
+      Jwt__Issuer: ${JWT_ISSUER:-ocean.visionplusapps.com}
+      Jwt__Audience: ${JWT_AUDIENCE:-ocean.visionplusapps.com}
+      Jwt__ExpirationInMinutes: ${JWT_EXPIRATION:-60}
+      WhatsApp__WebhookUrl: ${WHATSAPP_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/whatsapp-bridge}
+      AllowedOrigins: ${ALLOWED_ORIGINS:-https://ocean.visionplusapps.com}
+    volumes:
+      - ocean-uploads_data:/app/wwwroot/uploads
+      - ocean-dataprotection_keys:/app/keys
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - crm-network
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-https://ocean.visionplusapps.com/api}
+    container_name: ocean-crm-frontend
+    restart: unless-stopped
+    networks:
+      - crm-network
+
+volumes:
+  ocean-postgres-data:
+    driver: local
+  ocean-uploads_data:
+    driver: local
+  ocean-dataprotection_keys:
+    driver: local
+
+networks:
+  crm-network:
+    external: true
+    name: crm-app_crm-network
