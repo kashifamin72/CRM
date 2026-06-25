@@ -12,6 +12,7 @@ import EmployeeCreatePage from './pages/EmployeeCreatePage';
 import EmployeeEditPage from './pages/EmployeeEditPage';
 import LeadSourcesPage from './pages/LeadSourcesPage';
 import StatusReasonsPage from './pages/StatusReasonsPage';
+import BrandingSettingsPage from './pages/BrandingSettingsPage';
 import ReportsPage from './pages/ReportsPage';
 import MessageLogsPage from './pages/MessageLogsPage';
 import CalendarPage from './pages/CalendarPage';
@@ -98,6 +99,15 @@ function App() {
           element={
             <ProtectedRoute requiredRoles={['Administrator']}>
               <Layout><StatusReasonsPage /></Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings/branding"
+          element={
+            <ProtectedRoute requiredRoles={['Administrator']}>
+              <Layout><BrandingSettingsPage /></Layout>
             </ProtectedRoute>
           }
         />

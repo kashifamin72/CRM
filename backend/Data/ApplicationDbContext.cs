@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<MessageLog> MessageLogs => Set<MessageLog>();
     public DbSet<LeadActivity> LeadActivities => Set<LeadActivity>();
     public DbSet<StatusReason> StatusReasons => Set<StatusReason>();
+    public DbSet<TenantSetting> TenantSettings => Set<TenantSetting>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -81,6 +82,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<StatusReason>(e =>
         {
             e.HasIndex(s => new { s.Status, s.Reason }).IsUnique();
+        });
+
+        builder.Entity<TenantSetting>(e =>
+        {
+            e.HasOne(t => t.UpdatedBy).WithMany()
+                .HasForeignKey(t => t.UpdatedById).OnDelete(DeleteBehavior.SetNull);
         });
 
         SeedData(builder);

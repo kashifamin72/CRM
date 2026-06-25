@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useBranding } from '../contexts/BrandingContext';
 import { useToast } from '../components/Toaster';
 import {
   Shield,
@@ -27,8 +28,12 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const { branding } = useBranding();
   const { showToast } = useToast();
   const navigate = useNavigate();
+
+  const companyName = branding.companyName || 'CRM System';
+  const tagline = branding.tagline || 'Customer Relationship Management';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,12 +60,20 @@ export default function LoginPage() {
         </div>
         <div className="relative z-10 flex flex-col justify-center px-12 xl:px-20 py-12 max-w-xl">
           <div className="flex items-center gap-3 mb-10">
-            <div className="h-12 w-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
-              <Shield className="h-7 w-7 text-white" />
-            </div>
-            <div>
-              <span className="text-2xl font-bold text-white font-display">VisionPlus</span>
-              <span className="text-sm text-white/60 block -mt-0.5">CRM System</span>
+            {branding.logoUrl ? (
+              <img
+                src={branding.logoUrl}
+                alt={companyName}
+                className="h-12 w-12 rounded-2xl object-cover bg-white/15 border border-white/20 flex-shrink-0"
+              />
+            ) : (
+              <div className="h-12 w-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20 flex-shrink-0">
+                <Shield className="h-7 w-7 text-white" />
+              </div>
+            )}
+            <div className="min-w-0">
+              <span className="text-2xl font-bold text-white font-display block truncate">{companyName}</span>
+              <span className="text-sm text-white/60 block -mt-0.5 truncate">{tagline}</span>
             </div>
           </div>
           <h1 className="text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight font-display">
@@ -95,13 +108,21 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center p-6 sm:p-8">
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="h-10 w-10 rounded-xl flex items-center justify-center shadow-lg"
-              style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-500)), rgb(var(--color-primary-700)))' }}>
-              <Shield className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <span className="text-xl font-bold text-slate-900 font-display">VisionPlus</span>
-              <span className="text-xs text-slate-500 block -mt-0.5">CRM System</span>
+            {branding.logoUrl ? (
+              <img
+                src={branding.logoUrl}
+                alt={companyName}
+                className="h-10 w-10 rounded-xl object-cover shadow-lg flex-shrink-0"
+              />
+            ) : (
+              <div className="h-10 w-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0"
+                style={{ background: 'linear-gradient(135deg, rgb(var(--color-primary-500)), rgb(var(--color-primary-700)))' }}>
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+            )}
+            <div className="min-w-0">
+              <span className="text-xl font-bold text-slate-900 font-display block truncate">{companyName}</span>
+              <span className="text-xs text-slate-500 block -mt-0.5 truncate">{tagline}</span>
             </div>
           </div>
 

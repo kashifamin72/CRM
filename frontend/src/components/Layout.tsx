@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useBranding } from '../contexts/BrandingContext';
 import { api } from '../services/api';
 import {
   LayoutDashboard,
@@ -23,6 +24,7 @@ import {
   ArrowUp,
   PanelLeftClose,
   PanelLeftOpen,
+  Building2,
 } from 'lucide-react';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import clsx from 'clsx';
@@ -41,6 +43,7 @@ interface FollowUpItem {
 
 export function Layout({ children }: LayoutProps) {
   const { user, logout, isAdmin, isManager } = useAuth();
+  const { branding } = useBranding();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -121,6 +124,7 @@ export function Layout({ children }: LayoutProps) {
   const adminItems = [
     ...(isAdmin ? [{ to: '/employees', icon: UserCog, label: 'Employees' }] : []),
     ...(isAdmin ? [{ to: '/status-reasons', icon: Database, label: 'Status Reasons' }] : []),
+    ...(isAdmin ? [{ to: '/settings/branding', icon: Building2, label: 'Branding' }] : []),
   ];
 
   const isActive = (path: string) => {
@@ -199,17 +203,37 @@ export function Layout({ children }: LayoutProps) {
           collapsed ? 'justify-center px-2' : 'gap-3 px-6'
         )}>
           {collapsed ? (
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
-              <Shield className="h-5 w-5 text-white" />
-            </div>
-          ) : (
-            <>
+            branding.logoUrl ? (
+              <img
+                src={branding.logoUrl}
+                alt={branding.companyName}
+                className="h-9 w-9 rounded-xl object-cover bg-white/10"
+              />
+            ) : (
               <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
                 <Shield className="h-5 w-5 text-white" />
               </div>
-              <div>
-                <span className="text-base font-bold text-white font-display">VisionPlus</span>
-                <span className="text-xs text-slate-400 block -mt-0.5">CRM System</span>
+            )
+          ) : (
+            <>
+              {branding.logoUrl ? (
+                <img
+                  src={branding.logoUrl}
+                  alt={branding.companyName}
+                  className="h-9 w-9 rounded-xl object-cover bg-white/10 flex-shrink-0"
+                />
+              ) : (
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20 flex-shrink-0">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
+              )}
+              <div className="min-w-0">
+                <span className="text-base font-bold text-white font-display block truncate">
+                  {branding.companyName || 'CRM System'}
+                </span>
+                <span className="text-xs text-slate-400 block -mt-0.5 truncate">
+                  {branding.tagline || 'Customer Relationship Management'}
+                </span>
               </div>
             </>
           )}

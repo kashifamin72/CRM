@@ -204,6 +204,16 @@ using (var scope = app.Services.CreateScope())
             }
         }
         catch { /* ignore seed failures — data may already be present */ }
+
+        // TenantSettings schema patch (single-row table for tenant branding)
+        try
+        {
+            await db.Database.ExecuteSqlRawAsync("CREATE TABLE IF NOT EXISTS \"TenantSettings\" (\"Id\" integer NOT NULL PRIMARY KEY, \"CompanyName\" character varying(80) NOT NULL DEFAULT 'CRM System', \"Tagline\" character varying(150), \"LogoPath\" character varying(500), \"PrimaryColor\" character varying(20) DEFAULT '#2563eb', \"SupportEmail\" character varying(200), \"SupportPhone\" character varying(50), \"UpdatedAt\" timestamp with time zone NOT NULL, \"UpdatedById\" character varying(450), CONSTRAINT \"CK_TenantSettings_SingleRow\" CHECK (\"Id\" = 1));");
+            await db.Database.ExecuteSqlRawAsync("DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FK_TenantSettings_AspNetUsers_UpdatedById') THEN ALTER TABLE \"TenantSettings\" ADD CONSTRAINT \"FK_TenantSettings_AspNetUsers_UpdatedById\" FOREIGN KEY (\"UpdatedById\") REFERENCES \"AspNetUsers\"(\"Id\") ON DELETE SET NULL; END IF; END $$;");
+            // Seed the singleton row (only if missing)
+            await db.Database.ExecuteSqlRawAsync("INSERT INTO \"TenantSettings\" (\"Id\", \"CompanyName\", \"Tagline\", \"PrimaryColor\", \"UpdatedAt\") SELECT 1, 'CRM System', 'Customer Relationship Management', '#2563eb', NOW() WHERE NOT EXISTS (SELECT 1 FROM \"TenantSettings\" WHERE \"Id\" = 1);");
+        }
+        catch { /* table already exists — ignore */ }
     }
     else
     {
@@ -226,6 +236,14 @@ using (var scope = app.Services.CreateScope())
             await db.Database.ExecuteSqlRawAsync("ALTER TABLE LeadActivities ADD COLUMN Remark TEXT;");
         }
         catch { /* column/table already exists — ignore */ }
+
+        // TenantSettings schema patch (SQLite)
+        try
+        {
+            await db.Database.ExecuteSqlRawAsync("CREATE TABLE IF NOT EXISTS TenantSettings (Id INTEGER NOT NULL PRIMARY KEY CHECK (Id = 1), CompanyName TEXT NOT NULL DEFAULT 'CRM System', Tagline TEXT, LogoPath TEXT, PrimaryColor TEXT DEFAULT '#2563eb', SupportEmail TEXT, SupportPhone TEXT, UpdatedAt TEXT NOT NULL, UpdatedById TEXT);");
+            await db.Database.ExecuteSqlRawAsync("INSERT OR IGNORE INTO TenantSettings (Id, CompanyName, Tagline, PrimaryColor, UpdatedAt) VALUES (1, 'CRM System', 'Customer Relationship Management', '#2563eb', datetime('now'));");
+        }
+        catch { /* table already exists — ignore */ }
     }
 
     await SeedDataService.SeedAsync(scope.ServiceProvider);
